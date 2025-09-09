@@ -1,22 +1,29 @@
 import { Separator } from "@/components/ui/separator";
-import { SidebarTrigger } from "@/components/ui/sidebar";
-import { Input } from "@/components/ui/input";
-import { IconSearch } from "@tabler/icons-react";
 
-export function SiteHeader() {
+export function Header() {
   return (
-    <header className="flex h-(--header-height) shrink-0 items-center gap-2 border-b transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-(--header-height)">
-      <div className="flex w-full items-center gap-1 px-4 lg:gap-2 lg:px-6">
-        <SidebarTrigger className="-ml-1" />
-        <Separator
-          orientation="vertical"
-          className="mx-2 data-[orientation=vertical]:h-4"
-        />
-        <div className="ml-auto flex items-center gap-2">
-          <Input type="text" placeholder="Find ..." />
-          <IconSearch />
-        </div>
+    <header className="flex justify-center items-center gap-3 overflow-hidden mt-5 px-5">
+      <Separator
+        orientation="horizontal"
+        className="data-[orientation=horizontal]:w-[40%] bg-foreground"
+      />
+
+      <div
+        className="bg-foreground hover:bg-background
+          text-card font-bold hover:text-card-foreground
+          flex items-center justify-center gap-2
+          border border-border rounded-full
+          transition ease-in
+          cursor-pointer
+          h-20 w-20"
+      >
+        MENU
       </div>
+
+      <Separator
+        orientation="horizontal"
+        className="data-[orientation=horizontal]:w-[40%] bg-foreground"
+      />
     </header>
   );
 }

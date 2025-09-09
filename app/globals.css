@@ -132,7 +132,7 @@
 
   --destructive: oklch(61.8% 0.231 29.5);
 
-  --border: oklch(11.9% 0.057 265.8 / 10%);
+  --border: oklch(11.9% 0.057 265.8 / 40%);
   --input: oklch(11.9% 0.057 265.8 / 10%);
   --ring: oklch(80.5% 0.176 74.3);
 
@@ -164,7 +164,7 @@
 
   --destructive: oklch(61.8% 0.231 29.5);
 
-  --border: oklch(100% 0 0 / 10%);
+  --border: oklch(100% 0 0 / 40%);
   --input: oklch(100% 0 0 / 15%);
   --ring: oklch(80.5% 0.176 74.3);
 
