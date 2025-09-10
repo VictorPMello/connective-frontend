@@ -1,7 +1,7 @@
 "use client";
 
 import { Separator } from "@/components/ui/separator";
-import { DrawerMenu } from "../drawer/drawerMenu";
+import { DrawerMenu } from "@/components/drawer/drawerMenu";
 
 export function Header() {
   return (

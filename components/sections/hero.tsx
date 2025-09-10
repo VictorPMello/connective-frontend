@@ -13,7 +13,10 @@ export function Hero() {
       />
 
       <h1 className="text-3xl w-fit backdrop-blur-2xl dark:text-shadow-lg text-shadow-sidebar">
-        Connect your team, clients, and results in one place.
+        <span className="font-bold text-sidebar-ring dark:text-primary">
+          Connect your team
+        </span>{" "}
+        , clients, and results in one place.
       </h1>
       <h3 className="text-xl max-w-1/2 dark:text-shadow-lg text-shadow-sidebar">
         Connective is the CRM designed to simplify your workflow, organize
