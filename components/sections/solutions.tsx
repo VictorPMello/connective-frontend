@@ -11,7 +11,7 @@ export function Solutions() {
         lg:max-w-7xl mx-auto
         relative text-center"
     >
-      <h2 className="text-3xl">
+      <h2 className="text-4xl">
         <span className="font-bold text-sidebar-ring dark:text-primary">
           Everything
         </span>{" "}

@@ -1,7 +1,3 @@
-import { Separator } from "@/components/ui/separator";
-
-import { Bell, ChartColumnStacked, Users, Zap } from "lucide-react";
-
 export function About() {
   return (
     <section
@@ -11,7 +7,7 @@ export function About() {
         lg:max-w-7xl mx-auto
         relative text-center"
     >
-      <h2 className="text-3xl">
+      <h2 className="text-4xl">
         <span className="font-bold text-sidebar-ring dark:text-primary">
           Who
         </span>{" "}
@@ -24,7 +20,7 @@ export function About() {
       <div></div>
 
       <div className="flex gap-3 max-w-md text-left self-start">
-        <p className="text-xl">
+        <p className="text-2xl">
           At Connective, we believe that strong relationships are the foundation
           of any successful business. Our goal is to deliver a modern,
           accessible, and efficient solution that helps companies of all sizes

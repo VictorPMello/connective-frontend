@@ -12,7 +12,7 @@ export function Hero() {
         alt="Picture of the author"
       />
 
-      <h1 className="text-3xl w-fit backdrop-blur-2xl dark:text-shadow-lg text-shadow-sidebar">
+      <h1 className="text-4xl w-fit backdrop-blur-2xl dark:text-shadow-lg text-shadow-sidebar">
         <span className="font-bold text-sidebar-ring dark:text-primary">
           Connect your team
         </span>{" "}

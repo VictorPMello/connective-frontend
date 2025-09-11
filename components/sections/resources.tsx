@@ -1,7 +1,5 @@
 import { Separator } from "@/components/ui/separator";
 
-import { Bell, ChartColumnStacked, Users, Zap } from "lucide-react";
-
 export function Resources() {
   return (
     <section
@@ -11,7 +9,7 @@ export function Resources() {
         lg:max-w-7xl mx-auto
         relative text-center"
     >
-      <h2 className="text-3xl">
+      <h2 className="text-4xl">
         Why choose{" "}
         <span className="font-bold text-sidebar-ring dark:text-primary">
           Connective?
