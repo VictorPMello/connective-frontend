@@ -14,12 +14,12 @@ export function Header() {
       <h1 className="text-4xl">Connective</h1>
       <Separator
         orientation="horizontal"
-        className="data-[orientation=horizontal]:w-[30%] bg-foreground"
+        className="data-[orientation=horizontal]:w-[45%] bg-foreground"
       />
       <DrawerMenu />
       <Separator
         orientation="horizontal"
-        className="data-[orientation=horizontal]:w-[40%] bg-foreground"
+        className="data-[orientation=horizontal]:w-[10%] bg-foreground"
       />
     </header>
   );

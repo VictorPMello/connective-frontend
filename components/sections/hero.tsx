@@ -1,11 +1,12 @@
 import { CircleDot } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 
 export function Hero() {
   return (
     <section className="w-screen h-screen flex flex-col lg:max-w-7xl mx-auto justify-center gap-3 relative">
       <Image
-        className="absolute inset-0 z-[-100] h-full object-contain"
+        className="absolute inset-0 z-[-50] h-full object-contain"
         src="/hero/hero.webp"
         width={5000}
         height={5000}
@@ -24,7 +25,13 @@ export function Hero() {
       </h3>
       <div className="flex flex-col gap-3">
         <span className="text-base font-bold dark:text-shadow-lg text-shadow-sidebar">
-          <CircleDot className="inline" /> Start your free 14-day trial
+          <CircleDot className="inline" />
+          <Link
+            href="/login"
+            className="text-lg cursor-pointer p-2 bg-background rounded-xl hover:bg-background/80"
+          >
+            Start your free 14-day trial
+          </Link>
         </span>
         <span className="text-base font-bold dark:text-shadow-lg text-shadow-sidebar">
           <CircleDot className="inline" /> Book a demo

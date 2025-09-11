@@ -3,7 +3,7 @@ export function About() {
     <section
       id="about"
       className="w-screen h-screen
-        flex flex-col justify-around items-center gap-3
+        flex flex-col justify-evenly items-center gap-3
         lg:max-w-7xl mx-auto
         relative text-center"
     >
@@ -13,11 +13,6 @@ export function About() {
         </span>{" "}
         we are
       </h2>
-
-      {
-        // add any emelent 3D?
-      }
-      <div></div>
 
       <div className="flex gap-3 max-w-md text-left self-start">
         <p className="text-2xl">

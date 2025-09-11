@@ -16,11 +16,6 @@ export function Resources() {
         </span>
       </h2>
 
-      {
-        // add any emelent 3D?
-      }
-      <div></div>
-
       <div className="flex gap-3">
         <p className="text-lg flex gap-2 justify-center items-center">
           Simple and intuitive interface

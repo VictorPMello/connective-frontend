@@ -17,10 +17,6 @@ export function Pricing() {
         that grow with your business
       </h2>
 
-      {
-        // add any emelent 3D?
-      }
-
       <div className="flex gap-6">
         <p className="text-xl flex flex-col gap-2 justify-center items-center max-w-sm">
           <span className="font-bold flex gap-2 items-center justify-center">
