@@ -42,16 +42,6 @@ export function Pricing() {
           />
           Perfect for sales and support teams.
         </p>
-        <p className="text-xl flex flex-col gap-2 justify-center items-center max-w-sm">
-          <span className="font-bold flex gap-2 items-center justify-center">
-            Enterprise
-          </span>
-          <Separator
-            orientation="horizontal"
-            className="data-[orientation=horizontal]:w-[75%] bg-foreground mx-auto"
-          />
-          Advanced features and customization for large companies.
-        </p>
       </div>
 
       <Link
