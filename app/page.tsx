@@ -7,6 +7,8 @@ import { Resources } from "@/components/sections/resources";
 import { About } from "@/components/sections/about";
 import { Pricing } from "@/components/sections/pricing";
 
+import { Footer } from "@/components/footer/footer";
+
 export default function Home() {
   return (
     <>
@@ -19,7 +21,7 @@ export default function Home() {
         <Pricing />
         <About />
       </main>
-      <footer id="about" className="w-screen p-3"></footer>
+      <Footer />
     </>
   );
 }
