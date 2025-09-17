@@ -1,4 +1,5 @@
 import { AddTaskDialog } from "@/components/dialog/addTaskDialog";
+import { AllProjectsDialog } from "@/components/dialog/allProjectsDialog";
 import { HeaderDashboard } from "@/components/header/headerDashboard";
 
 import { Badge } from "@/components/ui/badge";
@@ -45,8 +46,9 @@ export default function Projects() {
             <div>
               <Card className="@container/card">
                 <CardHeader>
-                  <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
+                  <CardTitle className="flex items-center gap-3 text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
                     Projects
+                    <AllProjectsDialog />
                   </CardTitle>
                   <CardAction>
                     <AddTaskDialog />
