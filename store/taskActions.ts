@@ -1,6 +1,3 @@
-import { StateCreator } from "zustand";
-
-import type { Kanban } from "@/types/kanbanInterface";
 import {
   TaskType,
   CreateTaskDataType,
@@ -10,8 +7,9 @@ import {
 import { TaskActions } from "@/types/taskActionsInterface";
 
 import { generateId } from "@/utils/helpers";
+import { KanbanStateCreator } from "@/types/kanbanStateType";
 
-export const createTaskActions: StateCreator<Kanban, [], [], TaskActions> = (
+export const createTaskActions: KanbanStateCreator<TaskActions> = (
   set,
   get,
 ) => ({
@@ -48,7 +46,7 @@ export const createTaskActions: StateCreator<Kanban, [], [], TaskActions> = (
   deleteTask: (id: string) => {
     set((state) => ({
       ...state,
-      tasks: (state.tasks = state.tasks.filter((t) => t.id !== id)),
+      tasks: state.tasks.filter((t) => t.id !== id),
     }));
   },
 

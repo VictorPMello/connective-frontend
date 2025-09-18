@@ -1,6 +1,3 @@
-import { StateCreator } from "zustand";
-
-import type { Kanban } from "@/types/kanbanInterface";
 import type {
   ProjectType,
   CreateProjectDataType,
@@ -9,13 +6,12 @@ import type {
 import type { ProjectActions } from "@/types/projectActionsInterface";
 
 import { generateId } from "@/utils/helpers";
+import { KanbanStateCreator } from "@/types/kanbanStateType";
 
-export const createProjectActions: StateCreator<
-  Kanban,
-  [],
-  [],
-  ProjectActions
-> = (set, get) => ({
+export const createProjectActions: KanbanStateCreator<ProjectActions> = (
+  set,
+  get,
+) => ({
   createdProject: (data: CreateProjectDataType) => {
     set((state) => {
       const now = new Date();

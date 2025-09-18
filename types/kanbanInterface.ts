@@ -1,14 +1,6 @@
-import {
-  CreateProjectDataType,
-  ProjectType,
-  UpdateProjectDataType,
-} from "@/types/projectTypes";
+import { ProjectType } from "@/types/projectTypes";
 
-import {
-  CreateTaskDataType,
-  TaskType,
-  UpdateTaskDataType,
-} from "@/types/taskTypes";
+import { TaskType } from "@/types/taskTypes";
 
 export interface Kanban {
   projects: ProjectType[];
@@ -17,26 +9,4 @@ export interface Kanban {
 
   isLoading: boolean;
   searchQuery: string;
-
-  createdProject: (data: CreateProjectDataType) => void;
-  updateProject: (id: string, data: UpdateProjectDataType) => void;
-  deleteProject: (id: string) => void;
-  moveProject: (id: string | null) => void;
-
-  createdTask: (data: CreateTaskDataType) => void;
-  updateTask: (id: string, data: UpdateTaskDataType) => void;
-  deleteTask: (id: string) => void;
-  moveTask: (id: string | null) => void;
-
-  setSearchQuery: (query: string) => void;
-
-  getProjectById: (id: string) => ProjectType | undefined;
-  getTaskById: (id: string) => TaskType | undefined;
-  getTasksByProject: (projectId: string) => TaskType[];
-  getProjectStatus: (projectId: string) => {
-    total: number;
-    toStart: number;
-    inProgress: number;
-    completed: number;
-  };
 }

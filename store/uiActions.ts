@@ -1,10 +1,7 @@
-import { StateCreator } from "zustand";
-import { Kanban } from "@/types/kanbanInterface";
 import { UIActions } from "@/types/uiActionsInterface";
+import { KanbanStateCreator } from "@/types/kanbanStateType";
 
-export const createUIActions: StateCreator<Kanban, [], [], UIActions> = (
-  set,
-) => ({
+export const createUIActions: KanbanStateCreator<UIActions> = (set) => ({
   setSearchQuery: (query: string) => {
     set((state) => ({
       ...state,
