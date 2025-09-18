@@ -64,6 +64,8 @@ export const createTaskActions: KanbanStateCreator<TaskActions> = (
     return get().tasks.filter((task) => task.projectId === projectId);
   },
 
+  // Alterar esse logica do status | está com a quantidade tasks e não o status
+
   getProjectStatus: (projectId: string) => {
     const tasks = get().tasks.filter((task) => task.projectId === projectId);
 

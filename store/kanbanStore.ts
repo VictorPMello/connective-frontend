@@ -1,6 +1,9 @@
 import { create } from "zustand";
 import { devtools, persist } from "zustand/middleware";
+import { immer } from "zustand/middleware/immer";
+
 import { KanbanStore } from "@/types/kanbanStateType";
+
 import { createProjectActions } from "@/store/projectActions";
 import { createTaskActions } from "@/store/taskActions";
 import { createUIActions } from "@/store/uiActions";
@@ -8,7 +11,7 @@ import { createUIActions } from "@/store/uiActions";
 export const useKanbanStore = create<KanbanStore>()(
   devtools(
     persist(
-      (...args) => ({
+      immer((...args) => ({
         projects: [],
         tasks: [],
         selectedProject: null,
@@ -19,7 +22,7 @@ export const useKanbanStore = create<KanbanStore>()(
         ...createProjectActions(...args),
         ...createTaskActions(...args),
         ...createUIActions(...args),
-      }),
+      })),
       {
         name: "kanban-storage",
       },
