@@ -6,7 +6,7 @@ import type {
 import type { ProjectActions } from "@/types/projectActionsInterface";
 
 import { generateId } from "@/utils/helpers";
-import { KanbanStateCreator } from "@/types/kanbanStateType";
+import { KanbanStateCreator } from "@/types/toRemovekanbanStateType";
 
 export const createProjectActions: KanbanStateCreator<ProjectActions> = (
   set,

@@ -1,5 +1,5 @@
 import { UIActions } from "@/types/uiActionsInterface";
-import { KanbanStateCreator } from "@/types/kanbanStateType";
+import { KanbanStateCreator } from "@/types/toRemovekanbanStateType";
 
 export const createUIActions: KanbanStateCreator<UIActions> = (set) => ({
   setSearchQuery: (query: string) => {

@@ -2,12 +2,12 @@ import {
   TaskType,
   CreateTaskDataType,
   UpdateTaskDataType,
-} from "@/types/taskTypes";
+} from "@/types/toRemoveTaskTypes";
 
 import { TaskActions } from "@/types/taskActionsInterface";
 
 import { generateId } from "@/utils/helpers";
-import { KanbanStateCreator } from "@/types/kanbanStateType";
+import { KanbanStateCreator } from "@/types/toRemovekanbanStateType";
 
 export const createTaskActions: KanbanStateCreator<TaskActions> = (
   set,
@@ -64,16 +64,5 @@ export const createTaskActions: KanbanStateCreator<TaskActions> = (
     return get().tasks.filter((task) => task.projectId === projectId);
   },
 
-  // Alterar esse logica do status | está com a quantidade tasks e não o status
-
-  getProjectStatus: (projectId: string) => {
-    const tasks = get().tasks.filter((task) => task.projectId === projectId);
-
-    return {
-      total: tasks.length,
-      toStart: tasks.filter((t) => t.status === "toStart").length,
-      inProgress: tasks.filter((t) => t.status === "inProgress").length,
-      completed: tasks.filter((t) => t.status === "completed").length,
-    };
-  },
+  // Precisa de um get para o status
 });

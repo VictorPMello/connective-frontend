@@ -2,10 +2,9 @@ import { create } from "zustand";
 import { devtools, persist } from "zustand/middleware";
 import { immer } from "zustand/middleware/immer";
 
-import { KanbanStore } from "@/types/kanbanStateType";
-
+import { KanbanStore } from "@/types/toRemovekanbanStateType";
 import { createProjectActions } from "@/store/projectActions";
-import { createTaskActions } from "@/store/taskActions";
+import { createTaskActions } from "@/store/toRemoveTaskActions";
 import { createUIActions } from "@/store/uiActions";
 
 export const useKanbanStore = create<KanbanStore>()(
