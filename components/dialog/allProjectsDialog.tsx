@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import { Pen, SquareKanban, SquarePlus, Trash } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import { Input } from "@/components/ui/input";
+import { CreateProjectDialog } from "@/components/dialog/createProjectDialog";
 
 export function AllProjectsDialog() {
   return (
@@ -27,7 +28,7 @@ export function AllProjectsDialog() {
               className="w-1/2"
               placeholder="Search your project"
             />
-            <Button className="font-bold cursor-pointer">Create Project</Button>
+            <CreateProjectDialog />
           </div>
         </DialogHeader>
         <div className="flex flex-col gap-3">

@@ -5,8 +5,9 @@ import { usePathname } from "next/navigation";
 import { Separator } from "@/components/ui/separator";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import { Input } from "@/components/ui/input";
+import { CreateProjectDialog } from "@/components/dialog/createProjectDialog";
+
 import { IconSearch } from "@tabler/icons-react";
-import { Button } from "@/components/ui/button";
 
 export function HeaderDashboard() {
   const pathname = usePathname();
@@ -22,9 +23,7 @@ export function HeaderDashboard() {
         <div className="ml-auto flex items-center gap-2">
           {pathname === "/dashboard/projects" ? (
             <>
-              <Button className="font-bold cursor-pointer">
-                Create Project
-              </Button>
+              <CreateProjectDialog />
             </>
           ) : (
             <>

@@ -3,7 +3,7 @@ import { KanbanStateCreator } from "@/types/kanban/kanbanStateType";
 
 import { CreateTaskSchema } from "@/lib/schemas/taskSchema";
 import { TaskActions } from "@/types/task/taskActions";
-import { TaskPriority, TaskStatus } from "@/types/task/taskType";
+import { TaskPriority } from "@/types/task/taskType";
 
 import { generateId } from "@/utils/helpers";
 
@@ -11,7 +11,6 @@ export const CreateTaskActions: KanbanStateCreator<TaskActions> = (set) => ({
   createTask: (
     title: string,
     projectId: string,
-    status: TaskStatus = "todo",
     priority: TaskPriority,
     description?: string,
   ) => {
@@ -19,7 +18,7 @@ export const CreateTaskActions: KanbanStateCreator<TaskActions> = (set) => ({
       const validateTask = CreateTaskSchema.parse({
         title,
         description,
-        status,
+        status: "todo",
         priority,
         projectId,
       });

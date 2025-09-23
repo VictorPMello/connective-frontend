@@ -16,7 +16,6 @@ export const TaskSchema = z.object({
 
 export const CreateTaskSchema = TaskSchema.omit({
   id: true,
-
   createdAt: true,
   updatedAt: true,
 });
