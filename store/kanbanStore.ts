@@ -13,7 +13,7 @@ export const useKanbanStore = create<KanbanStore>()(
       immer((...args) => ({
         projects: [],
         tasks: [],
-        selectedProject: null,
+        selectedProject: {},
         isLoading: false,
 
         ...CreateProjectActions(...args),

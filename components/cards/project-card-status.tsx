@@ -10,10 +10,17 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
-import { Maximize2, SquareKanban } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
-export function ProjectCardStatus() {
+import { Maximize2, SquareKanban } from "lucide-react";
+
+export function ProjectCardStatus({
+  title,
+  description,
+}: {
+  title: string;
+  description: string;
+}) {
   return (
     <Card className="@container/card flex-row">
       <div className="flex flex-col justify-center items-end text-sm p-10">
@@ -25,7 +32,8 @@ export function ProjectCardStatus() {
           >
             <div>
               <span className="block text-xs">Project</span>
-              <h5>Selected Project</h5>
+              <h5>{title}</h5>
+              <p>{description}</p>
             </div>
             <div className=" bg-priority-low p-1.5 rounded-full">
               <SquareKanban className="size-8" />

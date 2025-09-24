@@ -19,12 +19,30 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+
 import { ChevronsDown, ChevronsRight, ChevronsUp } from "lucide-react";
 
 import { useState } from "react";
+import { useTask } from "@/hooks/use-task";
 
-export function AddTaskDialog() {
-  const [value, setValue] = useState("low");
+import { TaskPriority } from "@/types/task/taskType";
+
+export function AddTaskDialog({ projectId }: { projectId: string }) {
+  const [title, setTitle] = useState("");
+  const [priority, setPriority] = useState("low");
+  const [description, setDescription] = useState("");
+
+  const { createTask } = useTask();
+
+  const handleCreateNewTask = () => {
+    createTask(title, projectId, priority as TaskPriority, description);
+
+    // Add Success and Error message
+
+    setTitle("");
+    setDescription("");
+    setPriority("low");
+  };
 
   return (
     <Dialog>
@@ -45,27 +63,31 @@ export function AddTaskDialog() {
                 id="taskTitle"
                 name="name"
                 placeholder="Write a title..."
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
               />
             </div>
             <div className="grid gap-3">
-              <Label htmlFor="taskPriority">Task Description</Label>
+              <Label htmlFor="taskDescription">Task Description</Label>
               <Input
-                id="taskPriority"
+                id="taskDescription"
                 name="username"
                 placeholder="Give a description of the task..."
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
               />
             </div>
             <div className="grid gap-3">
               <Label htmlFor="priority">Priority</Label>
-              <Select value={value} onValueChange={setValue}>
+              <Select value={priority} onValueChange={setPriority}>
                 <SelectTrigger
                   id="priority"
-                  className={`w-full text-priority-${value}`}
+                  className={`w-full text-priority-${priority}`}
                 >
                   <SelectValue
                     placeholder={
                       <span
-                        className={`flex gap-2 items-center text-priority-${value}`}
+                        className={`flex gap-2 items-center text-priority-${priority}`}
                       >
                         <ChevronsDown className="text-priority-low" />
                         Low
@@ -105,9 +127,16 @@ export function AddTaskDialog() {
                 Cancel
               </Button>
             </DialogClose>
-            <Button type="submit" className="cursor-pointer">
-              Add Task
-            </Button>
+
+            <DialogClose asChild>
+              <Button
+                type="button"
+                className="cursor-pointer"
+                onClick={handleCreateNewTask}
+              >
+                Add Task
+              </Button>
+            </DialogClose>
           </DialogFooter>
         </DialogContent>
       </form>

@@ -7,17 +7,10 @@ import { AllProjectsDialog } from "@/components/dialog/allProjectsDialog";
 
 import { Separator } from "@/components/ui/separator";
 
-// import { useProject } from "@/hooks/use-project";
 // import { useTask } from "@/hooks/use-task";
 
-export function ProjectCardList() {
-  // const { createProject } = useProject();
+export function ProjectCardList({ projectId }: { projectId: string }) {
   // const { createTask } = useTask();
-  //
-  // const handleTest = () => {
-  //   createProject("teste", "teste description");
-  // };
-  //
   // const handleTest2 = () => {
   //   createTask(
   //     "testeTask22",
@@ -36,7 +29,7 @@ export function ProjectCardList() {
             <AllProjectsDialog />
           </CardTitle>
           <CardAction>
-            <AddTaskDialog />
+            <AddTaskDialog projectId={projectId} />
           </CardAction>
         </CardHeader>
         <Separator className="mx-auto !w-[95%]" />

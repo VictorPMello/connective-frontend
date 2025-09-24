@@ -5,6 +5,6 @@ export interface KanBanState {
   projects: Project[];
   tasks: Task[];
 
-  selectedProject: string | null;
+  selectedProject: Partial<Project>;
   isLoading: boolean;
 }
