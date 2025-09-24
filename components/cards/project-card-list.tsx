@@ -1,25 +1,15 @@
 "use client";
-import { Card, CardAction, CardHeader, CardTitle } from "@/components/ui/card";
 
+import { Card, CardAction, CardHeader, CardTitle } from "@/components/ui/card";
 import { ProjectCard } from "@/components/cards/project-card";
 import { AddTaskDialog } from "@/components/dialog/addTaskDialog";
 import { AllProjectsDialog } from "@/components/dialog/allProjectsDialog";
-
 import { Separator } from "@/components/ui/separator";
 
-// import { useTask } from "@/hooks/use-task";
+import { useTask } from "@/hooks/use-task";
 
 export function ProjectCardList({ projectId }: { projectId: string }) {
-  // const { createTask } = useTask();
-  // const handleTest2 = () => {
-  //   createTask(
-  //     "testeTask22",
-  //     "A3Uw82meq1ryomlknhsMx",
-  //     "high",
-  //     "teste task description",
-  //   );
-  // };
-
+  const { todoTasks, doingTasks, doneTasks } = useTask(projectId);
   return (
     <div>
       <Card className="@container/card">
@@ -35,9 +25,9 @@ export function ProjectCardList({ projectId }: { projectId: string }) {
         <Separator className="mx-auto !w-[95%]" />
 
         <div className="flex gap-3 px-3">
-          <ProjectCard />
-          <ProjectCard />
-          <ProjectCard />
+          {todoTasks && <ProjectCard tasks={todoTasks} status="Todo" />}
+          {doingTasks && <ProjectCard tasks={doingTasks} status="Doing" />}
+          {doneTasks && <ProjectCard tasks={doneTasks} status="Done" />}
         </div>
       </Card>
     </div>

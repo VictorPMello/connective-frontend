@@ -4,6 +4,7 @@ import { ProjectCardList } from "@/components/cards/project-card-list";
 import { ProjectCardStatus } from "@/components/cards/project-card-status";
 import { HeaderDashboard } from "@/components/header/headerDashboard";
 import { Card } from "@/components/ui/card";
+
 import { useProject } from "@/hooks/use-project";
 
 export default function Projects() {
@@ -31,7 +32,9 @@ export default function Projects() {
                 key={selectedProject.id}
               >
                 <ProjectCardStatus description={description} title={title} />
-                <ProjectCardList projectId="AfsVqFz6i0sygJBotfvgQ" />
+                {selectedProject.id && (
+                  <ProjectCardList projectId={selectedProject.id} />
+                )}
               </div>
             </>
           )}
