@@ -7,4 +7,11 @@ export interface TaskActions {
     priority: TaskPriority,
     description?: string,
   ) => void;
+
+  updateTask: (
+    id: string,
+    title: string,
+    priority: TaskPriority,
+    description?: string,
+  ) => void;
 }

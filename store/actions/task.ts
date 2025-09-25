@@ -38,4 +38,33 @@ export const CreateTaskActions: KanbanStateCreator<TaskActions> = (set) => ({
       throw new Error(`Error to create a task: ${error}`);
     }
   },
+  updateTask: (
+    id: string,
+    title: string,
+    priority: TaskPriority,
+    description?: string,
+  ) => {
+    try {
+      set((state: KanBanState) => ({
+        ...state,
+        tasks: state.tasks.map((task) => {
+          if (task.id === id) {
+            return {
+              id: task.id,
+              title,
+              description,
+              status: task.status,
+              priority,
+              projectId: task.projectId,
+              createdAt: task.createdAt,
+              updatedAt: new Date(),
+            };
+          }
+          return task;
+        }),
+      }));
+    } catch (error) {
+      throw new Error(`Error to create a task: ${error}`);
+    }
+  },
 });

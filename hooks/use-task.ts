@@ -5,6 +5,7 @@ import { Task } from "@/types/task/taskType";
 export const useTask = (projectId?: string) => {
   const tasks = useKanbanStore((state) => state.tasks);
   const createTask = useKanbanStore((state) => state.createTask);
+  const updateTask = useKanbanStore((state) => state.updateTask);
 
   const projectTasks = projectId
     ? tasks.filter((task: Task) => task.projectId === projectId)
@@ -18,9 +19,10 @@ export const useTask = (projectId?: string) => {
 
   return {
     tasks: projectTasks,
+    createTask,
+    updateTask,
     todoTasks,
     doingTasks,
     doneTasks,
-    createTask,
   };
 };
