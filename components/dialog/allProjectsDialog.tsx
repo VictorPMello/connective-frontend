@@ -11,8 +11,17 @@ import { Pen, SquareKanban, SquarePlus, Trash } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import { Input } from "@/components/ui/input";
 import { CreateProjectDialog } from "@/components/dialog/createProjectDialog";
+import { TaskCount } from "@/components/cards/taskCount";
 
-export function AllProjectsDialog() {
+import { Project } from "@/types/project/projectType";
+
+export function AllProjectsDialog({
+  projectId,
+  projects,
+}: {
+  projectId: string;
+  projects: Project[];
+}) {
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -32,51 +41,44 @@ export function AllProjectsDialog() {
           </div>
         </DialogHeader>
         <div className="flex flex-col gap-3">
-          <div className="flex items-center gap-4 p-2 border rounded-lg">
-            <div className="bg-priority-low p-1 rounded-lg">
-              <SquareKanban className="text-primary-foreground" />
-            </div>
-            <div>
-              <h3 className="font-bold flex gap-2 items-center">
-                Project Name
-                <span className="text-sm bg-muted-foreground text-muted p-1.5 rounded-2xl">
-                  Select?
-                </span>
-              </h3>
-              <span className="text-sm">number of task</span>
-            </div>
-            <div className="flex flex-1 justify-end gap-3">
-              <Button variant="ghost" className="cursor-pointer">
-                <Pen className="text-priority-low" />
-              </Button>
-              <Button variant="ghost" className="cursor-pointer">
-                <Trash className="text-destructive" />
-              </Button>
-            </div>
-          </div>
+          {projects.map((project) => (
+            <div
+              key={project.id}
+              className="flex items-center gap-4 p-2 border rounded-lg"
+            >
+              <div className="bg-priority-low p-1 rounded-lg">
+                <SquareKanban className="text-primary-foreground" />
+              </div>
+              <div>
+                <h3 className="font-bold flex gap-2 items-center">
+                  {project.title}
+                  {project.id === projectId && (
+                    <span className="text-sm bg-muted-foreground text-muted p-1.5 rounded-2xl">
+                      Select?
+                    </span>
+                  )}
+                </h3>
 
-          <div className="flex items-center gap-4 p-2 border rounded-lg">
-            <div className="bg-priority-low p-1 rounded-lg">
-              <SquareKanban className="text-primary-foreground" />
+                <span className="text-sm">
+                  <TaskCount projectId={project.id} />
+                </span>
+              </div>
+              <div className="flex flex-1 justify-end gap-3">
+                {/* Button to edit project | has to create a form */}
+                <Button variant="ghost" className="cursor-pointer">
+                  <Pen className="text-priority-low" />
+                </Button>
+
+                {/* Button to delite project | has to create a form */}
+                <Button variant="ghost" className="cursor-pointer">
+                  <Trash className="text-destructive" />
+                </Button>
+              </div>
             </div>
-            <div>
-              <h3 className="font-bold flex gap-2 items-center">
-                Project Name
-              </h3>
-              <span className="text-sm">number of task</span>
-            </div>
-            <div className="flex flex-1 justify-end gap-3">
-              <Button variant="ghost" className="cursor-pointer">
-                <Pen className="text-priority-low" />
-              </Button>
-              <Button variant="ghost" className="cursor-pointer">
-                <Trash className="text-destructive" />
-              </Button>
-            </div>
-          </div>
+          ))}
         </div>
         <DialogFooter className="flex !justify-between items-center">
-          <span className="text-sm">number of all task</span>
+          <span className="text-sm">{projects.length} Projects</span>
           <Button variant="destructive" className="cursor-pointer">
             Delete all
           </Button>

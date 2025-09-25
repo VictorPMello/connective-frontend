@@ -33,6 +33,28 @@ export const CreateProjectActions: KanbanStateCreator<ProjectActions> = (
     }
   },
 
+  updateProject: (id: string, title: string, description?: string) => {
+    try {
+      set((state: KanBanState) => ({
+        ...state,
+        projects: state.projects.map((project) => {
+          if (project.id === id)
+            return {
+              id: project.id,
+              title,
+              description: description || "",
+              createdAt: project.createdAt,
+              updatedAt: new Date(),
+            };
+
+          return project;
+        }),
+      }));
+    } catch (error) {
+      throw new Error(`Error to create project: ${error}`);
+    }
+  },
+
   setSelectedProject: (projectId: string): void => {
     set((state: KanBanState) => {
       const filterProject = state.projects.find(

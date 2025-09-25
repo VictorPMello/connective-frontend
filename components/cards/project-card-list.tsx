@@ -6,9 +6,17 @@ import { AddTaskDialog } from "@/components/dialog/addTaskDialog";
 import { AllProjectsDialog } from "@/components/dialog/allProjectsDialog";
 import { Separator } from "@/components/ui/separator";
 
+import { Project } from "@/types/project/projectType";
+
 import { useTask } from "@/hooks/use-task";
 
-export function ProjectCardList({ projectId }: { projectId: string }) {
+export function ProjectCardList({
+  projectId,
+  projects,
+}: {
+  projectId: string;
+  projects: Project[];
+}) {
   const { todoTasks, doingTasks, doneTasks } = useTask(projectId);
   return (
     <div>
@@ -16,7 +24,7 @@ export function ProjectCardList({ projectId }: { projectId: string }) {
         <CardHeader>
           <CardTitle className="flex items-center gap-3 text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
             Projects
-            <AllProjectsDialog />
+            <AllProjectsDialog projectId={projectId} projects={projects} />
           </CardTitle>
           <CardAction>
             <AddTaskDialog projectId={projectId} />

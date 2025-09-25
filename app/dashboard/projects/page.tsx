@@ -38,7 +38,10 @@ export default function Projects() {
                   title={title}
                 />
                 {selectedProject.id && (
-                  <ProjectCardList projectId={selectedProject.id} />
+                  <ProjectCardList
+                    projectId={selectedProject.id}
+                    projects={projects}
+                  />
                 )}
               </div>
             </>

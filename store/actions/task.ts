@@ -38,6 +38,7 @@ export const CreateTaskActions: KanbanStateCreator<TaskActions> = (set) => ({
       throw new Error(`Error to create a task: ${error}`);
     }
   },
+
   updateTask: (
     id: string,
     title: string,

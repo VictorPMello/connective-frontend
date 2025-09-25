@@ -15,3 +15,8 @@ export const CreateProjectSchema = ProjectSchema.omit({
   createdAt: true,
   updatedAt: true,
 });
+
+export const UpdateProjectSchema = ProjectSchema.partial().omit({
+  id: true,
+  createdAt: true,
+});
