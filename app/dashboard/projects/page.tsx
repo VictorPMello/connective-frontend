@@ -31,7 +31,12 @@ export default function Projects() {
                 className="flex flex-col gap-4 py-4 md:gap-6 md:py-6"
                 key={selectedProject.id}
               >
-                <ProjectCardStatus description={description} title={title} />
+                <ProjectCardStatus
+                  selectedProjectId={selectedProject.id}
+                  projects={projects}
+                  description={description}
+                  title={title}
+                />
                 {selectedProject.id && (
                   <ProjectCardList projectId={selectedProject.id} />
                 )}

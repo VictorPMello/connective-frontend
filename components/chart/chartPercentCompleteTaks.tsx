@@ -10,24 +10,42 @@ import {
 
 import { Card, CardContent } from "@/components/ui/card";
 import { ChartConfig, ChartContainer } from "@/components/ui/chart";
-
-export const description = "A radial chart with text";
-
-const chartData = [
-  { browser: "safari", visitors: 100, fill: "var(--primary)" },
-];
+import { Task } from "@/types/task/taskType";
 
 const chartConfig = {
-  visitors: {
-    label: "Visitors",
+  completedPercentage: {
+    label: "Completed",
   },
-  safari: {
-    label: "Safari",
+  project: {
+    label: "Project",
     color: "var(--primary)",
   },
 } satisfies ChartConfig;
 
-export function ChartPercentCompleteTasks() {
+export function ChartPercentCompleteTasks({
+  totalTasks,
+  doneTasks,
+}: {
+  totalTasks: Task[];
+  doneTasks: Task[];
+}) {
+  const calculateCompletionPercentage = (): number => {
+    if (totalTasks.length === 0) return 0;
+    return Math.round((doneTasks.length / totalTasks.length) * 100);
+  };
+
+  const completionPercentage = calculateCompletionPercentage();
+
+  const chartData = [
+    {
+      browser: "project",
+      visitors: completionPercentage,
+      fill: "var(--primary)",
+    },
+  ];
+
+  const endAngle = (completionPercentage / 100) * 360;
+
   return (
     <Card className="border-none shadow-none w-[16rem]">
       <CardContent>
@@ -37,8 +55,8 @@ export function ChartPercentCompleteTasks() {
         >
           <RadialBarChart
             data={chartData}
-            startAngle={0}
-            endAngle={250}
+            startAngle={90}
+            endAngle={90 + endAngle}
             innerRadius={80}
             outerRadius={110}
           >
@@ -66,7 +84,7 @@ export function ChartPercentCompleteTasks() {
                           y={viewBox.cy}
                           className="fill-foreground text-4xl font-bold"
                         >
-                          {chartData[0].visitors.toLocaleString()}
+                          {completionPercentage}
                         </tspan>
                         <tspan
                           x={viewBox.cx}
