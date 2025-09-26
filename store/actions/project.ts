@@ -67,4 +67,14 @@ export const CreateProjectActions: KanbanStateCreator<ProjectActions> = (
       };
     });
   },
+
+  deleteProject: (id: string) => {
+    set((state: KanBanState) => ({
+      ...state,
+      projects: state.projects.filter((project) => project.id !== id),
+      tasks: state.tasks.filter((task) => task.projectId !== id),
+      selectedProject:
+        (state.selectedProject.id === id && state.projects[0]) || {},
+    }));
+  },
 });

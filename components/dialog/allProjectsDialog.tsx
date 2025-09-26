@@ -15,6 +15,9 @@ import { TaskCount } from "@/components/cards/taskCount";
 import { EditProject } from "@/components/popover/editProject";
 
 import { Project } from "@/types/project/projectType";
+
+import { useProject } from "@/hooks/use-project";
+
 export function AllProjectsDialog({
   projectId,
   projects,
@@ -22,6 +25,10 @@ export function AllProjectsDialog({
   projectId: string;
   projects: Project[];
 }) {
+  const { deleteProject } = useProject();
+
+  const handleDeleteProject = (id: string) => deleteProject(id);
+
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -64,10 +71,12 @@ export function AllProjectsDialog({
                 </span>
               </div>
               <div className="flex flex-1 justify-end gap-3">
-                {/* Button to edit project | has to create a form */}
                 <EditProject project={project} />
-                {/* Button to delite project | has to create a form */}
-                <Button variant="ghost" className="cursor-pointer">
+                <Button
+                  variant="ghost"
+                  className="cursor-pointer"
+                  onClick={() => handleDeleteProject(project.id)}
+                >
                   <Trash className="text-destructive" />
                 </Button>
               </div>

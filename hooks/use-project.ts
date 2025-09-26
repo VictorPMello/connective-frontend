@@ -4,6 +4,7 @@ export const useProject = () => {
   const projects = useKanbanStore((state) => state.projects);
   const createProject = useKanbanStore((state) => state.createProject);
   const updateProject = useKanbanStore((state) => state.updateProject);
+  const deleteProject = useKanbanStore((state) => state.deleteProject);
 
   const selectedProject = useKanbanStore((state) => state.selectedProject);
   const setSelectedProject = useKanbanStore(
@@ -14,6 +15,7 @@ export const useProject = () => {
     projects,
     createProject,
     updateProject,
+    deleteProject,
     selectedProject,
     setSelectedProject,
   };
