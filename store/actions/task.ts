@@ -68,4 +68,15 @@ export const CreateTaskActions: KanbanStateCreator<TaskActions> = (set) => ({
       throw new Error(`Error to create a task: ${error}`);
     }
   },
+
+  deleteTask: (id: string) => {
+    try {
+      set((state: KanBanState) => ({
+        ...state,
+        tasks: state.tasks.filter((task) => task.id !== id),
+      }));
+    } catch (error) {
+      throw new Error(`Error to create a task: ${error}`);
+    }
+  },
 });

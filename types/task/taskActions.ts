@@ -14,4 +14,6 @@ export interface TaskActions {
     priority: TaskPriority,
     description?: string,
   ) => void;
+
+  deleteTask: (id: string) => void;
 }

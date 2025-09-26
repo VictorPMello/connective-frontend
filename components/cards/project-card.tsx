@@ -31,7 +31,7 @@ export function ProjectCard({
   tasks: Task[];
   status: string;
 }) {
-  const { updateTask } = useTask();
+  const { updateTask, deleteTask } = useTask();
 
   const [editingTask, setEditingTask] = useState<{
     id: string;
@@ -73,6 +73,8 @@ export function ProjectCard({
     );
     setEditingTask(null);
   };
+
+  const handleDeleteTask = (id: string) => deleteTask(id);
 
   const handleCloseDialog = () => setEditingTask(null);
 
@@ -131,7 +133,10 @@ export function ProjectCard({
                     >
                       <SquarePen /> Edit Task
                     </DropdownMenuItem>
-                    <DropdownMenuItem className="text-destructive cursor-pointer focus:text-destructive/80">
+                    <DropdownMenuItem
+                      className="text-destructive cursor-pointer focus:text-destructive/80"
+                      onClick={() => handleDeleteTask(task.id)}
+                    >
                       <Trash className="text-destructive" /> Delete Task
                     </DropdownMenuItem>
                   </DropdownMenuContent>
