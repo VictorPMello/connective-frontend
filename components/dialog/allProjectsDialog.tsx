@@ -7,14 +7,14 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { Pen, SquareKanban, SquarePlus, Trash } from "lucide-react";
+import { SquareKanban, SquarePlus, Trash } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import { Input } from "@/components/ui/input";
 import { CreateProjectDialog } from "@/components/dialog/createProjectDialog";
 import { TaskCount } from "@/components/cards/taskCount";
+import { EditProject } from "@/components/popover/editProject";
 
 import { Project } from "@/types/project/projectType";
-
 export function AllProjectsDialog({
   projectId,
   projects,
@@ -65,10 +65,7 @@ export function AllProjectsDialog({
               </div>
               <div className="flex flex-1 justify-end gap-3">
                 {/* Button to edit project | has to create a form */}
-                <Button variant="ghost" className="cursor-pointer">
-                  <Pen className="text-priority-low" />
-                </Button>
-
+                <EditProject project={project} />
                 {/* Button to delite project | has to create a form */}
                 <Button variant="ghost" className="cursor-pointer">
                   <Trash className="text-destructive" />
