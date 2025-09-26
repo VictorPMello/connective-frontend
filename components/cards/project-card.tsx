@@ -3,22 +3,23 @@
 import { useState } from "react";
 
 import { Card, CardAction, CardHeader, CardTitle } from "@/components/ui/card";
-import {
-  ChevronsDown,
-  ChevronsRight,
-  ChevronsUp,
-  Ellipsis,
-  SquarePen,
-  Trash,
-} from "lucide-react";
-
+import { EditTaskDialog } from "@/components/dialog/editTask";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { EditTaskDialog } from "@/components/dialog/editTask";
+
+import {
+  ChevronsDown,
+  ChevronsRight,
+  ChevronsUp,
+  ClipboardX,
+  Ellipsis,
+  SquarePen,
+  Trash,
+} from "lucide-react";
 
 import { Task, TaskPriority } from "@/types/task/taskType";
 
@@ -75,7 +76,6 @@ export function ProjectCard({
   };
 
   const handleDeleteTask = (id: string) => deleteTask(id);
-
   const handleCloseDialog = () => setEditingTask(null);
 
   if (tasks.length === 0) {
@@ -89,6 +89,13 @@ export function ProjectCard({
             0
           </CardAction>
         </CardHeader>
+        <div className="flex flex-col justify-center items-center gap-4 p-6">
+          <div className=" bg-destructive p-2 rounded-full">
+            <ClipboardX size={35} className="mx-auto text-primary-foreground" />
+          </div>
+
+          <p className="text-lg">No tasks currently on this board</p>
+        </div>
       </Card>
     );
   }

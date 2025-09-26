@@ -54,7 +54,7 @@ export function ProjectCardStatus({
               <p>{description}</p>
             </div>
             <div className=" bg-priority-low p-1.5 rounded-full">
-              <SquareKanban className="size-8" />
+              <SquareKanban className="size-8 text-primary-foreground" />
             </div>
           </DropdownMenuTrigger>
           <DropdownMenuContent>
