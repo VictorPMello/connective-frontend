@@ -151,7 +151,7 @@ export function EditTaskDialog({
                 className="cursor-pointer"
                 onClick={handleUpdateTask}
               >
-                Add Task
+                Edit Task
               </Button>
             </DialogClose>
           </DialogFooter>
