@@ -77,4 +77,13 @@ export const CreateProjectActions: KanbanStateCreator<ProjectActions> = (
         (state.selectedProject.id === id && state.projects[0]) || {},
     }));
   },
+
+  deleteAllProjects: () => {
+    set(() => ({
+      projects: [],
+      tasks: [],
+      selectedProject: {},
+      isLoading: false,
+    }));
+  },
 });

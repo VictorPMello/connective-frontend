@@ -13,6 +13,17 @@ import { Input } from "@/components/ui/input";
 import { CreateProjectDialog } from "@/components/dialog/createProjectDialog";
 import { TaskCount } from "@/components/cards/taskCount";
 import { EditProject } from "@/components/popover/editProject";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 
 import { Project } from "@/types/project/projectType";
 
@@ -25,9 +36,10 @@ export function AllProjectsDialog({
   projectId: string;
   projects: Project[];
 }) {
-  const { deleteProject } = useProject();
+  const { deleteProject, deleteAllProjects } = useProject();
 
   const handleDeleteProject = (id: string) => deleteProject(id);
+  const handleDeleteAllProjects = () => deleteAllProjects();
 
   return (
     <Dialog>
@@ -85,9 +97,33 @@ export function AllProjectsDialog({
         </div>
         <DialogFooter className="flex !justify-between items-center">
           <span className="text-sm">{projects.length} Projects</span>
-          <Button variant="destructive" className="cursor-pointer">
-            Delete all
-          </Button>
+          <AlertDialog>
+            <AlertDialogTrigger asChild>
+              <Button variant="destructive" className="cursor-pointer">
+                Delete all
+              </Button>
+            </AlertDialogTrigger>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle>Delete All Projects?</AlertDialogTitle>
+                <AlertDialogDescription>
+                  This action cannot be undone. This will permanently delete all
+                  your projects and tasks from our servers.
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel className="cursor-pointer">
+                  Cancel
+                </AlertDialogCancel>
+                <AlertDialogAction
+                  onClick={handleDeleteAllProjects}
+                  className="bg-destructive hover:bg-destructive/80 cursor-pointer"
+                >
+                  Delete
+                </AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
         </DialogFooter>
       </DialogContent>
     </Dialog>
