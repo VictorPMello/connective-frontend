@@ -14,6 +14,11 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { TaskCount } from "@/components/cards/taskCount";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 import { Maximize2, SquareKanban } from "lucide-react";
 
@@ -48,10 +53,20 @@ export function ProjectCardStatus({
             border text-foreground rounded-2xl
             p-2 pl-5 cursor-pointer text-left text-xl"
           >
-            <div>
+            <div className="truncate">
               <span className="block text-xs">Project</span>
-              <h5>{title}</h5>
-              <p>{description}</p>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <div>
+                    <h5 className="truncate break-words">{title}</h5>
+                    <p className="truncate">{description}</p>
+                  </div>
+                </TooltipTrigger>
+                <TooltipContent className="text-lg text-foreground">
+                  <h5>{title}</h5>
+                  <p>{description}</p>
+                </TooltipContent>
+              </Tooltip>
             </div>
             <div className=" bg-priority-low p-1.5 rounded-full">
               <SquareKanban className="size-8 text-primary-foreground" />
@@ -76,8 +91,16 @@ export function ProjectCardStatus({
                    cursor-pointer text-left text-lg"
                     >
                       <SquareKanban className="size-8 text-priority-low" />
-                      <div className="flex-1">
-                        <h5>{project.title}</h5>
+                      <div className="flex-1 truncate">
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <h5 className="truncate">{project.title}</h5>
+                          </TooltipTrigger>
+                          <TooltipContent className="text-lg text-foreground">
+                            <h5>{project.title}</h5>
+                          </TooltipContent>
+                        </Tooltip>
+
                         <TaskCount projectId={project.id} />
                       </div>
                       <Maximize2 className="size-6 self-center text-priority-low" />
