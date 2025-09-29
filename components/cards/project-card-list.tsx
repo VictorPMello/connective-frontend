@@ -68,6 +68,8 @@ export function ProjectCardList({
 
     if (currentTask && currentTask.status !== newStatus) {
       updateTaskStatus(taskId, newStatus);
+
+      // Add Error | Success message
     }
 
     setActiveTask(null);

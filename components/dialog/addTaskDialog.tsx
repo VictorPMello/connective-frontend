@@ -1,5 +1,7 @@
 "use client";
 
+import { useState } from "react";
+
 import {
   Dialog,
   DialogClose,
@@ -22,7 +24,6 @@ import {
 
 import { ChevronsDown, ChevronsRight, ChevronsUp } from "lucide-react";
 
-import { useState } from "react";
 import { useTask } from "@/hooks/use-task";
 
 import { TaskPriority } from "@/types/task/taskType";
@@ -36,9 +37,7 @@ export function AddTaskDialog({ projectId }: { projectId: string }) {
 
   const handleCreateNewTask = () => {
     createTask(title, projectId, priority as TaskPriority, description);
-
-    // Add Success and Error message
-
+    // Add Error | Success message
     setTitle("");
     setDescription("");
     setPriority("low");

@@ -43,6 +43,7 @@ export function AllProjectsDialog({
 }) {
   const { deleteProject, deleteAllProjects } = useProject();
 
+  // Add Error | Success message
   const handleDeleteProject = (id: string) => deleteProject(id);
   const handleDeleteAllProjects = () => deleteAllProjects();
 

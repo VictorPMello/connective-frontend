@@ -67,6 +67,8 @@ export function ProjectCard({
       updatedData.priority,
       updatedData.description,
     );
+
+    // Add Error | Success message
     setEditingTask(null);
   };
 
@@ -74,6 +76,8 @@ export function ProjectCard({
 
   const handleDeleteTask = (id: string) => {
     deleteTask(id);
+
+    // Add Error | Success message
     setDeletingTask(null);
   };
 

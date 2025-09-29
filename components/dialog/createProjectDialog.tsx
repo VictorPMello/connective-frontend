@@ -26,7 +26,7 @@ export function CreateProjectDialog() {
   const handleCreateProject = () => {
     createProject(titleProject, descriptionProject);
 
-    // Add Success and Error message
+    // Add Error | Success message
 
     setTitleProject("");
     setDescriptionProject("");
