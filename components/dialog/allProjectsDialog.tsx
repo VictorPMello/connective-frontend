@@ -24,6 +24,11 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 import { Project } from "@/types/project/projectType";
 
@@ -59,7 +64,7 @@ export function AllProjectsDialog({
             <CreateProjectDialog />
           </div>
         </DialogHeader>
-        <div className="flex flex-col gap-3">
+        <div className="flex flex-col gap-3 truncate">
           {projects.map((project) => (
             <div
               key={project.id}
@@ -68,9 +73,17 @@ export function AllProjectsDialog({
               <div className="bg-priority-low p-1 rounded-lg">
                 <SquareKanban className="text-primary-foreground" />
               </div>
-              <div>
+              <div className="truncate">
                 <h3 className="font-bold flex gap-2 items-center">
-                  {project.title}
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <h5 className="truncate">{project.title}</h5>
+                    </TooltipTrigger>
+                    <TooltipContent className="text-lg text-foreground">
+                      <h5>{project.title}</h5>
+                    </TooltipContent>
+                  </Tooltip>
+
                   {project.id === projectId && (
                     <span className="text-sm bg-muted-foreground text-muted p-1.5 rounded-2xl">
                       Select?
@@ -84,13 +97,33 @@ export function AllProjectsDialog({
               </div>
               <div className="flex flex-1 justify-end gap-3">
                 <EditProject project={project} />
-                <Button
-                  variant="ghost"
-                  className="cursor-pointer"
-                  onClick={() => handleDeleteProject(project.id)}
-                >
-                  <Trash className="text-destructive" />
-                </Button>
+                <AlertDialog>
+                  <AlertDialogTrigger asChild>
+                    <Button variant="ghost" className="cursor-pointer">
+                      <Trash className="text-destructive" />
+                    </Button>
+                  </AlertDialogTrigger>
+                  <AlertDialogContent>
+                    <AlertDialogHeader>
+                      <AlertDialogTitle>Delete This Project?</AlertDialogTitle>
+                      <AlertDialogDescription>
+                        This action cannot be undone. This will permanently
+                        delete this project and tasks from our servers.
+                      </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                      <AlertDialogCancel className="cursor-pointer">
+                        Cancel
+                      </AlertDialogCancel>
+                      <AlertDialogAction
+                        onClick={() => handleDeleteProject(project.id)}
+                        className="bg-destructive hover:bg-destructive/80 cursor-pointer"
+                      >
+                        Delete
+                      </AlertDialogAction>
+                    </AlertDialogFooter>
+                  </AlertDialogContent>
+                </AlertDialog>
               </div>
             </div>
           ))}

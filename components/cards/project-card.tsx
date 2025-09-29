@@ -12,6 +12,23 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
+
+import {
   ChevronsDown,
   ChevronsRight,
   ChevronsUp,
@@ -39,6 +56,11 @@ export function ProjectCard({
     title: string;
     priority: TaskPriority;
     description: string;
+  } | null>(null);
+
+  const [deletingTask, setDeletingTask] = useState<{
+    isOpen: boolean;
+    id: string;
   } | null>(null);
 
   const getPriorityTask = (priority: string) => {
@@ -75,8 +97,12 @@ export function ProjectCard({
     setEditingTask(null);
   };
 
-  const handleDeleteTask = (id: string) => deleteTask(id);
   const handleCloseDialog = () => setEditingTask(null);
+
+  const handleDeleteTask = (id: string) => {
+    deleteTask(id);
+    setDeletingTask(null);
+  };
 
   if (tasks.length === 0) {
     return (
@@ -142,15 +168,29 @@ export function ProjectCard({
                     </DropdownMenuItem>
                     <DropdownMenuItem
                       className="text-destructive cursor-pointer focus:text-destructive/80"
-                      onClick={() => handleDeleteTask(task.id)}
+                      onClick={() =>
+                        setDeletingTask({ isOpen: true, id: task.id })
+                      }
                     >
                       <Trash className="text-destructive" /> Delete Task
                     </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
               </div>
-              <h4 className="mt-5 mb-2 font-bold text-lg">{task.title}</h4>
-              <p className="opacity-65">{task.description}</p>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <div>
+                    <h4 className="mt-5 mb-2 font-bold text-lg truncate">
+                      {task.title}
+                    </h4>
+                    <p className="opacity-65 truncate">{task.description}</p>
+                  </div>
+                </TooltipTrigger>
+                <TooltipContent className="text-lg text-foreground">
+                  <h4 className="mt-5 mb-2 font-bold text-lg">{task.title}</h4>
+                  <p className="opacity-65 ">{task.description}</p>
+                </TooltipContent>
+              </Tooltip>
             </div>
           ))}
         </div>
@@ -162,6 +202,34 @@ export function ProjectCard({
           onClose={handleCloseDialog}
           onUpdate={handleUpdateTask}
         />
+      )}
+
+      {deletingTask && (
+        <AlertDialog open={deletingTask.isOpen}>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>Delete This Project?</AlertDialogTitle>
+              <AlertDialogDescription>
+                This action cannot be undone. This will permanently delete this
+                project and tasks from our servers.
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel
+                className="cursor-pointer"
+                onClick={() => setDeletingTask(null)}
+              >
+                Cancel
+              </AlertDialogCancel>
+              <AlertDialogAction
+                onClick={() => handleDeleteTask(deletingTask.id)}
+                className="bg-destructive hover:bg-destructive/80 cursor-pointer"
+              >
+                Delete
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
       )}
     </>
   );
