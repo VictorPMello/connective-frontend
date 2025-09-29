@@ -1,4 +1,4 @@
-import { TaskPriority } from "@/types/task/taskType";
+import { TaskPriority, TaskStatus } from "@/types/task/taskType";
 
 export interface TaskActions {
   createTask: (
@@ -14,6 +14,8 @@ export interface TaskActions {
     priority: TaskPriority,
     description?: string,
   ) => void;
+
+  updateTaskStatus: (id: string, newStatus: TaskStatus) => void;
 
   deleteTask: (id: string) => void;
 }

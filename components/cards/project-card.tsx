@@ -1,22 +1,11 @@
 "use client";
 
 import { useState } from "react";
+import { useDroppable } from "@dnd-kit/core";
 
 import { Card, CardAction, CardHeader, CardTitle } from "@/components/ui/card";
 import { EditTaskDialog } from "@/components/dialog/editTask";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
-
+import { DraggableTaskCard } from "@/components/cards/draggableTaskCard";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -28,28 +17,23 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 
-import {
-  ChevronsDown,
-  ChevronsRight,
-  ChevronsUp,
-  ClipboardX,
-  Ellipsis,
-  SquarePen,
-  Trash,
-} from "lucide-react";
+import { ClipboardX } from "lucide-react";
 
 import { Task, TaskPriority } from "@/types/task/taskType";
 
 import { useTask } from "@/hooks/use-task";
 
 export function ProjectCard({
+  id,
   tasks,
   status,
 }: {
+  id: string;
   tasks: Task[];
   status: string;
 }) {
   const { updateTask, deleteTask } = useTask();
+  const { setNodeRef, isOver } = useDroppable({ id: id });
 
   const [editingTask, setEditingTask] = useState<{
     id: string;
@@ -62,17 +46,6 @@ export function ProjectCard({
     isOpen: boolean;
     id: string;
   } | null>(null);
-
-  const getPriorityTask = (priority: string) => {
-    switch (priority) {
-      case "low":
-        return "text-priority-low bg-priority-low/30";
-      case "medium":
-        return "text-priority-medium bg-priority-medium/30";
-      case "high":
-        return "text-priority-high bg-priority-high/30";
-    }
-  };
 
   const handleEditTask = (task: Task) =>
     setEditingTask({
@@ -106,7 +79,12 @@ export function ProjectCard({
 
   if (tasks.length === 0) {
     return (
-      <Card className="@container/card w-1/3 border rounded-3xl">
+      <Card
+        ref={setNodeRef}
+        className={`@container/card border rounded-3xl w-1/3 transition-colors ${
+          isOver ? "border-primary border-2 bg-primary/5" : ""
+        }`}
+      >
         <CardHeader className="flex justify-between">
           <CardTitle className="text-lg font-semibold tabular-nums @[250px]/card:text-3xl">
             {status}
@@ -128,7 +106,12 @@ export function ProjectCard({
 
   return (
     <>
-      <Card className="@container/card w-1/3 border rounded-3xl">
+      <Card
+        ref={setNodeRef}
+        className={`@container/card border rounded-3xl w-1/3 transition-colors ${
+          isOver ? "border-primary border-2 bg-primary/5" : ""
+        }`}
+      >
         <CardHeader className="flex justify-between">
           <CardTitle className="text-lg font-semibold tabular-nums @[250px]/card:text-3xl">
             {status}
@@ -139,59 +122,12 @@ export function ProjectCard({
         </CardHeader>
         <div className="flex flex-col gap-4 p-6">
           {tasks.map((task: Task) => (
-            <div key={task.id} className="p-6 border rounded-2xl">
-              <div className="flex justify-between">
-                <p
-                  className={`flex gap-2 justify-center ${getPriorityTask(task.priority)} rounded-xl py-1 px-2 `}
-                >
-                  {task.priority === "low" ? (
-                    <ChevronsDown />
-                  ) : task.priority === "medium" ? (
-                    <ChevronsRight />
-                  ) : (
-                    <ChevronsUp />
-                  )}
-
-                  {task.priority}
-                </p>
-
-                <DropdownMenu>
-                  <DropdownMenuTrigger className="cursor-pointer">
-                    <Ellipsis />
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent>
-                    <DropdownMenuItem
-                      className="cursor-pointer"
-                      onClick={() => handleEditTask(task)}
-                    >
-                      <SquarePen /> Edit Task
-                    </DropdownMenuItem>
-                    <DropdownMenuItem
-                      className="text-destructive cursor-pointer focus:text-destructive/80"
-                      onClick={() =>
-                        setDeletingTask({ isOpen: true, id: task.id })
-                      }
-                    >
-                      <Trash className="text-destructive" /> Delete Task
-                    </DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              </div>
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <div>
-                    <h4 className="mt-5 mb-2 font-bold text-lg truncate">
-                      {task.title}
-                    </h4>
-                    <p className="opacity-65 truncate">{task.description}</p>
-                  </div>
-                </TooltipTrigger>
-                <TooltipContent className="text-lg text-foreground">
-                  <h4 className="mt-5 mb-2 font-bold text-lg">{task.title}</h4>
-                  <p className="opacity-65 ">{task.description}</p>
-                </TooltipContent>
-              </Tooltip>
-            </div>
+            <DraggableTaskCard
+              key={task.id}
+              task={task}
+              onEdit={() => handleEditTask(task)}
+              onDelete={() => setDeletingTask({ isOpen: true, id: task.id })}
+            />
           ))}
         </div>
       </Card>

@@ -6,6 +6,7 @@ export const useTask = (projectId?: string) => {
   const tasks = useKanbanStore((state) => state.tasks);
   const createTask = useKanbanStore((state) => state.createTask);
   const updateTask = useKanbanStore((state) => state.updateTask);
+  const updateTaskStatus = useKanbanStore((state) => state.updateTaskStatus);
   const deleteTask = useKanbanStore((state) => state.deleteTask);
 
   const projectTasks = projectId
@@ -22,6 +23,7 @@ export const useTask = (projectId?: string) => {
     tasks: projectTasks,
     createTask,
     updateTask,
+    updateTaskStatus,
     deleteTask,
     todoTasks,
     doingTasks,
