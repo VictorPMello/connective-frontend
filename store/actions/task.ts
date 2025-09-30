@@ -3,7 +3,7 @@ import { KanbanStateCreator } from "@/types/kanban/kanbanStateType";
 
 import { CreateTaskSchema } from "@/lib/schemas/taskSchema";
 import { TaskActions } from "@/types/task/taskActions";
-import { TaskPriority } from "@/types/task/taskType";
+import { TaskPriority, TaskStatus } from "@/types/task/taskType";
 
 import { generateId } from "@/utils/helpers";
 
@@ -51,13 +51,10 @@ export const CreateTaskActions: KanbanStateCreator<TaskActions> = (set) => ({
         tasks: state.tasks.map((task) => {
           if (task.id === id) {
             return {
-              id: task.id,
+              ...task,
               title,
               description,
-              status: task.status,
               priority,
-              projectId: task.projectId,
-              createdAt: task.createdAt,
               updatedAt: new Date(),
             };
           }
@@ -65,7 +62,27 @@ export const CreateTaskActions: KanbanStateCreator<TaskActions> = (set) => ({
         }),
       }));
     } catch (error) {
-      throw new Error(`Error to create a task: ${error}`);
+      throw new Error(`error to create a task: ${error}`);
+    }
+  },
+
+  updateTaskStatus: (id: string, newStatus: TaskStatus) => {
+    try {
+      set((state: KanBanState) => ({
+        ...state,
+        tasks: state.tasks.map((task) => {
+          if (task.id === id) {
+            return {
+              ...task,
+              status: newStatus,
+              updatedAt: new Date(),
+            };
+          }
+          return task;
+        }),
+      }));
+    } catch (error) {
+      throw new Error(`error to create a task: ${error}`);
     }
   },
 

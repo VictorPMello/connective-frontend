@@ -1,38 +1,39 @@
 "use client";
 
 import { useState } from "react";
+import { useDroppable } from "@dnd-kit/core";
 
 import { Card, CardAction, CardHeader, CardTitle } from "@/components/ui/card";
 import { EditTaskDialog } from "@/components/dialog/editTask";
+import { DraggableTaskCard } from "@/components/cards/draggableTaskCard";
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 
-import {
-  ChevronsDown,
-  ChevronsRight,
-  ChevronsUp,
-  ClipboardX,
-  Ellipsis,
-  SquarePen,
-  Trash,
-} from "lucide-react";
+import { ClipboardX } from "lucide-react";
 
 import { Task, TaskPriority } from "@/types/task/taskType";
 
 import { useTask } from "@/hooks/use-task";
 
 export function ProjectCard({
+  id,
   tasks,
   status,
 }: {
+  id: string;
   tasks: Task[];
   status: string;
 }) {
   const { updateTask, deleteTask } = useTask();
+  const { setNodeRef, isOver } = useDroppable({ id: id });
 
   const [editingTask, setEditingTask] = useState<{
     id: string;
@@ -41,16 +42,10 @@ export function ProjectCard({
     description: string;
   } | null>(null);
 
-  const getPriorityTask = (priority: string) => {
-    switch (priority) {
-      case "low":
-        return "text-priority-low bg-priority-low/30";
-      case "medium":
-        return "text-priority-medium bg-priority-medium/30";
-      case "high":
-        return "text-priority-high bg-priority-high/30";
-    }
-  };
+  const [deletingTask, setDeletingTask] = useState<{
+    isOpen: boolean;
+    id: string;
+  } | null>(null);
 
   const handleEditTask = (task: Task) =>
     setEditingTask({
@@ -72,15 +67,28 @@ export function ProjectCard({
       updatedData.priority,
       updatedData.description,
     );
+
+    // Add Error | Success message
     setEditingTask(null);
   };
 
-  const handleDeleteTask = (id: string) => deleteTask(id);
   const handleCloseDialog = () => setEditingTask(null);
+
+  const handleDeleteTask = (id: string) => {
+    deleteTask(id);
+
+    // Add Error | Success message
+    setDeletingTask(null);
+  };
 
   if (tasks.length === 0) {
     return (
-      <Card className="@container/card w-1/3 border rounded-3xl">
+      <Card
+        ref={setNodeRef}
+        className={`@container/card border rounded-3xl lg:w-1/3 transition-colors ${
+          isOver ? "border-primary border-2 bg-primary/5" : ""
+        }`}
+      >
         <CardHeader className="flex justify-between">
           <CardTitle className="text-lg font-semibold tabular-nums @[250px]/card:text-3xl">
             {status}
@@ -102,7 +110,12 @@ export function ProjectCard({
 
   return (
     <>
-      <Card className="@container/card w-1/3 border rounded-3xl">
+      <Card
+        ref={setNodeRef}
+        className={`@container/card border rounded-3xl w-full lg:w-1/3 overflow-hidden lg:overflow-auto transition-colors ${
+          isOver ? "border-primary border-2 bg-primary/5" : ""
+        }`}
+      >
         <CardHeader className="flex justify-between">
           <CardTitle className="text-lg font-semibold tabular-nums @[250px]/card:text-3xl">
             {status}
@@ -111,47 +124,14 @@ export function ProjectCard({
             {tasks.length}
           </CardAction>
         </CardHeader>
-        <div className="flex flex-col gap-4 p-6">
+        <div className="flex lg:flex-col gap-4 p-6 overflow-x-scroll lg:overflow-x-hidden snap-x snap-mandatory">
           {tasks.map((task: Task) => (
-            <div key={task.id} className="p-6 border rounded-2xl">
-              <div className="flex justify-between">
-                <p
-                  className={`flex gap-2 justify-center ${getPriorityTask(task.priority)} rounded-xl py-1 px-2 `}
-                >
-                  {task.priority === "low" ? (
-                    <ChevronsDown />
-                  ) : task.priority === "medium" ? (
-                    <ChevronsRight />
-                  ) : (
-                    <ChevronsUp />
-                  )}
-
-                  {task.priority}
-                </p>
-
-                <DropdownMenu>
-                  <DropdownMenuTrigger className="cursor-pointer">
-                    <Ellipsis />
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent>
-                    <DropdownMenuItem
-                      className="cursor-pointer"
-                      onClick={() => handleEditTask(task)}
-                    >
-                      <SquarePen /> Edit Task
-                    </DropdownMenuItem>
-                    <DropdownMenuItem
-                      className="text-destructive cursor-pointer focus:text-destructive/80"
-                      onClick={() => handleDeleteTask(task.id)}
-                    >
-                      <Trash className="text-destructive" /> Delete Task
-                    </DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              </div>
-              <h4 className="mt-5 mb-2 font-bold text-lg">{task.title}</h4>
-              <p className="opacity-65">{task.description}</p>
-            </div>
+            <DraggableTaskCard
+              key={task.id}
+              task={task}
+              onEdit={() => handleEditTask(task)}
+              onDelete={() => setDeletingTask({ isOpen: true, id: task.id })}
+            />
           ))}
         </div>
       </Card>
@@ -162,6 +142,34 @@ export function ProjectCard({
           onClose={handleCloseDialog}
           onUpdate={handleUpdateTask}
         />
+      )}
+
+      {deletingTask && (
+        <AlertDialog open={deletingTask.isOpen}>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>Delete This Project?</AlertDialogTitle>
+              <AlertDialogDescription>
+                This action cannot be undone. This will permanently delete this
+                project and tasks from our servers.
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel
+                className="cursor-pointer"
+                onClick={() => setDeletingTask(null)}
+              >
+                Cancel
+              </AlertDialogCancel>
+              <AlertDialogAction
+                onClick={() => handleDeleteTask(deletingTask.id)}
+                className="bg-destructive hover:bg-destructive/80 cursor-pointer"
+              >
+                Delete
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
       )}
     </>
   );

@@ -26,7 +26,7 @@ export function CreateProjectDialog() {
   const handleCreateProject = () => {
     createProject(titleProject, descriptionProject);
 
-    // Add Success and Error message
+    // Add Error | Success message
 
     setTitleProject("");
     setDescriptionProject("");
@@ -36,7 +36,7 @@ export function CreateProjectDialog() {
     <Dialog>
       <form>
         <DialogTrigger asChild>
-          <Button className="font-bold cursor-pointer">
+          <Button className="font-bold cursor-pointer text-sm w-full lg:w-auto lg:text-base">
             Create New Project
           </Button>
         </DialogTrigger>

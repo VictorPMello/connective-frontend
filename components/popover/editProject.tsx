@@ -22,6 +22,8 @@ export function EditProject({ project }: { project: Project }) {
 
   const handleUpdateProject = () => {
     updateProject(project.id, title, description);
+
+    // Add Error | Success message
     setIsOpen(false);
   };
 
