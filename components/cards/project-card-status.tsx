@@ -1,8 +1,5 @@
-"use client";
-
 import { Card, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { ChartPercentCompleteTasks } from "@/components/chart/chartPercentCompleteTaks";
-
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -11,8 +8,8 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { TaskCount } from "@/components/cards/taskCount";
 import {
   Tooltip,
@@ -23,6 +20,7 @@ import {
 import { Maximize2, SquareKanban } from "lucide-react";
 
 import { Project } from "@/types/project/projectType";
+
 import { useTask } from "@/hooks/use-task";
 import { useProject } from "@/hooks/use-project";
 
@@ -31,11 +29,15 @@ export function ProjectCardStatus({
   projects,
   title,
   description,
+  searchProject,
+  setSearchProject,
 }: {
   selectedProjectId?: string;
   projects: Project[];
   title: string;
   description: string;
+  searchProject: string;
+  setSearchProject: (value: string) => void;
 }) {
   const { setSelectedProject } = useProject();
   const { tasks, todoTasks, doingTasks, doneTasks } =
@@ -45,11 +47,11 @@ export function ProjectCardStatus({
     setSelectedProject(projectId);
 
   return (
-    <Card className="@container/card flex-row">
-      <div className="flex flex-col justify-center items-end text-sm p-10">
+    <Card className="@container/card lg:flex-row">
+      <div className="flex flex-col justify-center items-end text-sm p-5 lg:p-10">
         <DropdownMenu>
           <DropdownMenuTrigger
-            className="flex justify-between items-center w-[20rem]
+            className="flex justify-between items-center w-full lg:w-[20rem]
             border text-foreground rounded-2xl
             p-2 pl-5 cursor-pointer text-left text-xl"
           >
@@ -72,9 +74,15 @@ export function ProjectCardStatus({
               <SquareKanban className="size-8 text-primary-foreground" />
             </div>
           </DropdownMenuTrigger>
-          <DropdownMenuContent>
+          <DropdownMenuContent className=" w-60 lg:w-auto">
             <DropdownMenuLabel>
-              <Input type="text" placeholder="Find ..." />
+              <Input
+                type="text"
+                placeholder="Search project..."
+                value={searchProject}
+                onChange={(e) => setSearchProject(e.target.value)}
+                autoComplete="off"
+              />
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
             <div className="flex gap-3 flex-col">
@@ -84,11 +92,11 @@ export function ProjectCardStatus({
                   key={project.id}
                   onClick={() => handleChangeProject(project.id)}
                 >
-                  <div className="p-2">
+                  <div className="p-2 w-full">
                     <Button
                       variant="ghost"
-                      className="flex justify-start gap-5 items-center w-[20rem]
-                   cursor-pointer text-left text-lg"
+                      className="flex justify-between lg:justify-start gap-5 items-center w-full lg:w-[20rem]
+                       cursor-pointer text-left text-lg"
                     >
                       <SquareKanban className="size-8 text-priority-low" />
                       <div className="flex-1 truncate">
@@ -112,7 +120,7 @@ export function ProjectCardStatus({
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
-      <CardHeader className="flex flex-1 justify-center w-[16rem]">
+      <CardHeader className="flex flex-1 justify-center m-auto w-[16rem]">
         <CardTitle>
           <ChartPercentCompleteTasks totalTasks={tasks} doneTasks={doneTasks} />
         </CardTitle>

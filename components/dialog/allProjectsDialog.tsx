@@ -50,16 +50,16 @@ export function AllProjectsDialog({
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <SquarePlus />
+        <SquarePlus className="lg:size-6" />
       </DialogTrigger>
       <DialogContent className=" sm:max-w-[425px]">
         <DialogHeader className="flex fle-col">
           <DialogTitle>All Projects</DialogTitle>
           <Separator className="my-3" />
-          <div className="flex justify-between gap-4">
+          <div className="flex flex-col lg:flex-row justify-between gap-4">
             <Input
               type="text"
-              className="w-1/2"
+              className="lg:w-1/2"
               placeholder="Search your project"
             />
             <CreateProjectDialog />
@@ -133,7 +133,10 @@ export function AllProjectsDialog({
           <span className="text-sm">{projects.length} Projects</span>
           <AlertDialog>
             <AlertDialogTrigger asChild>
-              <Button variant="destructive" className="cursor-pointer">
+              <Button
+                variant="destructive"
+                className="cursor-pointer w-full lg:w-auto"
+              >
                 Delete all
               </Button>
             </AlertDialogTrigger>

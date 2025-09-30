@@ -36,7 +36,7 @@ export function CreateProjectDialog() {
     <Dialog>
       <form>
         <DialogTrigger asChild>
-          <Button className="font-bold cursor-pointer">
+          <Button className="font-bold cursor-pointer text-sm w-full lg:w-auto lg:text-base">
             Create New Project
           </Button>
         </DialogTrigger>

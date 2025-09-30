@@ -1,5 +1,7 @@
 "use client";
 
+import { useMemo, useState } from "react";
+
 import { ProjectCardList } from "@/components/cards/project-card-list";
 import { ProjectCardStatus } from "@/components/cards/project-card-status";
 import { HeaderDashboard } from "@/components/header/headerDashboard";
@@ -10,10 +12,19 @@ import { useProject } from "@/hooks/use-project";
 export default function Projects() {
   const { projects, selectedProject } = useProject();
 
+  const [searchProject, setSearchProject] = useState("");
+
   const title = selectedProject.title ? selectedProject.title : "";
   const description = selectedProject.description
     ? selectedProject.description
     : "";
+
+  const filteredProjects = useMemo(() => {
+    if (!searchProject.trim()) return projects;
+    return projects.filter((project) =>
+      project.title.toLowerCase().includes(searchProject.toLowerCase()),
+    );
+  }, [projects, searchProject]);
 
   return (
     <>
@@ -33,9 +44,11 @@ export default function Projects() {
               >
                 <ProjectCardStatus
                   selectedProjectId={selectedProject.id}
-                  projects={projects}
+                  projects={filteredProjects}
                   description={description}
                   title={title}
+                  searchProject={searchProject}
+                  setSearchProject={setSearchProject}
                 />
                 {selectedProject.id && (
                   <ProjectCardList

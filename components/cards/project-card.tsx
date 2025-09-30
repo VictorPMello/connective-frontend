@@ -85,7 +85,7 @@ export function ProjectCard({
     return (
       <Card
         ref={setNodeRef}
-        className={`@container/card border rounded-3xl w-1/3 transition-colors ${
+        className={`@container/card border rounded-3xl lg:w-1/3 transition-colors ${
           isOver ? "border-primary border-2 bg-primary/5" : ""
         }`}
       >
@@ -112,7 +112,7 @@ export function ProjectCard({
     <>
       <Card
         ref={setNodeRef}
-        className={`@container/card border rounded-3xl w-1/3 transition-colors ${
+        className={`@container/card border rounded-3xl w-full lg:w-1/3 overflow-hidden lg:overflow-auto transition-colors ${
           isOver ? "border-primary border-2 bg-primary/5" : ""
         }`}
       >
@@ -124,7 +124,7 @@ export function ProjectCard({
             {tasks.length}
           </CardAction>
         </CardHeader>
-        <div className="flex flex-col gap-4 p-6">
+        <div className="flex lg:flex-col gap-4 p-6 overflow-x-scroll lg:overflow-x-hidden snap-x snap-mandatory">
           {tasks.map((task: Task) => (
             <DraggableTaskCard
               key={task.id}

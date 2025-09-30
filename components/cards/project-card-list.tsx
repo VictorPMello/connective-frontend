@@ -80,8 +80,8 @@ export function ProjectCardList({
   return (
     <div>
       <Card className="@container/card">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-3 text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
+        <CardHeader className="flex justify-between items-center">
+          <CardTitle className="flex items-center gap-3 font-semibold tabular-nums @[250px]/card:lg:text-3xl">
             Projects
             <AllProjectsDialog projectId={projectId} projects={projects} />
           </CardTitle>
@@ -97,7 +97,7 @@ export function ProjectCardList({
           onDragEnd={handleDragEnd}
           onDragCancel={handleDragCancel}
         >
-          <div className="flex gap-3 px-3">
+          <div className="flex flex-col lg:flex-row gap-3 px-3">
             {todoTasks && (
               <ProjectCard id="todo" tasks={todoTasks} status="Todo" />
             )}
