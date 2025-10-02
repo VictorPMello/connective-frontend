@@ -3,7 +3,7 @@
 import * as React from "react";
 import {
   IconCamera,
-  IconChartBar,
+  // IconChartBar,
   IconDashboard,
   IconDatabase,
   IconFileAi,
@@ -12,7 +12,7 @@ import {
   IconFolder,
   IconHelp,
   IconInnerShadowTop,
-  IconListDetails,
+  // IconListDetails,
   IconReport,
   IconSearch,
   IconSettings,
@@ -46,26 +46,26 @@ const data = {
       url: "/dashboard",
       icon: IconDashboard,
     },
+    // {
+    //   title: "Lifecycle",
+    //   url: "#",
+    //   icon: IconListDetails,
+    // },
     {
-      title: "Lifecycle",
-      url: "#",
-      icon: IconListDetails,
-    },
-    {
-      title: "Analytics",
-      url: "#",
-      icon: IconChartBar,
+      title: "Clients",
+      url: "/dashboard/clients",
+      icon: IconUsers,
     },
     {
       title: "Projects",
       url: "/dashboard/projects",
       icon: IconFolder,
     },
-    {
-      title: "Team",
-      url: "#",
-      icon: IconUsers,
-    },
+    // {
+    //   title: "Team",
+    //   url: "#",
+    //   icon: IconUsers,
+    // },
   ],
   navClouds: [
     {
