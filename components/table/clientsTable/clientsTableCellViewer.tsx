@@ -68,6 +68,7 @@ export function ClientsTableCellViewer({
           {item.header}
         </Button>
       </DrawerTrigger>
+      {/* All info of clients HERE */}
       <DrawerContent>
         <DrawerHeader className="gap-1">
           <DrawerTitle>{item.header}</DrawerTitle>
@@ -78,6 +79,7 @@ export function ClientsTableCellViewer({
         <div className="flex flex-col gap-4 overflow-y-auto px-4 text-sm">
           {!isMobile && (
             <>
+              {/* If !isMobile show the graphic */}
               <ChartContainer config={chartConfig}>
                 <AreaChart
                   accessibilityLayer
@@ -133,6 +135,8 @@ export function ClientsTableCellViewer({
               <Separator />
             </>
           )}
+
+          {/* Form to Edit this client */}
           <form className="flex flex-col gap-4">
             <div className="flex flex-col gap-3">
               <Label htmlFor="header">Header</Label>

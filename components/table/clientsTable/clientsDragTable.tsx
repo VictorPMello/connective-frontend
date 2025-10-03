@@ -1,11 +1,9 @@
 import { useSortable } from "@dnd-kit/sortable";
 
+import { IconGripVertical } from "@tabler/icons-react";
 import { Button } from "@/components/ui/button";
 
-import { IconGripVertical } from "@tabler/icons-react";
-
-// Create a separate component for the drag handle
-export function ClientsCheckboxTable({ id }: { id: number }) {
+export function ClientsDragTable({ id }: { id: number }) {
   const { attributes, listeners } = useSortable({
     id,
   });

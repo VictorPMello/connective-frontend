@@ -43,7 +43,7 @@ import {
 } from "@tanstack/react-table";
 import { z } from "zod";
 
-import { Badge } from "@/components/ui/badge";
+// import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -67,11 +67,16 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import {
+  Tabs,
+  TabsContent,
+  // TabsList, TabsTrigger
+} from "@/components/ui/tabs";
 
 import { ClientsTableRow } from "@/components/table/clientsTable/clientsTableRow";
 import { columns } from "@/components/table/clientsTable/clientsColumnTable";
 
+// Schema
 export const schema = z.object({
   id: z.number(),
   header: z.string(),
@@ -94,7 +99,7 @@ export function ClientsTable({
   const [sorting, setSorting] = useState<SortingState>([]);
   const [pagination, setPagination] = useState({
     pageIndex: 0,
-    pageSize: 10,
+    pageSize: 5,
   });
   const sortableId = useId();
   const sensors = useSensors(
@@ -150,6 +155,8 @@ export function ClientsTable({
       className="w-full flex-col justify-start gap-6"
     >
       <div className="flex items-center justify-between px-4 lg:px-6">
+        {/*
+      
         <Label htmlFor="view-selector" className="sr-only">
           View
         </Label>
@@ -168,6 +175,8 @@ export function ClientsTable({
             <SelectItem value="focus-documents">Focus Documents</SelectItem>
           </SelectContent>
         </Select>
+      */}
+        {/*
         <TabsList className="**:data-[slot=badge]:bg-muted-foreground/30 hidden **:data-[slot=badge]:size-5 **:data-[slot=badge]:rounded-full **:data-[slot=badge]:px-1 @4xl/main:flex">
           <TabsTrigger value="outline">Outline</TabsTrigger>
           <TabsTrigger value="past-performance">
@@ -178,7 +187,9 @@ export function ClientsTable({
           </TabsTrigger>
           <TabsTrigger value="focus-documents">Focus Documents</TabsTrigger>
         </TabsList>
-        <div className="flex items-center gap-2">
+          */}
+        <div className="flex flex-1 justify-end items-center gap-2">
+          {/* Controll columns */}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="outline" size="sm">
@@ -214,10 +225,12 @@ export function ClientsTable({
           </DropdownMenu>
           <Button variant="outline" size="sm">
             <IconPlus />
-            <span className="hidden lg:inline">Add Section</span>
+            {/* Form to add new client */}
+            <span className="hidden lg:inline">Add New Client</span>
           </Button>
         </div>
       </div>
+
       <TabsContent
         value="outline"
         className="relative flex flex-col gap-4 overflow-auto px-4 lg:px-6"
@@ -276,12 +289,12 @@ export function ClientsTable({
         <div className="flex items-center justify-between px-4">
           <div className="text-muted-foreground hidden flex-1 text-sm lg:flex">
             {table.getFilteredSelectedRowModel().rows.length} of{" "}
-            {table.getFilteredRowModel().rows.length} row(s) selected.
+            {table.getFilteredRowModel().rows.length} client(s) selected.
           </div>
           <div className="flex w-full items-center gap-8 lg:w-fit">
             <div className="hidden items-center gap-2 lg:flex">
               <Label htmlFor="rows-per-page" className="text-sm font-medium">
-                Rows per page
+                Clients per page
               </Label>
               <Select
                 value={`${table.getState().pagination.pageSize}`}
@@ -295,7 +308,7 @@ export function ClientsTable({
                   />
                 </SelectTrigger>
                 <SelectContent side="top">
-                  {[10, 20, 30, 40, 50].map((pageSize) => (
+                  {[5, 10, 15, 20, 25, 30, 35, 40, 45, 50].map((pageSize) => (
                     <SelectItem key={pageSize} value={`${pageSize}`}>
                       {pageSize}
                     </SelectItem>
@@ -351,6 +364,10 @@ export function ClientsTable({
           </div>
         </div>
       </TabsContent>
+      {/*
+
+        Outher Contents Tabs
+
       <TabsContent
         value="past-performance"
         className="flex flex-col px-4 lg:px-6"
@@ -366,6 +383,7 @@ export function ClientsTable({
       >
         <div className="aspect-video w-full flex-1 rounded-lg border border-dashed"></div>
       </TabsContent>
+      */}
     </Tabs>
   );
 }

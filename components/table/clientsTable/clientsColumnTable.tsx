@@ -27,17 +27,21 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-import { ClientsCheckboxTable } from "@/components/table/clientsTable/clientsCheckboxTable";
+import { ClientsDragTable } from "@/components/table/clientsTable/clientsDragTable";
 import { ClientsTableCellViewer } from "@/components/table/clientsTable/clientsTableCellViewer";
 
 import { schema } from "@/components/table/clientsTable/clientsTable";
 
 export const columns: ColumnDef<z.infer<typeof schema>>[] = [
+  // Create Drag Column
   {
     id: "drag",
     header: () => null,
-    cell: ({ row }) => <ClientsCheckboxTable id={row.original.id} />,
+    // Header is the title column
+    cell: ({ row }) => <ClientsDragTable id={row.original.id} />,
+    // Cell is the content column
   },
+  // Create Select checkbox Column
   {
     id: "select",
     header: ({ table }) => (
@@ -64,6 +68,7 @@ export const columns: ColumnDef<z.infer<typeof schema>>[] = [
     enableSorting: false,
     enableHiding: false,
   },
+  // Create Header Column
   {
     accessorKey: "header",
     header: "Header",
@@ -72,6 +77,7 @@ export const columns: ColumnDef<z.infer<typeof schema>>[] = [
     },
     enableHiding: false,
   },
+  // Create Type Column
   {
     accessorKey: "type",
     header: "Section Type",
@@ -83,6 +89,7 @@ export const columns: ColumnDef<z.infer<typeof schema>>[] = [
       </div>
     ),
   },
+  // Create Status Column
   {
     accessorKey: "status",
     header: "Status",
@@ -97,6 +104,7 @@ export const columns: ColumnDef<z.infer<typeof schema>>[] = [
       </Badge>
     ),
   },
+  // Create Target Column
   {
     accessorKey: "target",
     header: () => <div className="w-full text-right">Target</div>,
@@ -122,6 +130,7 @@ export const columns: ColumnDef<z.infer<typeof schema>>[] = [
       </form>
     ),
   },
+  // Create Limit Column
   {
     accessorKey: "limit",
     header: () => <div className="w-full text-right">Limit</div>,
@@ -147,6 +156,7 @@ export const columns: ColumnDef<z.infer<typeof schema>>[] = [
       </form>
     ),
   },
+  // Create Reviewer Column
   {
     accessorKey: "reviewer",
     header: "Reviewer",
@@ -181,6 +191,7 @@ export const columns: ColumnDef<z.infer<typeof schema>>[] = [
       );
     },
   },
+  // Create Actions Column
   {
     id: "actions",
     cell: () => (
@@ -188,7 +199,7 @@ export const columns: ColumnDef<z.infer<typeof schema>>[] = [
         <DropdownMenuTrigger asChild>
           <Button
             variant="ghost"
-            className="data-[state=open]:bg-muted text-muted-foreground flex size-8"
+            className="data-[state=open]:bg-muted text-muted-foreground flex size-8 cursor-pointer"
             size="icon"
           >
             <IconDotsVertical />
@@ -196,11 +207,17 @@ export const columns: ColumnDef<z.infer<typeof schema>>[] = [
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end" className="w-32">
-          <DropdownMenuItem>Edit</DropdownMenuItem>
-          <DropdownMenuItem>Make a copy</DropdownMenuItem>
-          <DropdownMenuItem>Favorite</DropdownMenuItem>
+          <DropdownMenuItem className="cursor-pointer">Edit</DropdownMenuItem>
+          <DropdownMenuItem className="cursor-pointer">
+            Make a copy
+          </DropdownMenuItem>
+          <DropdownMenuItem className="cursor-pointer">
+            Favorite
+          </DropdownMenuItem>
           <DropdownMenuSeparator />
-          <DropdownMenuItem variant="destructive">Delete</DropdownMenuItem>
+          <DropdownMenuItem variant="destructive" className="cursor-pointer">
+            Delete
+          </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
     ),

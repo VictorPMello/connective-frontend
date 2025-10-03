@@ -15,6 +15,7 @@ export function ClientsTableRow({ row }: { row: Row<z.infer<typeof schema>> }) {
   return (
     <TableRow
       data-state={row.getIsSelected() && "selected"}
+      // getIsSelected() => true or false
       data-dragging={isDragging}
       ref={setNodeRef}
       className="relative z-0 data-[dragging=true]:z-10 data-[dragging=true]:opacity-80"
@@ -23,6 +24,8 @@ export function ClientsTableRow({ row }: { row: Row<z.infer<typeof schema>> }) {
         transition: transition,
       }}
     >
+      {/* Create Row getVisibleCells() => objetc row */}
+
       {row.getVisibleCells().map((cell) => (
         <TableCell key={cell.id}>
           {flexRender(cell.column.columnDef.cell, cell.getContext())}
