@@ -97,7 +97,11 @@ export const ClientSchema = z.object({
 });
 
 export const CreateClientSchema = ClientSchema.omit({
-  id: true,
   createdAt: true,
   updatedAt: true,
+});
+
+export const UpdateClientSchema = ClientSchema.partial().omit({
+  id: true,
+  createdAt: true,
 });
