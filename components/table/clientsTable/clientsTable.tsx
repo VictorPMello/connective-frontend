@@ -41,7 +41,6 @@ import {
   useReactTable,
   VisibilityState,
 } from "@tanstack/react-table";
-import { z } from "zod";
 
 // import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -76,22 +75,9 @@ import {
 import { ClientsTableRow } from "@/components/table/clientsTable/clientsTableRow";
 import { columns } from "@/components/table/clientsTable/clientsColumnTable";
 
-// Schema
-export const schema = z.object({
-  id: z.number(),
-  header: z.string(),
-  type: z.string(),
-  status: z.string(),
-  target: z.string(),
-  limit: z.string(),
-  reviewer: z.string(),
-});
+import { Client } from "@/types/client/clientType";
 
-export function ClientsTable({
-  data: initialData,
-}: {
-  data: z.infer<typeof schema>[];
-}) {
+export function ClientsTable({ data: initialData }: { data: Client[] }) {
   const [data, setData] = useState(() => initialData);
   const [rowSelection, setRowSelection] = useState({});
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});

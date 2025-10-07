@@ -2,7 +2,6 @@ import { useIsMobile } from "@/hooks/use-mobile";
 
 import { IconTrendingUp } from "@tabler/icons-react";
 import { Area, AreaChart, CartesianGrid, XAxis } from "recharts";
-import { z } from "zod";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -31,8 +30,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Separator } from "@/components/ui/separator";
-
-import { schema } from "@/components/table/clientsTable/clientsTable";
+import { Client } from "@/types/client/clientType";
 
 const chartData = [
   { month: "January", desktop: 186, mobile: 80 },
@@ -54,24 +52,20 @@ const chartConfig = {
   },
 } satisfies ChartConfig;
 
-export function ClientsTableCellViewer({
-  item,
-}: {
-  item: z.infer<typeof schema>;
-}) {
+export function ClientsTableCellViewer({ item }: { item: Client }) {
   const isMobile = useIsMobile();
 
   return (
     <Drawer direction={isMobile ? "bottom" : "right"}>
       <DrawerTrigger asChild>
         <Button variant="link" className="text-foreground w-fit px-0 text-left">
-          {item.header}
+          {item.name}
         </Button>
       </DrawerTrigger>
       {/* All info of clients HERE */}
       <DrawerContent>
         <DrawerHeader className="gap-1">
-          <DrawerTitle>{item.header}</DrawerTitle>
+          <DrawerTitle>{item.name}</DrawerTitle>
           <DrawerDescription>
             Showing total visitors for the last 6 months
           </DrawerDescription>
@@ -136,16 +130,16 @@ export function ClientsTableCellViewer({
             </>
           )}
 
-          {/* Form to Edit this client */}
+          {/* If !isMobile show the graphic */}
           <form className="flex flex-col gap-4">
             <div className="flex flex-col gap-3">
               <Label htmlFor="header">Header</Label>
-              <Input id="header" defaultValue={item.header} />
+              <Input id="header" defaultValue={item.name} />
             </div>
             <div className="grid grid-cols-2 gap-4">
               <div className="flex flex-col gap-3">
                 <Label htmlFor="type">Type</Label>
-                <Select defaultValue={item.type}>
+                <Select>
                   <SelectTrigger id="type" className="w-full">
                     <SelectValue placeholder="Select a type" />
                   </SelectTrigger>
@@ -186,16 +180,14 @@ export function ClientsTableCellViewer({
             <div className="grid grid-cols-2 gap-4">
               <div className="flex flex-col gap-3">
                 <Label htmlFor="target">Target</Label>
-                <Input id="target" defaultValue={item.target} />
               </div>
               <div className="flex flex-col gap-3">
                 <Label htmlFor="limit">Limit</Label>
-                <Input id="limit" defaultValue={item.limit} />
               </div>
             </div>
             <div className="flex flex-col gap-3">
               <Label htmlFor="reviewer">Reviewer</Label>
-              <Select defaultValue={item.reviewer}>
+              <Select defaultValue={item.manager}>
                 <SelectTrigger id="reviewer" className="w-full">
                   <SelectValue placeholder="Select a reviewer" />
                 </SelectTrigger>

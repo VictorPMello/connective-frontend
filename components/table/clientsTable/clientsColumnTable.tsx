@@ -4,8 +4,6 @@ import {
   IconLoader,
 } from "@tabler/icons-react";
 import { ColumnDef } from "@tanstack/react-table";
-import { toast } from "sonner";
-import { z } from "zod";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -14,25 +12,15 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-
 import { ClientsDragTable } from "@/components/table/clientsTable/clientsDragTable";
+
 import { ClientsTableCellViewer } from "@/components/table/clientsTable/clientsTableCellViewer";
 
-import { schema } from "@/components/table/clientsTable/clientsTable";
+import { Client } from "@/types/client/clientType";
 
-export const columns: ColumnDef<z.infer<typeof schema>>[] = [
+export const columns: ColumnDef<Client>[] = [
   // Create Drag Column
   {
     id: "drag",
@@ -70,21 +58,35 @@ export const columns: ColumnDef<z.infer<typeof schema>>[] = [
   },
   // Create Header Column
   {
-    accessorKey: "header",
-    header: "Header",
+    accessorKey: "clientName",
+    header: "Client/Enterprise",
     cell: ({ row }) => {
       return <ClientsTableCellViewer item={row.original} />;
     },
     enableHiding: false,
   },
-  // Create Type Column
+  // Create Contact Column
   {
-    accessorKey: "type",
-    header: "Section Type",
+    accessorKey: "contact",
+    header: "Contact",
     cell: ({ row }) => (
       <div className="w-32">
         <Badge variant="outline" className="text-muted-foreground px-1.5">
-          {row.original.type}
+          {row.original.contactPerson}
+          {row.original.phone}
+        </Badge>
+      </div>
+    ),
+  },
+
+  // Create Email Column
+  {
+    accessorKey: "email",
+    header: "Email",
+    cell: ({ row }) => (
+      <div className="w-32">
+        <Badge variant="outline" className="text-muted-foreground px-1.5">
+          {row.original.email}
         </Badge>
       </div>
     ),
@@ -95,7 +97,7 @@ export const columns: ColumnDef<z.infer<typeof schema>>[] = [
     header: "Status",
     cell: ({ row }) => (
       <Badge variant="outline" className="text-muted-foreground px-1.5">
-        {row.original.status === "Done" ? (
+        {row.original.status === "active" ? (
           <IconCircleCheckFilled className="fill-green-500 dark:fill-green-400" />
         ) : (
           <IconLoader />
@@ -104,92 +106,34 @@ export const columns: ColumnDef<z.infer<typeof schema>>[] = [
       </Badge>
     ),
   },
-  // Create Target Column
+  // Create Category Column
   {
-    accessorKey: "target",
-    header: () => <div className="w-full text-right">Target</div>,
+    accessorKey: "category",
+    header: "Category",
     cell: ({ row }) => (
-      <form
-        onSubmit={(e) => {
-          e.preventDefault();
-          toast.promise(new Promise((resolve) => setTimeout(resolve, 1000)), {
-            loading: `Saving ${row.original.header}`,
-            success: "Done",
-            error: "Error",
-          });
-        }}
-      >
-        <Label htmlFor={`${row.original.id}-target`} className="sr-only">
-          Target
-        </Label>
-        <Input
-          className="hover:bg-input/30 focus-visible:bg-background dark:hover:bg-input/30 dark:focus-visible:bg-input/30 h-8 w-16 border-transparent bg-transparent text-right shadow-none focus-visible:border dark:bg-transparent"
-          defaultValue={row.original.target}
-          id={`${row.original.id}-target`}
-        />
-      </form>
+      <Badge variant="outline" className="text-muted-foreground px-1.5">
+        {row.original.category === "basic" ? (
+          <IconCircleCheckFilled className="fill-green-500 dark:fill-green-400" />
+        ) : (
+          <IconLoader />
+        )}
+        {row.original.category}
+      </Badge>
     ),
   },
-  // Create Limit Column
+  // Create Manager Column
   {
-    accessorKey: "limit",
-    header: () => <div className="w-full text-right">Limit</div>,
+    accessorKey: "manager",
+    header: "Manager",
     cell: ({ row }) => (
-      <form
-        onSubmit={(e) => {
-          e.preventDefault();
-          toast.promise(new Promise((resolve) => setTimeout(resolve, 1000)), {
-            loading: `Saving ${row.original.header}`,
-            success: "Done",
-            error: "Error",
-          });
-        }}
-      >
-        <Label htmlFor={`${row.original.id}-limit`} className="sr-only">
-          Limit
-        </Label>
-        <Input
-          className="hover:bg-input/30 focus-visible:bg-background dark:hover:bg-input/30 dark:focus-visible:bg-input/30 h-8 w-16 border-transparent bg-transparent text-right shadow-none focus-visible:border dark:bg-transparent"
-          defaultValue={row.original.limit}
-          id={`${row.original.id}-limit`}
-        />
-      </form>
+      <>
+        <div className="w-32">
+          <Badge variant="outline" className="text-muted-foreground px-1.5">
+            {row.original.manager}
+          </Badge>
+        </div>
+      </>
     ),
-  },
-  // Create Reviewer Column
-  {
-    accessorKey: "reviewer",
-    header: "Reviewer",
-    cell: ({ row }) => {
-      const isAssigned = row.original.reviewer !== "Assign reviewer";
-
-      if (isAssigned) {
-        return row.original.reviewer;
-      }
-
-      return (
-        <>
-          <Label htmlFor={`${row.original.id}-reviewer`} className="sr-only">
-            Reviewer
-          </Label>
-          <Select>
-            <SelectTrigger
-              className="w-38 **:data-[slot=select-value]:block **:data-[slot=select-value]:truncate"
-              size="sm"
-              id={`${row.original.id}-reviewer`}
-            >
-              <SelectValue placeholder="Assign reviewer" />
-            </SelectTrigger>
-            <SelectContent align="end">
-              <SelectItem value="Eddie Lake">Eddie Lake</SelectItem>
-              <SelectItem value="Jamik Tashpulatov">
-                Jamik Tashpulatov
-              </SelectItem>
-            </SelectContent>
-          </Select>
-        </>
-      );
-    },
   },
   // Create Actions Column
   {
@@ -208,13 +152,6 @@ export const columns: ColumnDef<z.infer<typeof schema>>[] = [
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end" className="w-32">
           <DropdownMenuItem className="cursor-pointer">Edit</DropdownMenuItem>
-          <DropdownMenuItem className="cursor-pointer">
-            Make a copy
-          </DropdownMenuItem>
-          <DropdownMenuItem className="cursor-pointer">
-            Favorite
-          </DropdownMenuItem>
-          <DropdownMenuSeparator />
           <DropdownMenuItem variant="destructive" className="cursor-pointer">
             Delete
           </DropdownMenuItem>

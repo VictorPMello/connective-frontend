@@ -3,7 +3,7 @@ import { useSortable } from "@dnd-kit/sortable";
 import { IconGripVertical } from "@tabler/icons-react";
 import { Button } from "@/components/ui/button";
 
-export function ClientsDragTable({ id }: { id: number }) {
+export function ClientsDragTable({ id }: { id: string }) {
   const { attributes, listeners } = useSortable({
     id,
   });
