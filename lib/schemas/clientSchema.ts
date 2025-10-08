@@ -87,10 +87,10 @@ export const ClientSchema = z.object({
   secundaryPhone: z.string().optional().or(z.literal("")),
 
   // Dates and values
-  hiringDate: z.coerce.date().optional(),
+  hiringDate: z.date().optional(),
   monthlyAmount: z.string().optional(),
-  nextDueDate: z.coerce.date().optional(),
-  lastContact: z.coerce.date().optional(),
+  nextDueDate: z.date().optional(),
+  lastContact: z.date().optional(),
 
   // Payment Settings
   paymentMethod: z

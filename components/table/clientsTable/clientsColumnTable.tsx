@@ -19,7 +19,7 @@ export const columns: ColumnDef<Client>[] = [
     accessorKey: "clientName",
     header: "Client/Enterprise",
     cell: ({ row }) => {
-      return <ClientsTableCellViewer item={row.original} />;
+      return <ClientsTableCellViewer client={row.original} />;
     },
     enableHiding: false,
   },
