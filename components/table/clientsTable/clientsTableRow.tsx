@@ -1,21 +1,19 @@
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
+
 import { flexRender, Row } from "@tanstack/react-table";
-import { z } from "zod";
 
 import { TableCell, TableRow } from "@/components/ui/table";
 
-import { schema } from "@/components/table/clientsTable/clientsTable";
+import { Client } from "@/types/client/clientType";
 
-export function ClientsTableRow({ row }: { row: Row<z.infer<typeof schema>> }) {
+export function ClientsTableRow({ row }: { row: Row<Client> }) {
   const { transform, transition, setNodeRef, isDragging } = useSortable({
     id: row.original.id,
   });
 
   return (
     <TableRow
-      data-state={row.getIsSelected() && "selected"}
-      // getIsSelected() => true or false
       data-dragging={isDragging}
       ref={setNodeRef}
       className="relative z-0 data-[dragging=true]:z-10 data-[dragging=true]:opacity-80"
@@ -24,8 +22,6 @@ export function ClientsTableRow({ row }: { row: Row<z.infer<typeof schema>> }) {
         transition: transition,
       }}
     >
-      {/* Create Row getVisibleCells() => objetc row */}
-
       {row.getVisibleCells().map((cell) => (
         <TableCell key={cell.id}>
           {flexRender(cell.column.columnDef.cell, cell.getContext())}
