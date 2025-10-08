@@ -25,11 +25,11 @@ export const CreateClientActions: ClientStateCreator<ClientActions> = (
     }
   },
 
-  updateClient: (data) => {
+  updateClient: (data, id: string) => {
     try {
       set((state) => ({
         clients: state.clients.map((client) => {
-          if (client.id === data.id) {
+          if (client.id === id) {
             return { ...client, ...data, updateAt: new Date() };
           }
           return client;

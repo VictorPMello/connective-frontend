@@ -5,12 +5,32 @@ const MAX_FILE_SIZE = 5000000;
 export const ClientSchema = z.object({
   id: z.string(),
 
+  // Metadata
+  createdAt: z.date(),
+  updatedAt: z.date(),
+
   // basic information
   name: z.string().min(1, { message: "Name is required!" }).trim(),
   contactPerson: z
     .string()
     .min(1, { message: "Contact person is required!" })
     .trim(),
+
+  // contact
+  email: z.string().email({ message: "Invalid email" }),
+  phone: z
+    .string()
+    .regex(/^\(\d{2}\)\s?\d{4,5}-\d{4}$/, { message: "Invalid phone format" }),
+
+  // status and category
+  status: z.enum(["active", "negotiation", "inactive", "prospectus"]),
+  category: z.enum(["basic", "premium", "enterprise"]),
+
+  // Relationship
+  manager: z.string().min(1, { message: "Manager is required!" }),
+
+  // OPTIONAL
+  // basic information
   avatar: z
     .instanceof(File)
     .refine((file) => file.size <= MAX_FILE_SIZE, {
@@ -59,10 +79,6 @@ export const ClientSchema = z.object({
     .optional(),
 
   // contact
-  email: z.string().email({ message: "Invalid email" }),
-  phone: z
-    .string()
-    .regex(/^\(\d{2}\)\s?\d{4,5}-\d{4}$/, { message: "Invalid phone format" }),
   secundaryEmail: z
     .string()
     .email({ message: "Invalid email" })
@@ -70,12 +86,8 @@ export const ClientSchema = z.object({
     .or(z.literal("")),
   secundaryPhone: z.string().optional().or(z.literal("")),
 
-  // status and category
-  status: z.enum(["active", "negotiation", "inactive", "prospectus"]),
-  category: z.enum(["basic", "premium", "enterprise"]),
-
   // Dates and values
-  hiringDate: z.coerce.date(),
+  hiringDate: z.coerce.date().optional(),
   monthlyAmount: z.string().optional(),
   nextDueDate: z.coerce.date().optional(),
   lastContact: z.coerce.date().optional(),
@@ -85,18 +97,12 @@ export const ClientSchema = z.object({
     .enum(["credit_card", "boleto", "pix", "transfer"])
     .optional(),
 
-  // Relationship
-  manager: z.string().min(1, { message: "Manager is required!" }),
-
   // Notes
   notes: z.string().optional(),
-
-  // Metadata
-  createdAt: z.date(),
-  updatedAt: z.date(),
 });
 
 export const CreateClientSchema = ClientSchema.omit({
+  id: true,
   createdAt: true,
   updatedAt: true,
 });

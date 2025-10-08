@@ -26,7 +26,6 @@ import {
   IconChevronsLeft,
   IconChevronsRight,
   IconLayoutColumns,
-  IconPlus,
 } from "@tabler/icons-react";
 import {
   ColumnFiltersState,
@@ -76,6 +75,7 @@ import { ClientsTableRow } from "@/components/table/clientsTable/clientsTableRow
 import { columns } from "@/components/table/clientsTable/clientsColumnTable";
 
 import { Client } from "@/types/client/clientType";
+import { AddClientDialog } from "@/components/dialog/addClientDialog";
 
 export function ClientsTable({ data: initialData }: { data: Client[] }) {
   const [data, setData] = useState(() => initialData);
@@ -209,11 +209,7 @@ export function ClientsTable({ data: initialData }: { data: Client[] }) {
                 })}
             </DropdownMenuContent>
           </DropdownMenu>
-          <Button variant="outline" size="sm">
-            <IconPlus />
-            {/* Form to add new client */}
-            <span className="hidden lg:inline">Add New Client</span>
-          </Button>
+          <AddClientDialog />
         </div>
       </div>
 
