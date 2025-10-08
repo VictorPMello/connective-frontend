@@ -1,24 +1,14 @@
-import {
-  IconCircleCheckFilled,
-  IconDotsVertical,
-  IconLoader,
-} from "@tabler/icons-react";
+import { IconCircleCheckFilled, IconLoader } from "@tabler/icons-react";
 import { ColumnDef } from "@tanstack/react-table";
 
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 import { ClientsDragTable } from "@/components/table/clientsTable/clientsDragTable";
 
 import { ClientsTableCellViewer } from "@/components/table/clientsTable/clientsTableCellViewer";
 
 import { Client } from "@/types/client/clientType";
+import { ClientsTableActions } from "./clientsTableActions";
 
 export const columns: ColumnDef<Client>[] = [
   // Create Drag Column
@@ -138,25 +128,6 @@ export const columns: ColumnDef<Client>[] = [
   // Create Actions Column
   {
     id: "actions",
-    cell: () => (
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <Button
-            variant="ghost"
-            className="data-[state=open]:bg-muted text-muted-foreground flex size-8 cursor-pointer"
-            size="icon"
-          >
-            <IconDotsVertical />
-            <span className="sr-only">Open menu</span>
-          </Button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent align="end" className="w-32">
-          <DropdownMenuItem className="cursor-pointer">Edit</DropdownMenuItem>
-          <DropdownMenuItem variant="destructive" className="cursor-pointer">
-            Delete
-          </DropdownMenuItem>
-        </DropdownMenuContent>
-      </DropdownMenu>
-    ),
+    cell: ({ row }) => <ClientsTableActions id={row.original.id} />,
   },
 ];
