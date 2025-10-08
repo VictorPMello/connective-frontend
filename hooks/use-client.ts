@@ -3,7 +3,11 @@ import { useClientStore } from "@/store/CLientStore";
 export const UseClient = () => {
   const clients = useClientStore((state) => state.clients);
   const createClient = useClientStore((state) => state.createClient);
+
   const updateClient = useClientStore((state) => state.updateClient);
+  const updateClientsOrder = useClientStore(
+    (state) => state.updateClientsOrder,
+  );
 
   const deleteCLient = useClientStore((state) => state.deleteClient);
   const deleteAllClients = useClientStore((state) => state.deleteAllClients);
@@ -11,7 +15,10 @@ export const UseClient = () => {
   return {
     clients,
     createClient,
+
     updateClient,
+    updateClientsOrder,
+
     deleteCLient,
     deleteAllClients,
   };

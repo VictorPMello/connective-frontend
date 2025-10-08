@@ -40,6 +40,8 @@ export const CreateClientActions: ClientStateCreator<ClientActions> = (
     }
   },
 
+  updateClientsOrder: (newOrder) => set({ clients: newOrder }),
+
   deleteClient: (id) => {
     try {
       set((state) => ({
