@@ -17,7 +17,12 @@ export const ClientSchema = z.object({
     .trim(),
 
   // contact
-  email: z.string().email({ message: "Invalid email" }),
+  email: z
+    .string()
+    .min(1, { message: "Email is required" })
+    .refine((email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email), {
+      message: "Invalid email format",
+    }),
   phone: z
     .string()
     .regex(/^\(\d{2}\)\s?\d{4,5}-\d{4}$/, { message: "Invalid phone format" }),
@@ -46,16 +51,17 @@ export const ClientSchema = z.object({
     .optional(),
   address: z
     .object({
-      street: z.string().optional(),
-      number: z.string().optional(),
-      complement: z.string().optional(),
-      neighborhood: z.string().optional(),
-      city: z.string().optional(),
-      state: z.string().length(2).optional(),
+      street: z.string().optional().or(z.literal("")),
+      number: z.string().optional().or(z.literal("")),
+      complement: z.string().optional().or(z.literal("")),
+      neighborhood: z.string().optional().or(z.literal("")),
+      city: z.string().optional().or(z.literal("")),
+      state: z.string().length(2).optional().or(z.literal("")),
       zipCode: z
         .string()
         .regex(/^\d{5}-?\d{3}$/)
-        .optional(),
+        .optional()
+        .or(z.literal("")),
       country: z.string().default("BR"),
     })
     .optional(),
@@ -66,11 +72,13 @@ export const ClientSchema = z.object({
     .regex(/^\d{2}\.\d{3}\.\d{3}\/\d{4}-\d{2}$/, {
       message: "Invalid CNPJ format",
     })
-    .optional(),
+    .optional()
+    .or(z.literal("")),
   cpf: z
     .string()
     .regex(/^\d{3}\.\d{3}\.\d{3}-\d{2}$/, { message: "Invalid CPF format" })
-    .optional(),
+    .optional()
+    .or(z.literal("")),
   website: z
     .union([z.string().url({ message: "Invalid URL" }).or(z.literal(""))])
     .optional(),
@@ -87,10 +95,10 @@ export const ClientSchema = z.object({
   secundaryPhone: z.string().optional().or(z.literal("")),
 
   // Dates and values
-  hiringDate: z.date().optional(),
+  hiringDate: z.coerce.date().optional(),
   monthlyAmount: z.string().optional(),
-  nextDueDate: z.date().optional(),
-  lastContact: z.date().optional(),
+  nextDueDate: z.coerce.date().optional(),
+  lastContact: z.coerce.date().optional(),
 
   // Payment Settings
   paymentMethod: z
