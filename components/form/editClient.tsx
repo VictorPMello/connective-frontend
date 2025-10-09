@@ -44,6 +44,7 @@ import {
 } from "@/types/client/clientType";
 
 import { UpdateClientSchema } from "@/lib/schemas/clientSchema";
+import { UseClient } from "@/hooks/use-client";
 
 interface EditClientProps {
   client: Client;
@@ -53,6 +54,8 @@ interface EditClientProps {
 type ClientFormData = z.infer<typeof UpdateClientSchema>;
 
 export function EditClient({ client, id }: EditClientProps) {
+  const { updateClient } = UseClient();
+
   const form = useForm({
     resolver: zodResolver(UpdateClientSchema),
     defaultValues: {
@@ -64,7 +67,7 @@ export function EditClient({ client, id }: EditClientProps) {
       category: client.category as ClientCategory,
       manager: client.manager,
 
-      avatar: client.avatar,
+      // avatar: client.avatar,
       address: {
         street: client.address?.street || "",
         number: client.address?.number || "",
@@ -105,9 +108,8 @@ export function EditClient({ client, id }: EditClientProps) {
     /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
   const onSubmit: SubmitHandler<ClientFormData> = (data) => {
-    console.log("submit");
-
-    console.log(data, id);
+    // Add Success/Error message
+    updateClient(data, id);
   };
 
   return (
@@ -115,8 +117,7 @@ export function EditClient({ client, id }: EditClientProps) {
       <form onSubmit={form.handleSubmit(onSubmit)}>
         <FieldGroup>
           <FieldSet>
-            <FieldLegend>Payment Method</FieldLegend>
-            <FieldDescription>Main client information</FieldDescription>
+            <FieldLegend>Main client information</FieldLegend>
             <FieldGroup>
               {/* Name */}
               <Field>
@@ -650,7 +651,7 @@ export function EditClient({ client, id }: EditClientProps) {
                         >
                           <IconCalendar className="mr-2 h-4 w-4" />
                           {field.value ? (
-                            format(new Date(field.value + "T12:00:00"), "PPP")
+                            format(field.value, "PPP")
                           ) : (
                             <span>Select hiring date</span>
                           )}
@@ -659,15 +660,9 @@ export function EditClient({ client, id }: EditClientProps) {
                       <PopoverContent className="w-auto p-0" align="start">
                         <Calendar
                           mode="single"
-                          selected={
-                            field.value
-                              ? new Date(field.value + "T12:00:00")
-                              : undefined
-                          }
+                          selected={field.value}
                           onSelect={(date) => {
-                            field.onChange(
-                              date ? format(date, "yyyy-MM-dd") : "",
-                            );
+                            field.onChange(date);
                           }}
                         />
                       </PopoverContent>
@@ -698,7 +693,7 @@ export function EditClient({ client, id }: EditClientProps) {
                         >
                           <IconCalendar className="mr-2 h-4 w-4" />
                           {field.value ? (
-                            format(new Date(field.value + "T12:00:00"), "PPP")
+                            format(field.value, "PPP")
                           ) : (
                             <span>Select next due date</span>
                           )}
@@ -707,15 +702,9 @@ export function EditClient({ client, id }: EditClientProps) {
                       <PopoverContent className="w-auto p-0" align="start">
                         <Calendar
                           mode="single"
-                          selected={
-                            field.value
-                              ? new Date(field.value + "T12:00:00")
-                              : undefined
-                          }
+                          selected={field.value}
                           onSelect={(date) => {
-                            field.onChange(
-                              date ? format(date, "yyyy-MM-dd") : "",
-                            );
+                            field.onChange(date);
                           }}
                         />
                       </PopoverContent>
@@ -746,11 +735,7 @@ export function EditClient({ client, id }: EditClientProps) {
                         >
                           <IconCalendar className="mr-2 h-4 w-4" />
                           {field.value ? (
-                            format(
-                              new Date(field.value + "T12:00:00"),
-                              "PPP",
-                              {},
-                            )
+                            format(field.value, "PPP")
                           ) : (
                             <span>Select last contact date</span>
                           )}
@@ -759,15 +744,9 @@ export function EditClient({ client, id }: EditClientProps) {
                       <PopoverContent className="w-auto p-0" align="start">
                         <Calendar
                           mode="single"
-                          selected={
-                            field.value
-                              ? new Date(field.value + "T12:00:00")
-                              : undefined
-                          }
+                          selected={field.value}
                           onSelect={(date) => {
-                            field.onChange(
-                              date ? format(date, "yyyy-MM-dd") : "",
-                            );
+                            field.onChange(date);
                           }}
                         />
                       </PopoverContent>
@@ -806,10 +785,9 @@ export function EditClient({ client, id }: EditClientProps) {
 
           <FieldSeparator />
           <Field orientation="horizontal">
-            <Button variant="outline" type="button">
-              Cancel
+            <Button type="submit" className="w-full">
+              Submit
             </Button>
-            <Button type="submit">Submit</Button>
           </Field>
         </FieldGroup>
       </form>

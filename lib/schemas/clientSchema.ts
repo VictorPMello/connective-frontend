@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-const MAX_FILE_SIZE = 5000000;
+// const MAX_FILE_SIZE = 5000000;
 
 export const ClientSchema = z.object({
   id: z.string(),
@@ -36,19 +36,19 @@ export const ClientSchema = z.object({
 
   // OPTIONAL
   // basic information
-  avatar: z
-    .instanceof(File)
-    .refine((file) => file.size <= MAX_FILE_SIZE, {
-      message: "Image size should be less than 5MB.",
-    })
-    .refine(
-      (file) =>
-        ["image/jpeg", "image/jpg", "image/png", "image/webp"].includes(
-          file.type,
-        ),
-      { message: "Only .jpg, .jpeg, .png and .webp formats are supported." },
-    )
-    .optional(),
+  // avatar: z
+  //   .instanceof(File)
+  //   .refine((file) => file.size <= MAX_FILE_SIZE, {
+  //     message: "Image size should be less than 5MB.",
+  //   })
+  //   .refine(
+  //     (file) =>
+  //       ["image/jpeg", "image/jpg", "image/png", "image/webp"].includes(
+  //         file.type,
+  //       ),
+  //     { message: "Only .jpg, .jpeg, .png and .webp formats are supported." },
+  //   )
+  //   .optional(),
   address: z
     .object({
       street: z.string().optional().or(z.literal("")),
@@ -95,10 +95,10 @@ export const ClientSchema = z.object({
   secundaryPhone: z.string().optional().or(z.literal("")),
 
   // Dates and values
-  hiringDate: z.coerce.date().optional(),
+  hiringDate: z.date().optional(),
+  nextDueDate: z.date().optional(),
+  lastContact: z.date().optional(),
   monthlyAmount: z.string().optional(),
-  nextDueDate: z.coerce.date().optional(),
-  lastContact: z.coerce.date().optional(),
 
   // Payment Settings
   paymentMethod: z
