@@ -60,7 +60,7 @@ export function DraggableTaskCard({
       style={style}
       {...attributes}
       {...listeners}
-      className={`p-6 border rounded-2xl transition-all snap-center shrink-0 w-[200px] ${
+      className={`p-6 border rounded-2xl transition-all snap-center shrink-0 w-[200px] m-auto lg:w-2/3 ${
         isDragging ? "shadow-2xl ring-2 ring-primary" : ""
       }`}
     >

@@ -20,12 +20,8 @@ export const useKanbanStore = create<KanbanStore>()(
         ...CreateTaskActions(...args),
         ...CreateUIActions(...args),
       })),
-      {
-        name: "kanban-store",
-      },
+      { name: "kanban-store" },
     ),
-    {
-      name: "kanban-store",
-    },
+    { name: "kanban-store" },
   ),
 );
