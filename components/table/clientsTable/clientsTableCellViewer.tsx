@@ -13,6 +13,7 @@ import { EditClient } from "@/components/form/editClient";
 import { ClientInfos } from "@/components/cards/clientInfos";
 
 import { Client } from "@/types/client/clientType";
+import { Plus } from "lucide-react";
 
 export function ClientsTableCellViewer({ client }: { client: Client }) {
   const [isFormOpen, setIsFormOpen] = useState(false);
@@ -21,8 +22,12 @@ export function ClientsTableCellViewer({ client }: { client: Client }) {
   return (
     <Drawer direction={isMobile ? "bottom" : "right"}>
       <DrawerTrigger asChild>
-        <Button variant="link" className="text-foreground w-fit px-0 text-left">
+        <Button
+          variant="link"
+          className="underline flex justify-between text-foreground w-full px-0  cursor-pointer"
+        >
           {client.name}
+          <Plus />
         </Button>
       </DrawerTrigger>
 
@@ -33,7 +38,11 @@ export function ClientsTableCellViewer({ client }: { client: Client }) {
               <ClientInfos client={client} />
             </div>
             <DrawerFooter>
-              <Button variant="outline" onClick={() => setIsFormOpen(true)}>
+              <Button
+                variant="outline"
+                className="cursor-pointer text-base font-bold"
+                onClick={() => setIsFormOpen(true)}
+              >
                 Edit
               </Button>
             </DrawerFooter>
@@ -44,7 +53,11 @@ export function ClientsTableCellViewer({ client }: { client: Client }) {
               <EditClient client={client} id={client.id} />
             </div>
             <DrawerFooter>
-              <Button variant="outline" onClick={() => setIsFormOpen(false)}>
+              <Button
+                variant="outline"
+                className="cursor-pointer text-base font-bold"
+                onClick={() => setIsFormOpen(false)}
+              >
                 Close
               </Button>
             </DrawerFooter>

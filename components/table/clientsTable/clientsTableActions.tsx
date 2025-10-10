@@ -1,14 +1,5 @@
 import { useState } from "react";
 
-import { IconDotsVertical } from "@tabler/icons-react";
-
-import { Button } from "@/components/ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -21,6 +12,8 @@ import {
 } from "@/components/ui/alert-dialog";
 
 import { UseClient } from "@/hooks/use-client";
+import { Button } from "@/components/ui/button";
+import { Trash } from "lucide-react";
 
 export function ClientsTableActions({ id }: { id: string }) {
   const [isAlertOpen, setIsAlertOpen] = useState(false);
@@ -32,28 +25,13 @@ export function ClientsTableActions({ id }: { id: string }) {
 
   return (
     <>
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <Button
-            variant="ghost"
-            className="data-[state=open]:bg-muted text-muted-foreground flex size-8 cursor-pointer"
-            size="icon"
-          >
-            <IconDotsVertical />
-            <span className="sr-only">Open menu</span>
-          </Button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent align="end" className="w-32">
-          <DropdownMenuItem className="cursor-pointer">Edit</DropdownMenuItem>
-          <DropdownMenuItem
-            variant="destructive"
-            className="cursor-pointer"
-            onSelect={() => setIsAlertOpen(true)}
-          >
-            Delete
-          </DropdownMenuItem>
-        </DropdownMenuContent>
-      </DropdownMenu>
+      <Button
+        variant="ghost"
+        className="cursor-pointer"
+        onClick={() => setIsAlertOpen(true)}
+      >
+        <Trash className="text-destructive" />
+      </Button>
 
       {isAlertOpen && (
         <AlertDialog open={isAlertOpen} onOpenChange={setIsAlertOpen}>
@@ -71,7 +49,7 @@ export function ClientsTableActions({ id }: { id: string }) {
               </AlertDialogCancel>
               <AlertDialogAction
                 onClick={() => handleDeleteClient(id)}
-                className="bg-destructive hover:bg-destructive/80 cursor-pointer"
+                className="bg-destructive hover:bg-destructive/ cursor-pointer"
               >
                 Delete
               </AlertDialogAction>

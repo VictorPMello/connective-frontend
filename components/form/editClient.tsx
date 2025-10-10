@@ -1,8 +1,8 @@
 import z from "zod";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-
 import { IMaskInput } from "react-imask";
+import { format } from "date-fns";
 
 import {
   Field,
@@ -33,8 +33,6 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
 import { IconCalendar } from "@tabler/icons-react";
-
-import { format } from "date-fns";
 
 import {
   Client,
@@ -113,15 +111,18 @@ export function EditClient({ client, id }: EditClientProps) {
   };
 
   return (
-    <div className="w-full max-w-md">
+    <div className="w-full max-w-md mt-3">
       <form onSubmit={form.handleSubmit(onSubmit)}>
         <FieldGroup>
           <FieldSet>
-            <FieldLegend>Main client information</FieldLegend>
+            <FieldLegend className="!text-xl font-bold">
+              Main client information
+            </FieldLegend>
             <FieldGroup>
-              {/* Name */}
               <Field>
-                <FieldLabel htmlFor="name">Name</FieldLabel>
+                <FieldLabel className="text-base font-semibold" htmlFor="name">
+                  Name
+                </FieldLabel>
                 <Input
                   id="name"
                   placeholder="CLient Name"
@@ -134,10 +135,13 @@ export function EditClient({ client, id }: EditClientProps) {
                   </p>
                 )}
               </Field>
-
-              {/* Contact Person name */}
               <Field>
-                <FieldLabel htmlFor="contactPerson">Contact Person</FieldLabel>
+                <FieldLabel
+                  className="text-base font-semibold"
+                  htmlFor="contactPerson"
+                >
+                  Contact Person
+                </FieldLabel>
                 <Input
                   id="contactPerson"
                   placeholder="Contact person name"
@@ -151,31 +155,10 @@ export function EditClient({ client, id }: EditClientProps) {
                   </p>
                 )}
               </Field>
-
-              {/* Email */}
               <Field>
-                <FieldLabel htmlFor="email">Email</FieldLabel>
-                <Input
-                  id="email"
-                  placeholder="Client email"
-                  type="email"
-                  {...form.register("email")}
-                  required
-                />
-                {form.watch("email") &&
-                  !isValidEmail(form.watch("email") as string) && (
-                    <p className="text-xs text-red-500">Invalid email</p>
-                  )}
-                {form.formState.errors.email && (
-                  <p className="text-sm text-destructive mt-1">
-                    {form.formState.errors.email.message}
-                  </p>
-                )}
-              </Field>
-
-              {/* Phone */}
-              <Field>
-                <FieldLabel htmlFor="phone">Phone</FieldLabel>
+                <FieldLabel className="text-base font-semibold" htmlFor="phone">
+                  Phone
+                </FieldLabel>
                 <Controller
                   name="phone"
                   control={form.control}
@@ -198,10 +181,34 @@ export function EditClient({ client, id }: EditClientProps) {
                   </p>
                 )}
               </Field>
-
-              {/* Manager */}
               <Field>
-                <FieldLabel htmlFor="manager">Manager</FieldLabel>
+                <FieldLabel className="text-base font-semibold" htmlFor="email">
+                  Email
+                </FieldLabel>
+                <Input
+                  id="email"
+                  placeholder="Client email"
+                  type="email"
+                  {...form.register("email")}
+                  required
+                />
+                {form.watch("email") &&
+                  !isValidEmail(form.watch("email") as string) && (
+                    <p className="text-xs text-red-500">Invalid email</p>
+                  )}
+                {form.formState.errors.email && (
+                  <p className="text-sm text-destructive mt-1">
+                    {form.formState.errors.email.message}
+                  </p>
+                )}
+              </Field>
+              <Field>
+                <FieldLabel
+                  className="text-base font-semibold"
+                  htmlFor="manager"
+                >
+                  Manager
+                </FieldLabel>
                 <Input
                   id="manager"
                   placeholder="Manager name"
@@ -214,9 +221,7 @@ export function EditClient({ client, id }: EditClientProps) {
                   </p>
                 )}
               </Field>
-
               <Field className="flex flex-row gap-2">
-                {/* Status */}
                 <Select
                   value={form.watch("status")}
                   onValueChange={(value) =>
@@ -253,8 +258,6 @@ export function EditClient({ client, id }: EditClientProps) {
                     </p>
                   )}
                 </Select>
-
-                {/* Category */}
                 <Select
                   value={form.watch("category")}
                   onValueChange={(value) =>
@@ -292,73 +295,34 @@ export function EditClient({ client, id }: EditClientProps) {
               </Field>
             </FieldGroup>
           </FieldSet>
-
           <FieldSeparator />
           <FieldSet>
-            <FieldLegend>Address</FieldLegend>
-            <FieldDescription>Client location information</FieldDescription>
+            <FieldLegend className="!text-xl font-bold">Address</FieldLegend>
+            <FieldDescription className="text-lg font-bold">
+              Client location information
+            </FieldDescription>
             <FieldGroup>
-              {/* Street */}
               <Field>
-                <FieldLabel htmlFor="address.street">Street</FieldLabel>
-                <Input
-                  id="address.street"
-                  placeholder="Street name"
-                  {...form.register("address.street")}
-                />
-                {form.formState.errors.address?.street && (
-                  <p className="text-sm text-destructive mt-1">
-                    {form.formState.errors.address.street.message}
-                  </p>
-                )}
-              </Field>
-
-              {/* Number and Complement */}
-              <Field className="flex gap-2">
-                <div className="flex-1">
-                  <FieldLabel htmlFor="address.number">Number</FieldLabel>
-                  <Input
-                    id="address.number"
-                    placeholder="123"
-                    {...form.register("address.number")}
-                  />
-                </div>
-                <div className="flex-1">
-                  <FieldLabel htmlFor="address.complement">
-                    Complement
-                  </FieldLabel>
-                  <Input
-                    id="address.complement"
-                    placeholder="Apt 4B"
-                    {...form.register("address.complement")}
-                  />
-                </div>
-              </Field>
-
-              {/* Neighborhood */}
-              <Field>
-                <FieldLabel htmlFor="address.neighborhood">
-                  Neighborhood
+                <FieldLabel
+                  className="text-base font-semibold"
+                  htmlFor="address.country"
+                >
+                  Country
                 </FieldLabel>
                 <Input
-                  id="address.neighborhood"
-                  placeholder="Neighborhood"
-                  {...form.register("address.neighborhood")}
+                  id="address.country"
+                  placeholder="Brazil"
+                  {...form.register("address.country")}
                 />
               </Field>
-
-              {/* City and State */}
               <Field className="flex gap-2">
-                <div className="flex-[2]">
-                  <FieldLabel htmlFor="address.city">City</FieldLabel>
-                  <Input
-                    id="address.city"
-                    placeholder="City"
-                    {...form.register("address.city")}
-                  />
-                </div>
-                <div className="flex-1">
-                  <FieldLabel htmlFor="address.state">State</FieldLabel>
+                <div className="flex-1  mb-5">
+                  <FieldLabel
+                    className="text-base font-semibold mb-3"
+                    htmlFor="address.state"
+                  >
+                    State
+                  </FieldLabel>
                   <Input
                     id="address.state"
                     placeholder="BA"
@@ -371,11 +335,86 @@ export function EditClient({ client, id }: EditClientProps) {
                     </p>
                   )}
                 </div>
+                <div className="flex-[2]">
+                  <FieldLabel
+                    className="text-base font-semibold mb-3"
+                    htmlFor="address.city"
+                  >
+                    City
+                  </FieldLabel>
+                  <Input
+                    id="address.city"
+                    placeholder="City"
+                    {...form.register("address.city")}
+                  />
+                </div>
               </Field>
-
-              {/* ZIP Code */}
               <Field>
-                <FieldLabel htmlFor="address.zipCode">ZIP Code</FieldLabel>
+                <FieldLabel
+                  className="text-base font-semibold"
+                  htmlFor="address.street"
+                >
+                  Street
+                </FieldLabel>
+                <Input
+                  id="address.street"
+                  placeholder="Street name"
+                  {...form.register("address.street")}
+                />
+                {form.formState.errors.address?.street && (
+                  <p className="text-sm text-destructive mt-1">
+                    {form.formState.errors.address.street.message}
+                  </p>
+                )}
+              </Field>
+              <Field className="flex gap-2">
+                <div className="flex-1 mb-5">
+                  <FieldLabel
+                    className="text-base font-semibold mb-3"
+                    htmlFor="address.number"
+                  >
+                    Number
+                  </FieldLabel>
+                  <Input
+                    id="address.number"
+                    placeholder="123"
+                    {...form.register("address.number")}
+                  />
+                </div>
+                <div className="flex-1">
+                  <FieldLabel
+                    className="text-base font-semibold mb-3"
+                    htmlFor="address.complement"
+                  >
+                    Complement
+                  </FieldLabel>
+                  <Input
+                    id="address.complement"
+                    placeholder="Apt 4B"
+                    {...form.register("address.complement")}
+                  />
+                </div>
+              </Field>
+              <Field>
+                <FieldLabel
+                  className="text-base font-semibold"
+                  htmlFor="address.neighborhood"
+                >
+                  Neighborhood
+                </FieldLabel>
+                <Input
+                  id="address.neighborhood"
+                  placeholder="Neighborhood"
+                  {...form.register("address.neighborhood")}
+                />
+              </Field>
+              <Field>
+                <FieldLabel
+                  className="text-base font-semibold"
+                  htmlFor="address.zipCode"
+                >
+                  ZIP Code
+                </FieldLabel>
                 <Controller
                   name="address.zipCode"
                   control={form.control}
@@ -398,29 +437,21 @@ export function EditClient({ client, id }: EditClientProps) {
                   </p>
                 )}
               </Field>
-
-              {/* Country */}
-              <Field>
-                <FieldLabel htmlFor="address.country">Country</FieldLabel>
-                <Input
-                  id="address.country"
-                  placeholder="Brazil"
-                  {...form.register("address.country")}
-                />
-              </Field>
             </FieldGroup>
           </FieldSet>
-
           <FieldSeparator />
           <FieldSet>
-            <FieldLegend>Additional Information</FieldLegend>
-            <FieldDescription>
+            <FieldLegend className="!text-xl font-bold">
+              Additional Information
+            </FieldLegend>
+            <FieldDescription className="text-xl font-bold">
               Documents, dates and financial details
             </FieldDescription>
             <FieldGroup>
-              {/* CNPJ */}
               <Field>
-                <FieldLabel htmlFor="cnpj">CNPJ</FieldLabel>
+                <FieldLabel className="text-base font-semibold" htmlFor="cnpj">
+                  CNPJ
+                </FieldLabel>
                 <Controller
                   name="cnpj"
                   control={form.control}
@@ -443,10 +474,10 @@ export function EditClient({ client, id }: EditClientProps) {
                   </p>
                 )}
               </Field>
-
-              {/* CPF */}
               <Field>
-                <FieldLabel htmlFor="cpf">CPF</FieldLabel>
+                <FieldLabel className="text-base font-semibold" htmlFor="cpf">
+                  CPF
+                </FieldLabel>
                 <Controller
                   name="cpf"
                   control={form.control}
@@ -469,10 +500,13 @@ export function EditClient({ client, id }: EditClientProps) {
                   </p>
                 )}
               </Field>
-
-              {/* Website */}
               <Field>
-                <FieldLabel htmlFor="website">Website</FieldLabel>
+                <FieldLabel
+                  className="text-base font-semibold"
+                  htmlFor="website"
+                >
+                  Website
+                </FieldLabel>
                 <Input
                   id="website"
                   placeholder="https://example.com"
@@ -485,10 +519,13 @@ export function EditClient({ client, id }: EditClientProps) {
                   </p>
                 )}
               </Field>
-
-              {/* LinkedIn */}
               <Field>
-                <FieldLabel htmlFor="linkedin">LinkedIn</FieldLabel>
+                <FieldLabel
+                  className="text-base font-semibold"
+                  htmlFor="linkedin"
+                >
+                  LinkedIn
+                </FieldLabel>
                 <Input
                   id="linkedin"
                   placeholder="https://linkedin.com/in/username"
@@ -501,10 +538,11 @@ export function EditClient({ client, id }: EditClientProps) {
                   </p>
                 )}
               </Field>
-
-              {/* Secondary Email */}
               <Field>
-                <FieldLabel htmlFor="secundaryEmail">
+                <FieldLabel
+                  className="text-base font-semibold"
+                  htmlFor="secundaryEmail"
+                >
                   Secondary Email
                 </FieldLabel>
                 <Input
@@ -519,10 +557,11 @@ export function EditClient({ client, id }: EditClientProps) {
                   </p>
                 )}
               </Field>
-
-              {/* Secondary Phone */}
               <Field>
-                <FieldLabel htmlFor="secundaryPhone">
+                <FieldLabel
+                  className="text-base font-semibold"
+                  htmlFor="secundaryPhone"
+                >
                   Secondary Phone
                 </FieldLabel>
                 <Controller
@@ -547,10 +586,13 @@ export function EditClient({ client, id }: EditClientProps) {
                   </p>
                 )}
               </Field>
-
-              {/* Monthly Amount */}
               <Field>
-                <FieldLabel htmlFor="monthlyAmount">Monthly Amount</FieldLabel>
+                <FieldLabel
+                  className="text-base font-semibold"
+                  htmlFor="monthlyAmount"
+                >
+                  Monthly Amount
+                </FieldLabel>
                 <Controller
                   name="monthlyAmount"
                   control={form.control}
@@ -584,10 +626,13 @@ export function EditClient({ client, id }: EditClientProps) {
                   </p>
                 )}
               </Field>
-
-              {/* Payment Method */}
               <Field>
-                <FieldLabel htmlFor="paymentMethod">Payment Method</FieldLabel>
+                <FieldLabel
+                  className="text-base font-semibold"
+                  htmlFor="paymentMethod"
+                >
+                  Payment Method
+                </FieldLabel>
                 <Select
                   value={form.watch("paymentMethod")}
                   onValueChange={(value) =>
@@ -626,17 +671,22 @@ export function EditClient({ client, id }: EditClientProps) {
               </Field>
             </FieldGroup>
           </FieldSet>
-
           <FieldSeparator />
           <FieldSet>
-            <FieldLegend>Business Details</FieldLegend>
-            <FieldDescription>
+            <FieldLegend className="!text-xl font-bold">
+              Business Details
+            </FieldLegend>
+            <FieldDescription className="text-xl font-bold">
               Financial information and contact details
             </FieldDescription>
             <FieldGroup>
-              {/* Hiring Date */}
               <Field>
-                <FieldLabel htmlFor="hiringDate">Hiring Date</FieldLabel>
+                <FieldLabel
+                  className="text-base font-semibold"
+                  htmlFor="hiringDate"
+                >
+                  Hiring Date
+                </FieldLabel>
                 <Controller
                   name="hiringDate"
                   control={form.control}
@@ -675,10 +725,13 @@ export function EditClient({ client, id }: EditClientProps) {
                   </p>
                 )}
               </Field>
-
-              {/* Next Due Date */}
               <Field>
-                <FieldLabel htmlFor="nextDueDate">Next Due Date</FieldLabel>
+                <FieldLabel
+                  className="text-base font-semibold"
+                  htmlFor="nextDueDate"
+                >
+                  Next Due Date
+                </FieldLabel>
                 <Controller
                   name="nextDueDate"
                   control={form.control}
@@ -717,10 +770,13 @@ export function EditClient({ client, id }: EditClientProps) {
                   </p>
                 )}
               </Field>
-
-              {/* Last Contact */}
               <Field>
-                <FieldLabel htmlFor="lastContact">Last Contact Date</FieldLabel>
+                <FieldLabel
+                  className="text-base font-semibold"
+                  htmlFor="lastContact"
+                >
+                  Last Contact Date
+                </FieldLabel>
                 <Controller
                   name="lastContact"
                   control={form.control}
@@ -764,10 +820,11 @@ export function EditClient({ client, id }: EditClientProps) {
 
           <FieldSeparator />
           <FieldSet>
-            {/* Notes */}
             <FieldGroup>
               <Field>
-                <FieldLabel htmlFor="notes">Notes</FieldLabel>
+                <FieldLabel className="text-base font-semibold" htmlFor="notes">
+                  Notes
+                </FieldLabel>
                 <Textarea
                   id="notes"
                   placeholder="Additional notes about the client..."
@@ -785,7 +842,10 @@ export function EditClient({ client, id }: EditClientProps) {
 
           <FieldSeparator />
           <Field orientation="horizontal">
-            <Button type="submit" className="w-full">
+            <Button
+              type="submit"
+              className="w-full cursor-pointer text-base font-bold"
+            >
               Submit
             </Button>
           </Field>
