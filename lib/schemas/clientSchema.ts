@@ -34,6 +34,9 @@ export const ClientSchema = z.object({
   // Relationship
   manager: z.string().min(1, { message: "Manager is required!" }),
 
+  // Dates and values
+  hiringDate: z.date(),
+
   // OPTIONAL
   // basic information
   // avatar: z
@@ -95,7 +98,6 @@ export const ClientSchema = z.object({
   secundaryPhone: z.string().optional().or(z.literal("")),
 
   // Dates and values
-  hiringDate: z.date().optional(),
   nextDueDate: z.date().optional(),
   lastContact: z.date().optional(),
   monthlyAmount: z.string().optional(),
