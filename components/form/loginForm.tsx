@@ -1,9 +1,14 @@
+import Link from "next/link";
+import Image from "next/image";
 import { cn } from "@/lib/utils";
+
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import Link from "next/link";
+
+import TermsOfServiceDialog from "@/components/dialog/TermsOfServiceDialog";
+import PrivacyPolicyDialog from "@/components/dialog/PrivacyPolicyDialog";
 
 export function LoginForm({
   className,
@@ -88,17 +93,19 @@ export function LoginForm({
             </div>
           </form>
           <div className="bg-muted relative hidden md:block">
-            <img
-              src="/placeholder.svg"
-              alt="Image"
-              className="absolute inset-0 h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
+            <Image
+              src="/logo.jpg"
+              width={1000}
+              height={1000}
+              alt="logo.jpg"
+              className="absolute inset-0 h-full w-full object-cover "
             />
           </div>
         </CardContent>
       </Card>
       <div className="text-muted-foreground *:[a]:hover:text-primary text-center text-xs text-balance *:[a]:underline *:[a]:underline-offset-4">
-        By clicking continue, you agree to our <a href="#">Terms of Service</a>{" "}
-        and <a href="#">Privacy Policy</a>.
+        By clicking continue, you agree to our <TermsOfServiceDialog />
+        and <PrivacyPolicyDialog />
       </div>
     </div>
   );

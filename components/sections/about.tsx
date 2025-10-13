@@ -17,9 +17,9 @@ export function About() {
       <div className="flex gap-3 max-w-md text-left self-start">
         <p className="text-2xl">
           At Connective, we believe that strong relationships are the foundation
-          of any successful business. Our goal is to deliver a modern,
-          accessible, and efficient solution that helps companies of all sizes
-          increase sales and build customer loyalty
+          of every successful business. Our mission is to deliver a modern,
+          accessible, and efficient solution that empowers companies of all
+          sizes to grow, connect, and build long-lasting customer loyalty.
         </p>
       </div>
     </section>

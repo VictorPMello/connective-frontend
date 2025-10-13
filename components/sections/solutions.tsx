@@ -1,6 +1,13 @@
 import { Separator } from "@/components/ui/separator";
 
-import { Bell, ChartColumnStacked, Users, Zap } from "lucide-react";
+import {
+  // Bell,
+  ChartColumnStacked,
+  ClipboardList,
+  FolderClosed,
+  //   Users,
+  //   Zap,
+} from "lucide-react";
 
 export function Solutions() {
   return (
@@ -15,49 +22,53 @@ export function Solutions() {
         <span className="font-bold text-sidebar-ring dark:text-primary">
           Everything
         </span>{" "}
-        you need to manage relationships and sales. clients, and results in one
-        place.
+        you need to organize your clients and projects all in one place.
       </h2>
 
       <div className="flex gap-3 p-3">
         <div className="flex flex-col gap-6">
-          <p className="text-lg flex flex-col gap-2 justify-center w-2/3 mx-auto">
+          <p className="text-xl flex flex-col gap-2 justify-center w-2/3 mx-auto">
             <span className="font-bold flex gap-2 items-center justify-center">
               <ChartColumnStacked />
-              Sales Management
+              Client Insights
             </span>
             <Separator
               orientation="horizontal"
-              className="data-[orientation=horizontal]:w-[75%] bg-foreground mx-auto"
+              className="data-[orientation=horizontal]:w-[75%] bg-foreground mx-auto my-3"
             />
-            Track every stage of the pipeline and never miss an opportunity.
+            See total clients and project metrics at a glance, track your growth
+            over time.
           </p>
-          <p className="text-lg flex flex-col gap-2 justify-center w-2/3 mx-auto">
+          <p className="mt-3 text-xl flex flex-col gap-2 justify-center w-2/3 mx-auto">
             <span className="font-bold flex gap-2 items-center justify-center">
-              <Users />
-              Customer Hub
+              <ClipboardList />
+              Organized Client List
             </span>
             <Separator
               orientation="horizontal"
-              className="data-[orientation=horizontal]:w-[75%] bg-foreground mx-auto"
+              className="data-[orientation=horizontal]:w-[75%] bg-foreground mx-auto my-3"
             />
-            Keep all client information in one place, with history and
-            interactions.
+            Manage all your client details in one simple table, from contact
+            info to history.
+          </p>
+
+          <p className="mt-3 text-xl flex flex-col gap-2 justify-center w-2/3 mx-auto">
+            <span className="font-bold flex gap-2 items-center justify-center">
+              <FolderClosed />
+              Visual Project Board
+            </span>
+            <Separator
+              orientation="horizontal"
+              className="data-[orientation=horizontal]:w-[75%] bg-foreground mx-auto my-3"
+            />
+            Use an intuitive Kanban to follow every task, status, and progress
+            in real time.
           </p>
         </div>
 
         <div className="flex flex-col gap-6">
-          <p className="text-lg flex flex-col gap-2 justify-center w-2/3 mx-auto">
-            <span className="font-bold flex gap-2 items-center justify-center">
-              <Zap />
-              Task Automation
-            </span>
-            <Separator
-              orientation="horizontal"
-              className="data-[orientation=horizontal]:w-[75%] bg-foreground mx-auto"
-            />
-            Spend less time on repetitive tasks and more time closing deals.
-          </p>
+          {/*
+          
           <p className="text-lg flex flex-col gap-2 justify-center w-2/3 mx-auto">
             <span className="font-bold flex gap-2 items-center justify-center">
               <Bell />
@@ -65,10 +76,12 @@ export function Solutions() {
             </span>
             <Separator
               orientation="horizontal"
-              className="data-[orientation=horizontal]:w-[75%] bg-foreground mx-auto"
+              className="data-[orientation=horizontal]:w-[75%] bg-foreground mx-auto my-3"
             />
             Get notifications for follow-ups and important deadlines.
           </p>
+
+          */}
         </div>
       </div>
     </section>

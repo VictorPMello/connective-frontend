@@ -18,28 +18,31 @@ export function Resources() {
 
       <div className="flex gap-3">
         <p className="text-lg flex gap-2 justify-center items-center">
-          Simple and intuitive interface
+          Manage your projects, clients, and data easily — without needing
+          tutorials.
           <Separator
             orientation="vertical"
             className="data-[orientation=vertical]:h-[150%] bg-foreground mx-auto"
           />
         </p>
         <p className="text-lg flex gap-2 justify-center items-center">
-          Integration with WhatsApp, email, and other tools
+          Stay organized with visual boards and detailed client tables that keep
+          everything clear.
           <Separator
             orientation="vertical"
             className="data-[orientation=vertical]:h-[150%] bg-foreground mx-auto"
           />
         </p>
         <p className="text-lg flex gap-2 justify-center items-center">
-          Real-time reports for strategic decisions
+          Make smarter decisions with visual dashboards and performance charts.
           <Separator
             orientation="vertical"
             className="data-[orientation=vertical]:h-[150%] bg-foreground mx-auto"
           />
         </p>
         <p className="text-lg flex gap-2 justify-center items-center">
-          100% online and secure access from anywhere
+          Work 100% online, with encrypted data and instant access from any
+          device.
         </p>
       </div>
     </section>

@@ -1,9 +1,10 @@
 import { Separator } from "@/components/ui/separator";
-import Link from "next/link";
+// import Link from "next/link";
 
 export function Footer() {
   return (
     <footer id="about" className="w-screen p-3 text-center">
+      {/*
       <div className="flex justify-evenly">
         <div>
           <h4 className="mb-6 text-xl">Features</h4>
@@ -71,6 +72,7 @@ export function Footer() {
           </ul>
         </div>
       </div>
+      */}
 
       <Separator
         orientation="horizontal"

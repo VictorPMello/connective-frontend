@@ -1,8 +1,12 @@
 import { cn } from "@/lib/utils";
+
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+
+import TermsOfServiceDialog from "@/components/dialog/TermsOfServiceDialog";
+import PrivacyPolicyDialog from "@/components/dialog/PrivacyPolicyDialog";
 
 export function RegisterForm({
   className,
@@ -104,8 +108,8 @@ export function RegisterForm({
         </CardContent>
       </Card>
       <div className="text-muted-foreground *:[a]:hover:text-primary text-center text-xs text-balance *:[a]:underline *:[a]:underline-offset-4">
-        By clicking continue, you agree to our <a href="#">Terms of Service</a>{" "}
-        and <a href="#">Privacy Policy</a>.
+        By clicking continue, you agree to our <TermsOfServiceDialog />
+        and <PrivacyPolicyDialog />
       </div>
     </div>
   );

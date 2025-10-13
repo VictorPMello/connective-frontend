@@ -10,7 +10,7 @@ export default function Pricing() {
       <Background3D />
       <FixedThemeToggle />
       <Header />
-      <main className="w-screen max-w-3xl mx-auto h-screen flex justify-center items-center">
+      <main className="w-screen px-32 mx-auto h-screen flex flex-col justify-center items-center">
         <PricingTable />
       </main>
       <Footer />

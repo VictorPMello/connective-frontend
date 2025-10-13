@@ -1,4 +1,3 @@
-import { CircleDot } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -13,28 +12,24 @@ export function Hero() {
         alt="Picture of the author"
       />
 
-      <h1 className="text-4xl w-fit backdrop-blur-2xl dark:text-shadow-lg text-shadow-sidebar">
+      <h1 className="text-4xl w-fit - dark:text-shadow-lg text-shadow-sidebar">
         <span className="font-bold text-sidebar-ring dark:text-primary">
-          Connect your team
+          Connect your clients, goals, and growth
         </span>{" "}
-        , clients, and results in one place.
+        all in one place.
       </h1>
       <h3 className="text-xl max-w-1/2 dark:text-shadow-lg text-shadow-sidebar">
-        Connective is the CRM designed to simplify your workflow, organize
-        opportunities, and boost sales with intelligence.
+        Connective helps freelancers and small teams simplify their workflow,
+        organize opportunities, and grow smarter — not harder.
       </h3>
       <div className="flex flex-col gap-3">
         <span className="text-base font-bold dark:text-shadow-lg text-shadow-sidebar">
-          <CircleDot className="inline" />
           <Link
             href="/login"
-            className="text-lg cursor-pointer p-2 bg-background rounded-xl hover:bg-background/80"
+            className="bg-primary text-lg cursor-pointer p-2 rounded-xl hover:bg-primary/80"
           >
             Start your free 14-day trial
           </Link>
-        </span>
-        <span className="text-base font-bold dark:text-shadow-lg text-shadow-sidebar">
-          <CircleDot className="inline" /> Book a demo
         </span>
       </div>
     </section>
