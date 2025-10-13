@@ -51,6 +51,7 @@ export function AddClientDialog() {
       status: status as ClientStatus,
       category: category as ClientCategory,
       manager,
+      hiringDate: new Date(),
     });
 
     // Add Error | Success message

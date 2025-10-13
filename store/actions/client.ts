@@ -16,7 +16,6 @@ export const CreateClientActions: ClientStateCreator<ClientActions> = (
         ...validateClient,
         id: generateId(),
 
-        hiringDate: new Date(),
         createdAt: new Date(),
         updatedAt: new Date(),
       };
