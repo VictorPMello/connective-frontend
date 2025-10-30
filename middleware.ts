@@ -5,6 +5,7 @@ export function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
 
   const allowedPaths = [
+    "/",
     "/dashboard",
     "/dashboard/clients",
     "/dashboard/projects",
