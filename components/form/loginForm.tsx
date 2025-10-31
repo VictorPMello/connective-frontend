@@ -14,9 +14,11 @@ import { cn } from "@/lib/utils";
 
 import TermsOfServiceDialog from "@/components/dialog/TermsOfServiceDialog";
 import PrivacyPolicyDialog from "@/components/dialog/PrivacyPolicyDialog";
+
 import { UseAuth } from "@/hooks/use-auth";
 
 import Swal from "sweetalert2";
+import { useAccount } from "@/hooks/use-account";
 
 export function LoginForm({
   className,
@@ -27,6 +29,8 @@ export function LoginForm({
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const { setAccount } = useAccount();
+
   const { login } = UseAuth;
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -34,7 +38,11 @@ export function LoginForm({
     setIsLoading(true);
 
     try {
-      await login({ email, password });
+      const { user } = await login({ email, password });
+      setAccount({
+        name: user.name,
+        email: user.email,
+      });
 
       router.push("/dashboard");
     } catch (error) {

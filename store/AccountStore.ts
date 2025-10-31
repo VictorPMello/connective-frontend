@@ -10,8 +10,8 @@ export const useAccountStore = create<AccountStore>()(
     persist(
       immer((...args) => ({
         account: {
-          name: null,
-          email: null,
+          name: "",
+          email: "",
         },
 
         ...CreateAccountActions(...args),

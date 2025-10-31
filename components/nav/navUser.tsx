@@ -1,5 +1,7 @@
 "use client";
 
+import { useRouter } from "next/navigation";
+
 import {
   IconCreditCard,
   IconDotsVertical,
@@ -24,6 +26,9 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar";
+import { useAccount } from "@/hooks/use-account";
+
+import { UseAuth } from "@/hooks/use-auth";
 
 export function NavUser({
   user,
@@ -34,7 +39,17 @@ export function NavUser({
     avatar: string;
   };
 }) {
+  const router = useRouter();
   const { isMobile } = useSidebar();
+  const { deleteAccount } = useAccount();
+  const { logout } = UseAuth;
+
+  const logoutAccount = async () => {
+    await logout();
+    deleteAccount();
+
+    router.push("/");
+  };
 
   return (
     <SidebarMenu>
@@ -94,7 +109,7 @@ export function NavUser({
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>
+            <DropdownMenuItem onClick={logoutAccount}>
               <IconLogout />
               Log out
             </DropdownMenuItem>
