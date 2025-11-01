@@ -8,11 +8,11 @@ import {
 
 export type Client = z.infer<typeof ClientSchema>;
 
-export type ClientStatus = "active" | "negotiation" | "inactive" | "prospectus";
+export type ClientStatus = "ACTIVE" | "NEGOTIATION" | "INACTIVE" | "PROSPECTUS";
 
-export type ClientCategory = "basic" | "premium" | "enterprise";
+export type ClientCategory = "BASIC" | "PREMIUM" | "ENTERPRISE";
 
-export type ClientPaymentMethod = "credit_card" | "boleto" | "pix" | "transfer";
+export type ClientPaymentMethod = "CREDIT_CARD" | "BOLETO" | "PIX" | "TRANSFER";
 
 export type CreateClient = z.infer<typeof CreateClientSchema>;
 

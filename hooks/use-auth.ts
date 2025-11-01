@@ -3,7 +3,7 @@ import { api } from "@/lib/api";
 export interface LoginResponse {
   message: string;
   user: {
-    id: number;
+    id: string;
     name: string;
     email: string;
     plan: string;
@@ -20,7 +20,7 @@ export interface RegisterResponse {
   success: boolean;
   message: string;
   data: {
-    id: number;
+    id: string;
     name: string;
     email: string;
     plan: string;

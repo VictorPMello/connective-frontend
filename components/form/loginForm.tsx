@@ -18,7 +18,9 @@ import PrivacyPolicyDialog from "@/components/dialog/PrivacyPolicyDialog";
 import { UseAuth } from "@/hooks/use-auth";
 
 import Swal from "sweetalert2";
+
 import { useAccount } from "@/hooks/use-account";
+import { UseClient } from "@/hooks/use-client";
 
 export function LoginForm({
   className,
@@ -32,6 +34,7 @@ export function LoginForm({
   const { setAccount } = useAccount();
 
   const { login } = UseAuth;
+  const { getClients } = UseClient();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -39,6 +42,7 @@ export function LoginForm({
 
     try {
       const { user } = await login({ email, password });
+      await getClients(user.id);
       setAccount({
         name: user.name,
         email: user.email,
