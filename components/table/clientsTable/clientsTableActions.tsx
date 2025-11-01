@@ -18,10 +18,9 @@ import { Trash } from "lucide-react";
 export function ClientsTableActions({ id }: { id: string }) {
   const [isAlertOpen, setIsAlertOpen] = useState(false);
 
-  const { deleteCLient } = UseClient();
+  const { deleteClient } = UseClient();
 
-  // Add Error | Success message
-  const handleDeleteClient = (id: string) => deleteCLient(id);
+  const handleDeleteClient = (id: string) => deleteClient(id);
 
   return (
     <>

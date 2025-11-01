@@ -104,7 +104,7 @@ export const ClientSchema = z.object({
 
   // Payment Settings
   paymentMethod: z
-    .enum(["credit_card", "boleto", "pix", "transfer"])
+    .enum(["CREDIT_CARD", "BOLETO", "PIX", "TRANSFER"])
     .optional(),
 
   // Notes

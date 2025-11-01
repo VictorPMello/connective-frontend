@@ -10,7 +10,7 @@ export const UseClient = () => {
     (state) => state.updateClientsOrder,
   );
 
-  const deleteCLient = useClientStore((state) => state.deleteClient);
+  const deleteClient = useClientStore((state) => state.deleteClient);
 
   return {
     clients,
@@ -19,6 +19,7 @@ export const UseClient = () => {
     getClients,
     updateClient,
     updateClientsOrder,
-    deleteCLient,
+
+    deleteClient,
   };
 };

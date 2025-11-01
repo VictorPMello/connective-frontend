@@ -20,7 +20,9 @@ export const CreateClientActions: ClientStateCreator<ClientActions> = (
         accountId: userId.data.userId,
       });
 
-      set((state) => ({ clients: [...state.clients, response.data.data] }));
+      const { accountId, ...clientWithoutAccountId } = response.data.data;
+
+      set((state) => ({ clients: [...state.clients, clientWithoutAccountId] }));
     } catch (error) {
       if (axios.isAxiosError(error)) {
         throw new Error(
@@ -38,10 +40,10 @@ export const CreateClientActions: ClientStateCreator<ClientActions> = (
     } catch (error) {
       if (axios.isAxiosError(error)) {
         throw new Error(
-          `Error to fetch clients: ${error.response?.data?.message || error.message}`,
+          `Error to get client: ${error.response?.data?.message || error.message}`,
         );
       }
-      throw new Error(`Error to fetch clients: ${error}`);
+      throw new Error(`Error to get client: ${error}`);
     }
   },
 
@@ -49,10 +51,12 @@ export const CreateClientActions: ClientStateCreator<ClientActions> = (
     try {
       const response = await api.put(`/client/${id}`, data);
 
+      const { accountId, ...clientWithoutAccountId } = response.data.data;
+
       set((state) => ({
         clients: state.clients.map((client) => {
           if (client.id === id) {
-            return { ...client, ...response.data.data };
+            return { ...client, ...clientWithoutAccountId };
           }
           return client;
         }),
@@ -60,10 +64,10 @@ export const CreateClientActions: ClientStateCreator<ClientActions> = (
     } catch (error) {
       if (axios.isAxiosError(error)) {
         throw new Error(
-          `Error to fetch clients: ${error.response?.data?.message || error.message}`,
+          `Error to update client: ${error.response?.data?.message || error.message}`,
         );
       }
-      throw new Error(`Error to fetch clients: ${error}`);
+      throw new Error(`Error to update client: ${error}`);
     }
   },
 
@@ -78,10 +82,10 @@ export const CreateClientActions: ClientStateCreator<ClientActions> = (
     } catch (error) {
       if (axios.isAxiosError(error)) {
         throw new Error(
-          `Error to fetch clients: ${error.response?.data?.message || error.message}`,
+          `Error to delete client: ${error.response?.data?.message || error.message}`,
         );
       }
-      throw new Error(`Error to fetch clients: ${error}`);
+      throw new Error(`Error to delete client: ${error}`);
     }
   },
 });
