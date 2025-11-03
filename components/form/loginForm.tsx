@@ -21,6 +21,7 @@ import Swal from "sweetalert2";
 
 import { useAccount } from "@/hooks/use-account";
 import { UseClient } from "@/hooks/use-client";
+import { useProject } from "@/hooks/use-project";
 
 export function LoginForm({
   className,
@@ -35,6 +36,7 @@ export function LoginForm({
 
   const { login } = UseAuth;
   const { getClients } = UseClient();
+  const { getAllProjects } = useProject();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -43,6 +45,7 @@ export function LoginForm({
     try {
       const { user } = await login({ email, password });
       await getClients(user.id);
+      await getAllProjects(user.id);
       setAccount({
         name: user.name,
         email: user.email,

@@ -16,12 +16,7 @@ export const CreateAccountActions: AccountStateCreator<AccountActions> = (
 
   deleteAccount: () => {
     try {
-      set({
-        account: {
-          name: "",
-          email: "",
-        },
-      });
+      localStorage.clear();
     } catch (error) {
       throw new Error(`Error to delete a client: ${error}`);
     }

@@ -23,10 +23,7 @@ export const CreateTaskActions: KanbanStateCreator<TaskActions> = (set) => ({
         projectId,
       });
 
-      const newTask = await api.post("/task", {
-        ...validateTask,
-        projectId: "",
-      });
+      const newTask = await api.post("/task", validateTask);
 
       set((state: KanBanState) => ({
         ...state,

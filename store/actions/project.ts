@@ -7,6 +7,8 @@ import { CreateProjectSchema } from "@/lib/schemas/projectSchema";
 import { ProjectActions } from "@/types/project/projectActions";
 
 import { api } from "@/lib/api";
+import { Task } from "@/types/task/taskType";
+import { Project } from "@/types/project/projectType";
 
 export const CreateProjectActions: KanbanStateCreator<ProjectActions> = (
   set,
@@ -24,6 +26,40 @@ export const CreateProjectActions: KanbanStateCreator<ProjectActions> = (
         ...state,
         projects: [...state.projects, newProject.data.data],
         selectedProject: newProject.data.data,
+      }));
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        throw new Error(
+          `Error to delete client: ${error.response?.data?.message || error.message}`,
+        );
+      }
+      throw new Error(`Error to delete client: ${error}`);
+    }
+  },
+
+  getAllProjects: async (accountId: string) => {
+    try {
+      const response = await api.get(`projects/${accountId}`);
+
+      const projects = response.data.data.flatMap(
+        ({ description, id, title, createdAt, updatedAt }: Project) => ({
+          description,
+          id,
+          title,
+          createdAt,
+          updatedAt,
+        }),
+      );
+
+      const tasks = response.data.data.flatMap(
+        ({ tasks }: { tasks: Task[] }) => tasks,
+      );
+
+      set((state: KanBanState) => ({
+        ...state,
+        projects,
+        selectedProject: projects[0],
+        tasks,
       }));
     } catch (error) {
       if (axios.isAxiosError(error)) {

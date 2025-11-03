@@ -1,5 +1,8 @@
 export interface ProjectActions {
   createProject: (title: string, description?: string) => Promise<void>;
+
+  getAllProjects: (accountId: string) => Promise<void>;
+
   updateProject: (
     id: string,
     title: string,
