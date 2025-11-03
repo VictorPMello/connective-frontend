@@ -13,16 +13,9 @@ export const CreateClientActions: ClientStateCreator<ClientActions> = (
     try {
       const validateClient = CreateClientSchema.parse(data);
 
-      const userId = await api.get("/auth/me");
+      const response = await api.post("/client", validateClient);
 
-      const response = await api.post("/client", {
-        ...validateClient,
-        accountId: userId.data.userId,
-      });
-
-      const { accountId, ...clientWithoutAccountId } = response.data.data;
-
-      set((state) => ({ clients: [...state.clients, clientWithoutAccountId] }));
+      set((state) => ({ clients: [...state.clients, response.data.data] }));
     } catch (error) {
       if (axios.isAxiosError(error)) {
         throw new Error(
@@ -51,12 +44,10 @@ export const CreateClientActions: ClientStateCreator<ClientActions> = (
     try {
       const response = await api.put(`/client/${id}`, data);
 
-      const { accountId, ...clientWithoutAccountId } = response.data.data;
-
       set((state) => ({
         clients: state.clients.map((client) => {
           if (client.id === id) {
-            return { ...client, ...clientWithoutAccountId };
+            return { ...client, ...response.data.data };
           }
           return client;
         }),

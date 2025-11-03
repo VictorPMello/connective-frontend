@@ -1,39 +1,41 @@
+import axios from "axios";
+
 import { KanbanStateCreator } from "@/types/kanban/kanbanStateType";
 import { KanBanState } from "@/types/kanban/kanbanInterface";
 
 import { CreateProjectSchema } from "@/lib/schemas/projectSchema";
 import { ProjectActions } from "@/types/project/projectActions";
 
-import { generateId } from "@/utils/helpers";
+import { api } from "@/lib/api";
 
 export const CreateProjectActions: KanbanStateCreator<ProjectActions> = (
   set,
 ) => ({
-  createProject: (title: string, description?: string) => {
+  createProject: async (title: string, description?: string) => {
     try {
       const validatedProject = CreateProjectSchema.parse({
         title,
         description: description || "",
       });
 
-      const newProject = {
-        ...validatedProject,
-        id: generateId(),
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      };
+      const newProject = await api.post("/project", validatedProject);
 
       set((state: KanBanState) => ({
         ...state,
-        projects: [...state.projects, newProject],
-        selectedProject: newProject,
+        projects: [...state.projects, newProject.data.data],
+        selectedProject: newProject.data.data,
       }));
     } catch (error) {
-      throw new Error(`Error to create project: ${error}`);
+      if (axios.isAxiosError(error)) {
+        throw new Error(
+          `Error to delete client: ${error.response?.data?.message || error.message}`,
+        );
+      }
+      throw new Error(`Error to delete client: ${error}`);
     }
   },
 
-  updateProject: (id: string, title: string, description?: string) => {
+  updateProject: async (id: string, title: string, description?: string) => {
     try {
       set((state: KanBanState) => ({
         ...state,
@@ -68,17 +70,27 @@ export const CreateProjectActions: KanbanStateCreator<ProjectActions> = (
     });
   },
 
-  deleteProject: (id: string) => {
-    set((state: KanBanState) => ({
-      ...state,
-      projects: state.projects.filter((project) => project.id !== id),
-      tasks: state.tasks.filter((task) => task.projectId !== id),
-      selectedProject:
-        (state.selectedProject.id === id && state.projects[0]) || {},
-    }));
+  deleteProject: async (id: string) => {
+    try {
+      await api.delete(`/project/${id}`);
+      set((state: KanBanState) => ({
+        ...state,
+        projects: state.projects.filter((project) => project.id !== id),
+        tasks: state.tasks.filter((task) => task.projectId !== id),
+        selectedProject:
+          (state.selectedProject.id === id && state.projects[0]) || {},
+      }));
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        throw new Error(
+          `Error to delete client: ${error.response?.data?.message || error.message}`,
+        );
+      }
+      throw new Error(`Error to delete client: ${error}`);
+    }
   },
 
-  deleteAllProjects: () => {
+  deleteAllProjects: async () => {
     set(() => ({
       projects: [],
       tasks: [],
