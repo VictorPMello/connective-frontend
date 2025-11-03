@@ -30,8 +30,10 @@ import { TaskPriority } from "@/types/task/taskType";
 
 export function AddTaskDialog({ projectId }: { projectId: string }) {
   const [title, setTitle] = useState("");
-  const [priority, setPriority] = useState("low");
+  const [priority, setPriority] = useState("LOW");
   const [description, setDescription] = useState("");
+
+  const priorityLowerCase = priority.toLowerCase();
 
   const { createTask } = useTask();
 
@@ -40,7 +42,7 @@ export function AddTaskDialog({ projectId }: { projectId: string }) {
     // Add Error | Success message
     setTitle("");
     setDescription("");
-    setPriority("low");
+    setPriority("LOW");
   };
 
   return (
@@ -81,12 +83,12 @@ export function AddTaskDialog({ projectId }: { projectId: string }) {
               <Select value={priority} onValueChange={setPriority}>
                 <SelectTrigger
                   id="priority"
-                  className={`w-full text-priority-${priority}`}
+                  className={`w-full text-priority-${priorityLowerCase}`}
                 >
                   <SelectValue
                     placeholder={
                       <span
-                        className={`flex gap-2 items-center text-priority-${priority}`}
+                        className={`flex gap-2 items-center text-priority-${priorityLowerCase}`}
                       >
                         <ChevronsDown className="text-priority-low" />
                         Low
@@ -96,21 +98,21 @@ export function AddTaskDialog({ projectId }: { projectId: string }) {
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem
-                    value="low"
+                    value="LOW"
                     className="text-priority-low focus:text-priority-low cursor-pointer"
                   >
                     <ChevronsDown className="text-priority-low" />
                     Low
                   </SelectItem>
                   <SelectItem
-                    value="medium"
+                    value="MEDIUM"
                     className="text-priority-medium focus:text-priority-medium cursor-pointer"
                   >
                     <ChevronsRight className="text-priority-medium" />
                     Medium
                   </SelectItem>
                   <SelectItem
-                    value="high"
+                    value="HIGH"
                     className="text-priority-high focus:text-priority-high cursor-pointer"
                   >
                     <ChevronsUp className="text-priority-high" />

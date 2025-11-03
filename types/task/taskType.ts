@@ -8,9 +8,9 @@ import {
 
 export type Task = z.infer<typeof TaskSchema>;
 
-export type TaskStatus = "todo" | "doing" | "done";
+export type TaskStatus = "TODO" | "DOING" | "DONE";
 
-export type TaskPriority = "low" | "medium" | "high";
+export type TaskPriority = "LOW" | "MEDIUM" | "HIGH";
 
 export type CreateTask = z.infer<typeof CreateTaskSchema>;
 

@@ -5,10 +5,10 @@ import { CreateTaskSchema } from "@/lib/schemas/taskSchema";
 import { TaskActions } from "@/types/task/taskActions";
 import { TaskPriority, TaskStatus } from "@/types/task/taskType";
 
-import { generateId } from "@/utils/helpers";
+import { api } from "@/lib/api";
 
 export const CreateTaskActions: KanbanStateCreator<TaskActions> = (set) => ({
-  createTask: (
+  createTask: async (
     title: string,
     projectId: string,
     priority: TaskPriority,
@@ -18,28 +18,26 @@ export const CreateTaskActions: KanbanStateCreator<TaskActions> = (set) => ({
       const validateTask = CreateTaskSchema.parse({
         title,
         description,
-        status: "todo",
+        status: "TODO",
         priority,
         projectId,
       });
 
-      const newTask = {
+      const newTask = await api.post("/task", {
         ...validateTask,
-        id: generateId(),
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      };
+        projectId: "",
+      });
 
       set((state: KanBanState) => ({
         ...state,
-        tasks: [...state.tasks, newTask],
+        tasks: [...state.tasks, newTask.data.data],
       }));
     } catch (error) {
       throw new Error(`Error to create a task: ${error}`);
     }
   },
 
-  updateTask: (
+  updateTask: async (
     id: string,
     title: string,
     priority: TaskPriority,
@@ -66,7 +64,7 @@ export const CreateTaskActions: KanbanStateCreator<TaskActions> = (set) => ({
     }
   },
 
-  updateTaskStatus: (id: string, newStatus: TaskStatus) => {
+  updateTaskStatus: async (id: string, newStatus: TaskStatus) => {
     try {
       set((state: KanBanState) => ({
         ...state,
@@ -86,7 +84,7 @@ export const CreateTaskActions: KanbanStateCreator<TaskActions> = (set) => ({
     }
   },
 
-  deleteTask: (id: string) => {
+  deleteTask: async (id: string) => {
     try {
       set((state: KanBanState) => ({
         ...state,
