@@ -4,6 +4,7 @@ import { SectionCards } from "@/components/cards/section-cards";
 import { ChartClients } from "@/components/chart/chartClients";
 import { ChartProjects } from "@/components/chart/chartPojects";
 import { HeaderDashboard } from "@/components/header/headerDashboard";
+import { ProtectedRoute } from "@/components/ui/ProtectedRoute";
 
 import { UseClient } from "@/hooks/use-client";
 import { useProject } from "@/hooks/use-project";
@@ -13,7 +14,7 @@ export default function Home() {
   const { projects } = useProject();
 
   return (
-    <>
+    <ProtectedRoute>
       <HeaderDashboard />
       <div className="flex flex-1 flex-col">
         <div className="@container/main flex flex-1 flex-col gap-2">
@@ -26,6 +27,6 @@ export default function Home() {
           </div>
         </div>
       </div>
-    </>
+    </ProtectedRoute>
   );
 }

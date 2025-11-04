@@ -8,6 +8,7 @@ import { HeaderDashboard } from "@/components/header/headerDashboard";
 import { Card } from "@/components/ui/card";
 
 import { useProject } from "@/hooks/use-project";
+import { ProtectedRoute } from "@/components/ui/ProtectedRoute";
 
 export default function Projects() {
   const { projects, selectedProject } = useProject();
@@ -27,7 +28,7 @@ export default function Projects() {
   }, [projects, searchProject]);
 
   return (
-    <>
+    <ProtectedRoute>
       <HeaderDashboard />
       <div className="flex flex-1 flex-col px-3">
         <div className="@container/main flex flex-1 flex-col gap-2">
@@ -61,6 +62,6 @@ export default function Projects() {
           )}
         </div>
       </div>
-    </>
+    </ProtectedRoute>
   );
 }

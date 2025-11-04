@@ -1,9 +1,10 @@
 import { HeaderDashboard } from "@/components/header/headerDashboard";
 import { ClientsTable } from "@/components/table/clientsTable/clientsTable";
+import { ProtectedRoute } from "@/components/ui/ProtectedRoute";
 
 export default function Home() {
   return (
-    <>
+    <ProtectedRoute>
       <HeaderDashboard />
       <div className="flex flex-1 flex-col">
         <div className="@container/main flex flex-1 flex-col gap-2">
@@ -12,6 +13,6 @@ export default function Home() {
           </div>
         </div>
       </div>
-    </>
+    </ProtectedRoute>
   );
 }
