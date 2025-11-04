@@ -43,7 +43,17 @@ export function LoginForm({
     setIsLoading(true);
 
     try {
-      const { user } = await login({ email, password });
+      const response = await login({ email, password });
+
+      if (!response.token) {
+        throw new Error("Token não recebido do servidor");
+      }
+
+      const { user, token } = response;
+
+      localStorage.setItem("authToken", token);
+
+      localStorage.getItem("authToken");
 
       await getClients(user.id);
       await getAllProjects(user.id);
@@ -52,7 +62,6 @@ export function LoginForm({
         name: user.name,
         email: user.email,
       });
-
       router.push("/dashboard");
     } catch (error) {
       const errorMessage =
