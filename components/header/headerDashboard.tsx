@@ -4,10 +4,10 @@ import { usePathname } from "next/navigation";
 
 import { Separator } from "@/components/ui/separator";
 import { SidebarTrigger } from "@/components/ui/sidebar";
-import { Input } from "@/components/ui/input";
 import { CreateProjectDialog } from "@/components/dialog/createProjectDialog";
 
-import { IconSearch } from "@tabler/icons-react";
+// import { IconSearch } from "@tabler/icons-react";
+// import { Input } from "@/components/ui/input";
 
 export function HeaderDashboard() {
   const pathname = usePathname();
@@ -27,8 +27,10 @@ export function HeaderDashboard() {
             </>
           ) : (
             <>
-              <Input type="text" placeholder="Find ..." />
-              <IconSearch />
+              {/*
+               <Input type="text" placeholder="Find ..." />
+               <IconSearch />
+                */}
             </>
           )}
         </div>

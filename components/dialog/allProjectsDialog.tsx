@@ -133,10 +133,7 @@ export function AllProjectsDialog({
           <span className="text-sm">{projects.length} Projects</span>
           <AlertDialog>
             <AlertDialogTrigger asChild>
-              <Button
-                variant="destructive"
-                className="cursor-pointer w-full lg:w-auto"
-              >
+              <Button variant="destructive" className="cursor-pointer ">
                 Delete all
               </Button>
             </AlertDialogTrigger>

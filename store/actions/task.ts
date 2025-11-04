@@ -5,10 +5,10 @@ import { CreateTaskSchema } from "@/lib/schemas/taskSchema";
 import { TaskActions } from "@/types/task/taskActions";
 import { TaskPriority, TaskStatus } from "@/types/task/taskType";
 
-import { generateId } from "@/utils/helpers";
+import { api } from "@/lib/api";
 
 export const CreateTaskActions: KanbanStateCreator<TaskActions> = (set) => ({
-  createTask: (
+  createTask: async (
     title: string,
     projectId: string,
     priority: TaskPriority,
@@ -18,34 +18,31 @@ export const CreateTaskActions: KanbanStateCreator<TaskActions> = (set) => ({
       const validateTask = CreateTaskSchema.parse({
         title,
         description,
-        status: "todo",
+        status: "TODO",
         priority,
         projectId,
       });
 
-      const newTask = {
-        ...validateTask,
-        id: generateId(),
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      };
+      const newTask = await api.post("/task", validateTask);
 
       set((state: KanBanState) => ({
         ...state,
-        tasks: [...state.tasks, newTask],
+        tasks: [...state.tasks, newTask.data.data],
       }));
     } catch (error) {
       throw new Error(`Error to create a task: ${error}`);
     }
   },
 
-  updateTask: (
+  updateTask: async (
     id: string,
     title: string,
     priority: TaskPriority,
     description?: string,
   ) => {
     try {
+      await api.put(`task/${id}`, { title, priority, description });
+
       set((state: KanBanState) => ({
         ...state,
         tasks: state.tasks.map((task) => {
@@ -62,12 +59,13 @@ export const CreateTaskActions: KanbanStateCreator<TaskActions> = (set) => ({
         }),
       }));
     } catch (error) {
-      throw new Error(`error to create a task: ${error}`);
+      throw new Error(`error to update a task: ${error}`);
     }
   },
 
-  updateTaskStatus: (id: string, newStatus: TaskStatus) => {
+  updateTaskStatus: async (id: string, newStatus: TaskStatus) => {
     try {
+      await api.put(`task/${id}`, { status: newStatus });
       set((state: KanBanState) => ({
         ...state,
         tasks: state.tasks.map((task) => {
@@ -86,14 +84,15 @@ export const CreateTaskActions: KanbanStateCreator<TaskActions> = (set) => ({
     }
   },
 
-  deleteTask: (id: string) => {
+  deleteTask: async (id: string) => {
+    await api.delete(`/task/${id}`);
     try {
       set((state: KanBanState) => ({
         ...state,
         tasks: state.tasks.filter((task) => task.id !== id),
       }));
     } catch (error) {
-      throw new Error(`Error to create a task: ${error}`);
+      throw new Error(`Error to delete a task: ${error}`);
     }
   },
 });

@@ -14,11 +14,11 @@ export const useTask = (projectId?: string) => {
     ? tasks.filter((task: Task) => task.projectId === projectId)
     : [];
 
-  const todoTasks = projectTasks.filter((task: Task) => task.status === "todo");
+  const todoTasks = projectTasks.filter((task: Task) => task.status === "TODO");
   const doingTasks = projectTasks.filter(
-    (task: Task) => task.status === "doing",
+    (task: Task) => task.status === "DOING",
   );
-  const doneTasks = projectTasks.filter((task: Task) => task.status === "done");
+  const doneTasks = projectTasks.filter((task: Task) => task.status === "DONE");
 
   return {
     tasks: projectTasks,

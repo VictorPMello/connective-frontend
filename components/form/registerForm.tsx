@@ -1,5 +1,11 @@
-import { cn } from "@/lib/utils";
+"use client";
 
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { cn } from "@/lib/utils";
+import { UseAuth } from "@/hooks/use-auth";
+
+import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -8,30 +14,124 @@ import { Label } from "@/components/ui/label";
 import TermsOfServiceDialog from "@/components/dialog/TermsOfServiceDialog";
 import PrivacyPolicyDialog from "@/components/dialog/PrivacyPolicyDialog";
 
+import Swal from "sweetalert2";
+
 export function RegisterForm({
   className,
   ...props
 }: React.ComponentProps<"div">) {
+  const { register } = UseAuth;
+  const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
+
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+
+  const [passwordError, setPasswordError] = useState("");
+
+  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newPassword = e.target.value;
+    setPassword(newPassword);
+
+    if (confirmPassword && newPassword !== confirmPassword) {
+      setPasswordError("As senhas não coincidem");
+    } else {
+      setPasswordError("");
+    }
+  };
+
+  const handleConfirmPasswordChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    const newConfirmPassword = e.target.value;
+    setConfirmPassword(newConfirmPassword);
+
+    if (password && newConfirmPassword !== password) {
+      setPasswordError("As senhas não coincidem");
+    } else {
+      setPasswordError("");
+    }
+  };
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    if (password !== confirmPassword) {
+      setPasswordError("As senhas não coincidem");
+      toast.error("Erro no registro", {
+        description: "As senhas não são compatíveis!",
+      });
+      return;
+    }
+
+    if (password.length < 6) {
+      toast.error("Erro no registro", {
+        description: "A senha deve ter pelo menos 6 caracteres!",
+      });
+      return;
+    }
+
+    setIsLoading(true);
+
+    const plan = "BASIC";
+    const maxProjects = 3;
+    const maxClients = 10;
+
+    try {
+      await register({
+        email,
+        password,
+        name: username,
+        plan,
+        maxProjects,
+        maxClients,
+      });
+      Swal.fire({
+        title: "Registro realizado com sucesso!",
+        icon: "success",
+        draggable: true,
+      });
+
+      router.push("/login");
+    } catch (error) {
+      const errorMessage =
+        error instanceof Error
+          ? error.message
+          : "Erro desconhecido ao criar conta";
+
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: errorMessage,
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card className="overflow-hidden p-0">
         <CardContent className="grid p-0">
-          <form className="p-6 md:p-8">
+          <form onSubmit={handleSubmit} className="p-6 md:p-8">
             <div className="flex flex-col gap-6">
               <div className="flex flex-col items-center text-center">
-                <h1 className="text-2xl font-bold">Welcome back</h1>
-                <p className="text-muted-foreground text-balance">
-                  Login to your Acme Inc account
-                </p>
+                <h1 className="text-2xl font-bold">Register Account</h1>
               </div>
               <div className="flex gap-3">
                 <div className="grid gap-3 w-1/2">
                   <Label htmlFor="username">Username</Label>
                   <Input
                     id="username"
+                    name="username"
                     type="text"
                     placeholder="Your Username"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
                     required
+                    disabled={isLoading}
                   />
                 </div>
 
@@ -39,9 +139,13 @@ export function RegisterForm({
                   <Label htmlFor="email">Email</Label>
                   <Input
                     id="email"
+                    name="email"
                     type="email"
-                    placeholder="m@example.com"
+                    placeholder="example@example.com"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                     required
+                    disabled={isLoading}
                   />
                 </div>
               </div>
@@ -50,19 +154,44 @@ export function RegisterForm({
                   <div className="flex items-center">
                     <Label htmlFor="password">Password</Label>
                   </div>
-                  <Input id="password" type="password" required />
+                  <Input
+                    id="password"
+                    name="password"
+                    type="password"
+                    value={password}
+                    onChange={handlePasswordChange}
+                    required
+                    disabled={isLoading}
+                  />
                 </div>
 
                 <div className="grid w-1/2 gap-3">
                   <div className="flex items-center">
                     <Label htmlFor="confirmPassword">Confirm Password</Label>
                   </div>
-                  <Input id="confirmPassword" type="password" required />
+                  <Input
+                    id="confirmPassword"
+                    name="confirmPassword"
+                    type="password"
+                    value={confirmPassword}
+                    onChange={handleConfirmPasswordChange}
+                    required
+                    disabled={isLoading}
+                    className={passwordError ? "border-red-500" : ""}
+                  />
                 </div>
               </div>
-              <Button type="submit" className="w-full max-w-2/3 mx-auto">
-                Login
+              {passwordError && (
+                <p className="text-sm text-red-500 -mt-3">{passwordError}</p>
+              )}
+              <Button
+                type="submit"
+                className="w-full max-w-2/3 mx-auto"
+                disabled={isLoading || !!passwordError}
+              >
+                {isLoading ? "Criando conta..." : "Register"}
               </Button>
+              {/*
               <div className="after:border-border relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t">
                 <span className="bg-card text-muted-foreground relative z-10 px-2">
                   Or continue with
@@ -88,6 +217,7 @@ export function RegisterForm({
                   <span className="sr-only">Login with Meta</span>
                 </Button>
               </div>
+              */}
               <div className="text-center text-sm">
                 Don&apos;t have an account?{" "}
                 <a href="#" className="underline underline-offset-4">

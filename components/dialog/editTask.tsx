@@ -50,6 +50,8 @@ export function EditTaskDialog({
   const [priority, setPriority] = useState(taskData.priority);
   const [description, setDescription] = useState(taskData.description);
 
+  const priorityLowerCase = priority.toLowerCase();
+
   const handleUpdateTask = () => {
     onUpdate({
       id: taskData.id,
@@ -95,12 +97,12 @@ export function EditTaskDialog({
               >
                 <SelectTrigger
                   id="priority"
-                  className={`w-full text-priority-${priority}`}
+                  className={`w-full text-priority-${priorityLowerCase}`}
                 >
                   <SelectValue
                     placeholder={
                       <span
-                        className={`flex gap-2 items-center text-priority-${priority}`}
+                        className={`flex gap-2 items-center text-priority-${priorityLowerCase}`}
                       >
                         <ChevronsDown className="text-priority-low" />
                         Low
@@ -110,21 +112,21 @@ export function EditTaskDialog({
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem
-                    value="low"
+                    value="LOW"
                     className="text-priority-low focus:text-priority-low cursor-pointer"
                   >
                     <ChevronsDown className="text-priority-low" />
                     Low
                   </SelectItem>
                   <SelectItem
-                    value="medium"
+                    value="MEDIUM"
                     className="text-priority-medium focus:text-priority-medium cursor-pointer"
                   >
                     <ChevronsRight className="text-priority-medium" />
                     Medium
                   </SelectItem>
                   <SelectItem
-                    value="high"
+                    value="HIGH"
                     className="text-priority-high focus:text-priority-high cursor-pointer"
                   >
                     <ChevronsUp className="text-priority-high" />

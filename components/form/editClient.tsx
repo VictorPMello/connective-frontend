@@ -96,7 +96,7 @@ export function EditClient({ client, id }: EditClientProps) {
         ? new Date(client.lastContact)
         : undefined,
 
-      paymentMethod: client.paymentMethod as ClientPaymentMethod,
+      paymentMethod: (client.paymentMethod as ClientPaymentMethod) || "PIX",
 
       notes: client.notes || "",
     },
@@ -105,10 +105,8 @@ export function EditClient({ client, id }: EditClientProps) {
   const isValidEmail = (email: string) =>
     /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
-  const onSubmit: SubmitHandler<ClientFormData> = (data) => {
-    // Add Success/Error message
+  const onSubmit: SubmitHandler<ClientFormData> = (data) =>
     updateClient(data, id);
-  };
 
   return (
     <div className="w-full max-w-md mt-3">
@@ -235,19 +233,19 @@ export function EditClient({ client, id }: EditClientProps) {
                   <SelectContent>
                     <SelectGroup>
                       <SelectLabel>Status</SelectLabel>
-                      <SelectItem className="cursor-pointer" value="active">
+                      <SelectItem className="cursor-pointer" value="ACTIVE">
                         Active
                       </SelectItem>
                       <SelectItem
                         className="cursor-pointer"
-                        value="negotiation"
+                        value="NEGOTIATION"
                       >
                         Negotiation
                       </SelectItem>
-                      <SelectItem className="cursor-pointer" value="inactive">
+                      <SelectItem className="cursor-pointer" value="INACTIVE">
                         Inactive
                       </SelectItem>
-                      <SelectItem className="cursor-pointer" value="prospectus">
+                      <SelectItem className="cursor-pointer" value="PROSPECTUS">
                         Prospectus
                       </SelectItem>
                     </SelectGroup>
@@ -271,15 +269,15 @@ export function EditClient({ client, id }: EditClientProps) {
                     <SelectContent>
                       <SelectGroup>
                         <SelectLabel>Categories</SelectLabel>
-                        <SelectItem className="cursor-pointer" value="basic">
+                        <SelectItem className="cursor-pointer" value="BASIC">
                           Basic
                         </SelectItem>
-                        <SelectItem className="cursor-pointer" value="premium">
+                        <SelectItem className="cursor-pointer" value="PREMIUM">
                           Premium
                         </SelectItem>
                         <SelectItem
                           className="cursor-pointer"
-                          value="enterprise"
+                          value="ENTERPRISE"
                         >
                           Enterprise
                         </SelectItem>
@@ -647,17 +645,17 @@ export function EditClient({ client, id }: EditClientProps) {
                       <SelectLabel>Payment Methods</SelectLabel>
                       <SelectItem
                         className="cursor-pointer"
-                        value="credit_card"
+                        value="CREDIT_CARD"
                       >
                         Credit Card
                       </SelectItem>
-                      <SelectItem className="cursor-pointer" value="boleto">
+                      <SelectItem className="cursor-pointer" value="BOLETO">
                         Boleto
                       </SelectItem>
-                      <SelectItem className="cursor-pointer" value="pix">
+                      <SelectItem className="cursor-pointer" value="PIX">
                         PIX
                       </SelectItem>
-                      <SelectItem className="cursor-pointer" value="transfer">
+                      <SelectItem className="cursor-pointer" value="TRANSFER">
                         Transfer
                       </SelectItem>
                     </SelectGroup>

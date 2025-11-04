@@ -1,8 +1,15 @@
 export interface ProjectActions {
-  createProject: (title: string, description?: string) => void;
-  updateProject: (id: string, title: string, description?: string) => void;
-  deleteProject: (id: string) => void;
-  deleteAllProjects: () => void;
+  createProject: (title: string, description?: string) => Promise<void>;
+
+  getAllProjects: (accountId: string) => Promise<void>;
+
+  updateProject: (
+    id: string,
+    title: string,
+    description?: string,
+  ) => Promise<void>;
+  deleteProject: (id: string) => Promise<void>;
+  deleteAllProjects: () => Promise<void>;
 
   setSelectedProject: (projectId: string) => void;
 }

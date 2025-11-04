@@ -1,63 +1,82 @@
+import { api } from "@/lib/api";
 import { CreateClientSchema } from "@/lib/schemas/clientSchema";
 
 import { ClientActions } from "@/types/client/clientActions";
 import { ClientStateCreator } from "@/types/client/clientStateType";
 
-import { generateId } from "@/utils/helpers";
+import axios from "axios";
 
 export const CreateClientActions: ClientStateCreator<ClientActions> = (
   set,
 ) => ({
-  createClient: (data) => {
+  createClient: async (data) => {
     try {
       const validateClient = CreateClientSchema.parse(data);
 
-      const newClient = {
-        ...validateClient,
-        id: generateId(),
+      const response = await api.post("/client", validateClient);
 
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      };
-
-      set((state) => ({ clients: [...state.clients, newClient] }));
+      set((state) => ({ clients: [...state.clients, response.data.data] }));
     } catch (error) {
+      if (axios.isAxiosError(error)) {
+        throw new Error(
+          `Error to create a client: ${error.response?.data?.message || error.message}`,
+        );
+      }
       throw new Error(`Error to create a client: ${error}`);
     }
   },
 
-  updateClient: (data, id: string) => {
+  getClients: async (accountId: string) => {
     try {
+      const response = await api.get(`/clients/${accountId}`);
+      set({ clients: response.data.data });
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        throw new Error(
+          `Error to get client: ${error.response?.data?.message || error.message}`,
+        );
+      }
+      throw new Error(`Error to get client: ${error}`);
+    }
+  },
+
+  updateClient: async (data, id: string) => {
+    try {
+      const response = await api.put(`/client/${id}`, data);
+
       set((state) => ({
         clients: state.clients.map((client) => {
           if (client.id === id) {
-            return { ...client, ...data, updateAt: new Date() };
+            return { ...client, ...response.data.data };
           }
           return client;
         }),
       }));
     } catch (error) {
-      throw new Error(`Error to update a client: ${error}`);
+      if (axios.isAxiosError(error)) {
+        throw new Error(
+          `Error to update client: ${error.response?.data?.message || error.message}`,
+        );
+      }
+      throw new Error(`Error to update client: ${error}`);
     }
   },
 
   updateClientsOrder: (newOrder) => set({ clients: newOrder }),
 
-  deleteClient: (id) => {
+  deleteClient: async (id) => {
     try {
+      await api.delete(`/client/${id}`);
       set((state) => ({
         clients: state.clients.filter((client) => client.id !== id),
       }));
     } catch (error) {
-      throw new Error(`Error to delete a client: ${error}`);
-    }
-  },
-
-  deleteAllClients: () => {
-    try {
-      set(() => ({ clients: [] }));
-    } catch (error) {
-      throw new Error(`Error to delete all a clients: ${error}`);
+      if (axios.isAxiosError(error)) {
+        throw new Error(
+          `Error to delete client: ${error.response?.data?.message || error.message}`,
+        );
+      }
+      throw new Error(`Error to delete client: ${error}`);
     }
   },
 });

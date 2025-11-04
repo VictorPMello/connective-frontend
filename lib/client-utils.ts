@@ -7,7 +7,9 @@ export function getClientsAddedThisMonth(clients: Client[]): Client[] {
   const monthStart = startOfMonth(now);
   const monthEnd = endOfMonth(now);
 
-  return clients.filter((client) => {
+  if (clients.length === 0) return [];
+
+  const filtered = clients.filter((client) => {
     if (!client.hiringDate) return false;
 
     const hiringDate = new Date(client.hiringDate);
@@ -17,6 +19,8 @@ export function getClientsAddedThisMonth(clients: Client[]): Client[] {
       end: monthEnd,
     });
   });
+
+  return filtered;
 }
 
 export function getClientsAddedLastMonth(clients: Client[]): Client[] {

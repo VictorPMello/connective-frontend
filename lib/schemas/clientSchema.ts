@@ -28,14 +28,14 @@ export const ClientSchema = z.object({
     .regex(/^\(\d{2}\)\s?\d{4,5}-\d{4}$/, { message: "Invalid phone format" }),
 
   // status and category
-  status: z.enum(["active", "negotiation", "inactive", "prospectus"]),
-  category: z.enum(["basic", "premium", "enterprise"]),
+  status: z.enum(["ACTIVE", "NEGOTIATION", "INACTIVE", "PROSPECTUS"]),
+  category: z.enum(["BASIC", "PREMIUM", "ENTERPRISE"]),
 
   // Relationship
   manager: z.string().min(1, { message: "Manager is required!" }),
 
   // Dates and values
-  hiringDate: z.date(),
+  hiringDate: z.date().optional(),
 
   // OPTIONAL
   // basic information
@@ -104,7 +104,7 @@ export const ClientSchema = z.object({
 
   // Payment Settings
   paymentMethod: z
-    .enum(["credit_card", "boleto", "pix", "transfer"])
+    .enum(["CREDIT_CARD", "BOLETO", "PIX", "TRANSFER"])
     .optional(),
 
   // Notes
@@ -115,6 +115,7 @@ export const CreateClientSchema = ClientSchema.omit({
   id: true,
   createdAt: true,
   updatedAt: true,
+  hiringDate: true,
 });
 
 export const UpdateClientSchema = ClientSchema.partial().omit({

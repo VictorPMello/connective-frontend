@@ -6,16 +6,16 @@ export interface TaskActions {
     projectId: string,
     priority: TaskPriority,
     description?: string,
-  ) => void;
+  ) => Promise<void>;
 
   updateTask: (
     id: string,
     title: string,
     priority: TaskPriority,
     description?: string,
-  ) => void;
+  ) => Promise<void>;
 
-  updateTaskStatus: (id: string, newStatus: TaskStatus) => void;
+  updateTaskStatus: (id: string, newStatus: TaskStatus) => Promise<void>;
 
-  deleteTask: (id: string) => void;
+  deleteTask: (id: string) => Promise<void>;
 }

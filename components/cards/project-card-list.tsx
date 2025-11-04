@@ -99,13 +99,13 @@ export function ProjectCardList({
         >
           <div className="flex flex-col lg:flex-row gap-3 px-3">
             {todoTasks && (
-              <ProjectCard id="todo" tasks={todoTasks} status="Todo" />
+              <ProjectCard id="TODO" tasks={todoTasks} status="TODO" />
             )}
             {doingTasks && (
-              <ProjectCard id="doing" tasks={doingTasks} status="Doing" />
+              <ProjectCard id="DOING" tasks={doingTasks} status="DOING" />
             )}
             {doneTasks && (
-              <ProjectCard id="done" tasks={doneTasks} status="Done" />
+              <ProjectCard id="DONE" tasks={doneTasks} status="DONE" />
             )}
           </div>
 

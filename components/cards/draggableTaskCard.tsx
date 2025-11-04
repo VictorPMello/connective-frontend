@@ -46,11 +46,11 @@ export function DraggableTaskCard({
 
   const getPriorityTask = (priority: string) => {
     switch (priority) {
-      case "low":
+      case "LOW":
         return "text-priority-low bg-priority-low/30";
-      case "medium":
+      case "MEDIUM":
         return "text-priority-medium bg-priority-medium/30";
-      case "high":
+      case "HIGH":
         return "text-priority-high bg-priority-high/30";
     }
   };
@@ -68,9 +68,9 @@ export function DraggableTaskCard({
         <p
           className={`flex gap-2 justify-center ${getPriorityTask(task.priority)} rounded-xl py-1 px-2`}
         >
-          {task.priority === "low" ? (
+          {task.priority === "LOW" ? (
             <ChevronsDown />
-          ) : task.priority === "medium" ? (
+          ) : task.priority === "MEDIUM" ? (
             <ChevronsRight />
           ) : (
             <ChevronsUp />

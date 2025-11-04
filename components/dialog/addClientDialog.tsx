@@ -33,8 +33,8 @@ export function AddClientDialog() {
   const [contactPerson, setContactPerson] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
-  const [status, setStatus] = useState("active");
-  const [category, setCategory] = useState("basic");
+  const [status, setStatus] = useState("ACTIVE");
+  const [category, setCategory] = useState("BASIC");
   const [manager, setManager] = useState("");
 
   const { createClient } = UseClient();
@@ -51,7 +51,6 @@ export function AddClientDialog() {
       status: status as ClientStatus,
       category: category as ClientCategory,
       manager,
-      hiringDate: new Date(),
     });
 
     // Add Error | Success message
@@ -59,8 +58,8 @@ export function AddClientDialog() {
     setContactPerson("");
     setEmail("");
     setPhone("");
-    setStatus("active");
-    setCategory("basic");
+    setStatus("ACTIVE");
+    setCategory("BASIC");
     setManager("");
   };
 
@@ -147,19 +146,19 @@ export function AddClientDialog() {
                   <SelectContent>
                     <SelectGroup>
                       <SelectLabel>Status</SelectLabel>
-                      <SelectItem className="cursor-pointer" value="active">
+                      <SelectItem className="cursor-pointer" value="ACTIVE">
                         Active
                       </SelectItem>
                       <SelectItem
                         className="cursor-pointer"
-                        value="negotiation"
+                        value="NEGOTIATION"
                       >
                         Negotiation
                       </SelectItem>
-                      <SelectItem className="cursor-pointer" value="inactive">
+                      <SelectItem className="cursor-pointer" value="INACTIVE">
                         Inactive
                       </SelectItem>
-                      <SelectItem className="cursor-pointer" value="prospectus">
+                      <SelectItem className="cursor-pointer" value="PROSPECTUS">
                         Prospectus
                       </SelectItem>
                     </SelectGroup>
@@ -174,13 +173,13 @@ export function AddClientDialog() {
                   <SelectContent>
                     <SelectGroup>
                       <SelectLabel>Categories</SelectLabel>
-                      <SelectItem className="cursor-pointer" value="basic">
+                      <SelectItem className="cursor-pointer" value="BASIC">
                         Basic
                       </SelectItem>
-                      <SelectItem className="cursor-pointer" value="premium">
+                      <SelectItem className="cursor-pointer" value="PREMIUM">
                         Premium
                       </SelectItem>
-                      <SelectItem className="cursor-pointer" value="enterprise">
+                      <SelectItem className="cursor-pointer" value="ENTERPRISE">
                         Enterprise
                       </SelectItem>
                     </SelectGroup>
