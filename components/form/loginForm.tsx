@@ -43,13 +43,18 @@ export function LoginForm({
     setIsLoading(true);
 
     try {
-      const { user } = await login({ email, password });
+      const { user, token } = await login({ email, password });
+
+      localStorage.setItem("authToken", token);
+
       await getClients(user.id);
       await getAllProjects(user.id);
+
       setAccount({
         name: user.name,
         email: user.email,
       });
+
       router.push("/dashboard");
     } catch (error) {
       const errorMessage =
