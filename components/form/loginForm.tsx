@@ -43,9 +43,7 @@ export function LoginForm({
     setIsLoading(true);
 
     try {
-      const { user, token } = await login({ email, password });
-
-      localStorage.setItem("authToken", token);
+      const { user } = await login({ email, password });
 
       await getClients(user.id);
       await getAllProjects(user.id);
