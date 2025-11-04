@@ -96,7 +96,7 @@ export function EditClient({ client, id }: EditClientProps) {
         ? new Date(client.lastContact)
         : undefined,
 
-      paymentMethod: client.paymentMethod as ClientPaymentMethod,
+      paymentMethod: (client.paymentMethod as ClientPaymentMethod) || "PIX",
 
       notes: client.notes || "",
     },

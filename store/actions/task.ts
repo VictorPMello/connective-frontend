@@ -41,6 +41,8 @@ export const CreateTaskActions: KanbanStateCreator<TaskActions> = (set) => ({
     description?: string,
   ) => {
     try {
+      await api.put(`task/${id}`, { title, priority, description });
+
       set((state: KanBanState) => ({
         ...state,
         tasks: state.tasks.map((task) => {
@@ -57,12 +59,13 @@ export const CreateTaskActions: KanbanStateCreator<TaskActions> = (set) => ({
         }),
       }));
     } catch (error) {
-      throw new Error(`error to create a task: ${error}`);
+      throw new Error(`error to update a task: ${error}`);
     }
   },
 
   updateTaskStatus: async (id: string, newStatus: TaskStatus) => {
     try {
+      await api.put(`task/${id}`, { status: newStatus });
       set((state: KanBanState) => ({
         ...state,
         tasks: state.tasks.map((task) => {
@@ -82,13 +85,14 @@ export const CreateTaskActions: KanbanStateCreator<TaskActions> = (set) => ({
   },
 
   deleteTask: async (id: string) => {
+    await api.delete(`/task/${id}`);
     try {
       set((state: KanBanState) => ({
         ...state,
         tasks: state.tasks.filter((task) => task.id !== id),
       }));
     } catch (error) {
-      throw new Error(`Error to create a task: ${error}`);
+      throw new Error(`Error to delete a task: ${error}`);
     }
   },
 });
