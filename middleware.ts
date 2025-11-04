@@ -3,7 +3,15 @@ import type { NextRequest } from "next/server";
 
 export function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
-  const token = req.cookies.get("token")?.value;
+
+  const cookieToken = req.cookies.get("token")?.value;
+
+  const authHeader = req.headers.get("authorization");
+  const headerToken = authHeader?.startsWith("Bearer ")
+    ? authHeader.substring(7)
+    : null;
+
+  const token = cookieToken || headerToken;
 
   const isAuthPage =
     req.nextUrl.pathname.startsWith("/login") ||
@@ -14,7 +22,6 @@ export function middleware(req: NextRequest) {
   if (!token && isProtectedRoute) {
     return NextResponse.redirect(new URL("/login", req.url));
   }
-
   if (token && isAuthPage) {
     return NextResponse.redirect(new URL("/dashboard", req.url));
   }
