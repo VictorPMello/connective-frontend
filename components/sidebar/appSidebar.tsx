@@ -35,8 +35,14 @@ import { NavMain } from "@/components/nav/navMain";
 import { NavUser } from "@/components/nav/navUser";
 import { useAccount } from "@/hooks/use-account";
 
+import { redirect, RedirectType } from "next/navigation";
+
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { account } = useAccount();
+
+  const handleChange = () => {
+    redirect("/", RedirectType.replace);
+  };
 
   const data = {
     user: {
@@ -118,7 +124,12 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             >
               <a href="#">
                 <IconInnerShadowTop className="!size-5" />
-                <span className="text-base font-semibold">Connecte</span>
+                <span
+                  className="text-base font-semibold"
+                  onClick={handleChange}
+                >
+                  Connective
+                </span>
               </a>
             </SidebarMenuButton>
           </SidebarMenuItem>

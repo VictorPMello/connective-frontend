@@ -26,7 +26,7 @@ export function ClientsStatsCard({ clients }: { clients: Client[] }) {
     <>
       <Card className="@container/card">
         <CardHeader>
-          <CardDescription>Total Clientsa</CardDescription>
+          <CardDescription>Total Clients</CardDescription>
           <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
             {clients.length}
           </CardTitle>
