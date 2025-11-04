@@ -38,23 +38,86 @@ export function LoginForm({
   const { getClients } = UseClient();
   const { getAllProjects } = useProject();
 
+  // const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  //   e.preventDefault();
+  //   setIsLoading(true);
+  //
+  //   try {
+  //     const { user } = await login({ email, password });
+  //
+  //     await getClients(user.id);
+  //     await getAllProjects(user.id);
+  //
+  //     setAccount({
+  //       name: user.name,
+  //       email: user.email,
+  //     });
+  //
+  //     router.push("/dashboard");
+  //   } catch (error) {
+  //     const errorMessage =
+  //       error instanceof Error
+  //         ? error.message
+  //         : "Erro desconhecido ao efeituar o login!";
+  //
+  //     Swal.fire({
+  //       icon: "error",
+  //       title: "Oops...",
+  //       text: errorMessage,
+  //     });
+  //   } finally {
+  //     setIsLoading(false);
+  //   }
+  // };
+  //
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    console.log("🔵 1. Iniciando login...");
     setIsLoading(true);
 
     try {
-      const { user } = await login({ email, password });
+      console.log("🔵 2. Chamando API de login...");
+      const response = await login({ email, password });
+      console.log("🔵 3. Resposta completa:", response);
+
+      // Verifique se o token está vindo
+      if (!response.token) {
+        console.error("🔴 ERRO: Token não retornado na resposta!");
+        throw new Error("Token não recebido do servidor");
+      }
+
+      const { user, token } = response;
+      console.log("🔵 4. Token recebido:", token.substring(0, 20) + "...");
+
+      // Salva o token
+      localStorage.setItem("authToken", token);
+      console.log("🔵 5. Token salvo no localStorage");
+
+      // Verifica se foi salvo
+      const savedToken = localStorage.getItem("authToken");
+      console.log(
+        "🔵 6. Token recuperado do localStorage:",
+        savedToken ? "OK" : "FALHOU",
+      );
 
       await getClients(user.id);
+      console.log("🔵 7. Clients carregados");
+
       await getAllProjects(user.id);
+      console.log("🔵 8. Projects carregados");
 
       setAccount({
         name: user.name,
         email: user.email,
       });
+      console.log("🔵 9. Account setado");
 
+      console.log("🔵 10. Redirecionando para /dashboard...");
       router.push("/dashboard");
+      console.log("🔵 11. Push executado");
     } catch (error) {
+      console.error("🔴 ERRO no login:", error);
       const errorMessage =
         error instanceof Error
           ? error.message
@@ -66,6 +129,7 @@ export function LoginForm({
         text: errorMessage,
       });
     } finally {
+      console.log("🔵 12. Finalizando...");
       setIsLoading(false);
     }
   };
