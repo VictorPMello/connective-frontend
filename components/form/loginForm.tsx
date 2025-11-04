@@ -43,15 +43,28 @@ export function LoginForm({
     setIsLoading(true);
 
     try {
+      console.log("1. Iniciando login...");
       const { user } = await login({ email, password });
+      console.log("2. Login sucesso - User:", user);
+
+      console.log("3. Buscando clientes...");
       await getClients(user.id);
+      console.log("4. Clientes carregados");
+
+      console.log("5. Buscando projetos...");
       await getAllProjects(user.id);
+      console.log("6. Projetos carregados");
+
+      console.log("7. Setando account...");
       setAccount({
         name: user.name,
         email: user.email,
       });
+      console.log("8. Account setado");
 
+      console.log("9. Tentando redirecionar...");
       router.push("/dashboard");
+      console.log("10. Push executado");
     } catch (error) {
       const errorMessage =
         error instanceof Error
