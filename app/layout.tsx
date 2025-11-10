@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { Lexend } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "next-themes";
+import { RenderWakeup } from "@/components/ui/RenderWakeup";
 
 const lexend = Lexend({
   variable: "--font-lexend",
@@ -102,6 +103,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${lexend.variable} antialiased`}>
+        <RenderWakeup />
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
