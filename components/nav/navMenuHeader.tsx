@@ -12,9 +12,11 @@ export function NavMenuHeader() {
       <Link href="/#resources" className="uppercase">
         resources
       </Link>
+      {/*
       <Link href="/#pricing" className="uppercase">
         pricing
       </Link>
+      */}
       <Link href="/#about" className="uppercase">
         about us
       </Link>

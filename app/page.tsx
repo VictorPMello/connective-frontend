@@ -5,15 +5,17 @@ import { Hero } from "@/components/sections/hero";
 import { Solutions } from "@/components/sections/solutions";
 import { Resources } from "@/components/sections/resources";
 import { About } from "@/components/sections/about";
-import { Pricing } from "@/components/sections/pricing";
+
+// import { Pricing } from "@/components/sections/pricing";
 
 import { Footer } from "@/components/footer/footer";
-import { Background3D } from "@/components/ui/background3D";
+
+// import { Background3D } from "@/components/ui/background3D";
 
 export default function Home() {
   return (
     <>
-      <Background3D />
+      {/* <Background3D /> */}
       <FixedThemeToggle />
       <Header />
       <main className="w-screen">
@@ -21,7 +23,7 @@ export default function Home() {
 
         <Solutions />
         <Resources />
-        <Pricing />
+        {/* <Pricing /> */}
         <About />
       </main>
       <Footer />
