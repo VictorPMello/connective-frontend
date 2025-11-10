@@ -8,15 +8,15 @@ import { About } from "@/components/sections/about";
 
 // import { Pricing } from "@/components/sections/pricing";
 
-import { Footer } from "@/components/footer/footer";
 import { Cta } from "@/components/sections/cta";
+import { Footer } from "@/components/footer/footer";
 
-// import { Background3D } from "@/components/ui/background3D";
+import { BackgroundGradient } from "@/components/ui/BackgroundGradient";
 
 export default function Home() {
   return (
     <>
-      {/* <Background3D /> */}
+      <BackgroundGradient />
       <FixedThemeToggle />
       <Header />
       <main className="w-screen">
