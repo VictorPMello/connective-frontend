@@ -32,7 +32,7 @@ export function Resources() {
     <section
       id="resources"
       className="w-screen h-screen flex flex-col justify-around items-center gap-3
-         lg:max-w-7xl mx-auto relative text-center"
+         lg:max-w-7xl mx-auto mt-24 relative text-center"
     >
       <div className="container mx-auto px-6">
         <div className="max-w-3xl mx-auto text-center mb-20">

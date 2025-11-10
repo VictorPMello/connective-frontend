@@ -9,6 +9,7 @@ import { About } from "@/components/sections/about";
 // import { Pricing } from "@/components/sections/pricing";
 
 import { Footer } from "@/components/footer/footer";
+import { Cta } from "@/components/sections/cta";
 
 // import { Background3D } from "@/components/ui/background3D";
 
@@ -25,6 +26,7 @@ export default function Home() {
         <Resources />
         {/* <Pricing /> */}
         <About />
+        <Cta />
       </main>
       <Footer />
     </>
